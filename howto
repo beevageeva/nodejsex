@@ -1,0 +1,18 @@
+npm install (like bundle)
+
+
+
+test app locally
+/usr/local/share/gems/gems/foreman-0.78.0/bin/foreman start web
+
+
+push local changes to heroku repo
+git add .
+git commit -m "Demo"
+git push heroku master
+
+
+
+../heroku-client/bin/heroku login
+../heroku-client/bin/heroku open
+
