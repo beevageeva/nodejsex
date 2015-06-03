@@ -1,6 +1,7 @@
 var express = require('express');
 var cool = require('cool-ascii-faces');
 var app = express();
+var bodyParser = require("body-parser");
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
@@ -31,6 +32,7 @@ console.log(connectionString);
 
 //console.log("ROUTER " + router);
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.post('/api/v1/todos', function(req, res) {
 
 		console.log("--------------------post-------------------");

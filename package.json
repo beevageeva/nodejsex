@@ -11,7 +11,8 @@
 		"cool-ascii-faces": "~1.3.x",
 		"jade": "latest",
 		"socket.io": "latest",
-		"pg" : "latest"
+		"pg" : "latest",
+		"body-parser" : "latest"
   },
   "engines": {
     "node": "0.12.2"
