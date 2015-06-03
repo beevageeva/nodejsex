@@ -37,6 +37,8 @@ app.post('/api/v1/todos', function(req, res) {
 		console.log(req.headers)
 		console.log("--------------------post-b------------------");
 		console.log(req.body)
+		console.log("--------------------post-prop------------------");
+		console.log(Object.keys(req))
 		console.log("--------------------post-end------------------");
 
     var results = [];
