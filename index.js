@@ -23,12 +23,16 @@ io.sockets.on('connection', function (socket) {
 
 connectionString = process.env.DATABASE_URL
 
+console.log(connectionString);
 
 //http://mherman.org/blog/2015/02/12/postgresql-and-nodejs/#.VW2hz1T2NHw
 var router = express.Router();
 
-router.post('/api/v1/todos', function(req, res) {
+console.log("ROUTER " + router);
 
+app.post('/api/v1/todos', function(req, res) {
+
+		console.log("post");
     var results = [];
 
     // Grab data from http request
@@ -63,7 +67,7 @@ router.post('/api/v1/todos', function(req, res) {
 });
 
 
-router.get('/api/v1/todos', function(req, res) {
+app.get('/api/v1/todos', function(req, res) {
 
     var results = [];
 
@@ -94,7 +98,7 @@ router.get('/api/v1/todos', function(req, res) {
 });
 
 
-router.put('/api/v1/todos/:todo_id', function(req, res) {
+app.put('/api/v1/todos/:todo_id', function(req, res) {
 
     var results = [];
 
@@ -135,7 +139,7 @@ router.put('/api/v1/todos/:todo_id', function(req, res) {
 
 
 
-router.delete('/api/v1/todos/:todo_id', function(req, res) {
+app.delete('/api/v1/todos/:todo_id', function(req, res) {
 
     var results = [];
 
