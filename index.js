@@ -34,6 +34,8 @@ console.log(connectionString);
 app.post('/api/v1/todos', function(req, res) {
 
 		console.log("--------------------post-------------------");
+		console.log(req.headers)
+		console.log("--------------------post-b------------------");
 		console.log(req.body)
 		console.log("--------------------post-end------------------");
 
