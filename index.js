@@ -26,13 +26,17 @@ connectionString = process.env.DATABASE_URL
 console.log(connectionString);
 
 //http://mherman.org/blog/2015/02/12/postgresql-and-nodejs/#.VW2hz1T2NHw
-var router = express.Router();
+//TODO Why do I need router?
+//var router = express.Router();
 
-console.log("ROUTER " + router);
+//console.log("ROUTER " + router);
 
 app.post('/api/v1/todos', function(req, res) {
 
-		console.log("post");
+		console.log("--------------------post-------------------");
+		console.log(req.body)
+		console.log("--------------------post-end------------------");
+
     var results = [];
 
     // Grab data from http request
