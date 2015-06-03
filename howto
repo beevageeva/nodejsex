@@ -16,3 +16,11 @@ git push heroku master
 ../heroku-client/bin/heroku login
 ../heroku-client/bin/heroku open
 
+
+
+
+create a database(postgres)
+ ../heroku-client/bin/heroku addons:docs heroku-postgresql
+
+
+https://devcenter.heroku.com/articles/getting-started-with-nodejs#view-logs
