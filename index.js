@@ -1,5 +1,6 @@
 var express = require('express');
 var cool = require('cool-ascii-faces');
+var pg = require('pg');
 var app = express();
 var bodyParser = require("body-parser");
 
