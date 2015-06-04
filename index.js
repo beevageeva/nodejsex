@@ -8,6 +8,7 @@ var flash    = require('connect-flash');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
+var cookieParser = require('cookie-parser');
 
 
 
@@ -22,6 +23,13 @@ app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secre
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());  
+
+app.set('view engine', "ejs");
+
 
 require('./routes.js')(app, passport); 
 
@@ -63,9 +71,6 @@ app.listen(app.get('port'));
 
 
 
-connectionString = process.env.DATABASE_URL
-
-console.log(connectionString);
 
 //http://mherman.org/blog/2015/02/12/postgresql-and-nodejs/#.VW2hz1T2NHw
 //TODO Why do I need router?
@@ -73,8 +78,6 @@ console.log(connectionString);
 
 //console.log("ROUTER " + router);
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());  
 
 
 

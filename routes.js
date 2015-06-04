@@ -1,6 +1,13 @@
 // app/routes.js
 module.exports = function(app, passport) {
 
+
+connectionString = process.env.DATABASE_URL
+
+console.log(connectionString);
+
+
+
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================

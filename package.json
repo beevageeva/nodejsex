@@ -9,7 +9,7 @@
 	 "dependencies" : {
     "express" : "~4.0.0",           
     "ejs" : "~0.8.5",               
-    "jade" : "latest",               
+    "cookie-parser" : "latest",               
     "pg" : "latest",          
     "passport" : "~0.1.17",         
     "passport-local" : "~0.1.6",    
