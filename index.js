@@ -15,6 +15,11 @@ var cookieParser = require('cookie-parser');
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
+app.use(flash()); // use connect-flash for flash messages stored in session
+app.set('view engine', "ejs");
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());  
 
 
 
@@ -32,13 +37,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
-
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());  
-
-app.set('view engine', "ejs");
 
 
 require('./routes.js')(app, passport); 
