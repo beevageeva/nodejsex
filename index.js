@@ -8,20 +8,35 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 
-app.set('views', __dirname + '/tpl');
-app.set('view engine', "jade");
-app.engine('jade', require('jade').__express);
-app.get("/", function(req, res){
-    res.render("page");
-});
 
-var io = require('socket.io').listen(app.listen(app.get('port')));
-io.sockets.on('connection', function (socket) {
-    socket.emit('message', { message: 'welcome to the chat' });
-    socket.on('send', function (data) {
-        io.sockets.emit('message', data);
-    });
-});
+//chat with jade listening same port
+
+//app.set('views', __dirname + '/tpl');
+//app.set('view engine', "jade");
+//app.engine('jade', require('jade').__express);
+//app.get("/", function(req, res){
+//    res.render("page");
+//});
+//
+//
+////socket io chat
+//var io = require('socket.io').listen(app.listen(app.get('port')));
+//io.sockets.on('connection', function (socket) {
+//    socket.emit('message', { message: 'welcome to the chat' });
+//    socket.on('send', function (data) {
+//        io.sockets.emit('message', data);
+//    });
+//});
+////socket io chat end
+
+//chat with jade end
+
+//else no socket io listening
+app.listen(app.get('port'));
+//no socket listening end
+
+
+
 
 connectionString = process.env.DATABASE_URL
 
@@ -34,19 +49,22 @@ console.log(connectionString);
 //console.log("ROUTER " + router);
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());  
+
+
 app.post('/api/v1/todos', function(req, res) {
 
-		console.log("--------------------post-------------------");
-		console.log(req.headers)
-		console.log("--------------------post-params------------------");
-		console.log(req.params)
-		console.log("--------------------post-prop------------------");
-		console.log(Object.keys(req))
-		console.log("--------------------post-query------------------");
-		console.log(req.query)
-		console.log("--------------------post-url------------------");
-		console.log(req.url)
-		console.log("--------------------post-end------------------");
+//		console.log("--------------------post-------------------");
+//		console.log(req.headers)
+//		console.log("--------------------post-params------------------");
+//		console.log(req.params)
+//		console.log("--------------------post-prop------------------");
+//		console.log(Object.keys(req))
+//		console.log("--------------------post-query------------------");
+//		console.log(req.query)
+//		console.log("--------------------post-url------------------");
+//		console.log(req.url)
+//		console.log("--------------------post-end------------------");
 
     var results = [];
 
@@ -190,6 +208,11 @@ app.delete('/api/v1/todos/:todo_id', function(req, res) {
     });
 
 });
+
+ app.get('*', function(req, res) {
+        res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+    });
+
 
 
 
