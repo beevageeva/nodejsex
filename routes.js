@@ -2,6 +2,7 @@
 module.exports = function(app, passport) {
 
 
+var pg = require('pg');
 connectionString = process.env.DATABASE_URL
 
 console.log(connectionString);
