@@ -23,7 +23,7 @@ console.log(connectionString);
 
         // render the page and pass in any flash data if it exists
         //res.render('login.ejs', { message: req.flash('loginMessage') }); 
-        res.sendfile('/login.html'); 
+        res.sendfile('./public/login.html'); 
     });
 
     // process the login form
