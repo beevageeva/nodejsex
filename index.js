@@ -69,7 +69,8 @@ app.post('/api/todos', function(req, res) {
     var results = [];
 
     // Grab data from http request
-    var data = {text: req.body.text, complete: false};
+    //var data = {text: req.body.text, complete: false};
+    var data = {text: "text223", complete: false};
 
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, function(err, client, done) {
