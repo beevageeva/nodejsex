@@ -1,9 +1,8 @@
 
-module.exports = function(app, passport) {
 var pg = require('pg');
 connectionString = process.env.DATABASE_URL
 
-app.post('/api/todos', function(req, res) {
+exports.create = function(req, res) {
 
 //		console.log("--------------------post-------------------");
 //		console.log(req.headers);
@@ -57,10 +56,10 @@ app.post('/api/todos', function(req, res) {
         }
 
     });
-});
+};
 
 
-app.get('/api/todos', function(req, res) {
+exports.list = function(req, res) {
 
     var results = [];
 
@@ -88,10 +87,10 @@ app.get('/api/todos', function(req, res) {
 
     });
 
-});
+};
 
 
-app.put('/api/todos/:todo_id', function(req, res) {
+exports.update = function(req, res) {
 
     var results = [];
 
@@ -128,11 +127,11 @@ app.put('/api/todos/:todo_id', function(req, res) {
 
     });
 
-});
+};
 
 
 
-app.delete('/api/todos/:todo_id', function(req, res) {
+exports.delete = function(req, res) {
 
     var results = [];
 
@@ -167,7 +166,6 @@ app.delete('/api/todos/:todo_id', function(req, res) {
 
     });
 
-});
-
-
 };
+
+
