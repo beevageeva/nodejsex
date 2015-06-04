@@ -72,7 +72,13 @@ app.post('/api/todos', function(req, res) {
 
     // Grab data from http request
     //var data = {text: req.body.text, complete: false};
-    var data = {text: "text223", complete: false};
+    var textParam = req.body.text;
+		console.log("TEXT PARAM from request " + textParam);
+
+		if (typeof(textParam) === 'undefined'){
+  		textParam = "text1234";
+  	}
+    var data = {text: textParam, complete: false};
 
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, function(err, client, done) {
