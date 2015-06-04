@@ -2,6 +2,8 @@ var express = require('express');
 var pg = require('pg');
 var app = express();
 var bodyParser = require("body-parser");
+
+var session      = require('express-session');
 var flash    = require('connect-flash');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
