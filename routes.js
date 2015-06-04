@@ -12,7 +12,7 @@ console.log(connectionString);
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-        res.render('index.ejs'); // load the index.ejs file
+        res.render('./public/index.html'); // load the index.ejs file
     });
 
     // =====================================
@@ -25,6 +25,14 @@ console.log(connectionString);
         //res.render('login.ejs', { message: req.flash('loginMessage') }); 
         res.sendfile('./public/login.html'); 
     });
+
+
+		app.post('/login',
+  			passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: true })
+		);
+
 
     // process the login form
     // app.post('/login', do all our passport stuff here);
