@@ -52,7 +52,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());  
 
 
-app.post('/api/v1/todos', function(req, res) {
+app.post('/api/todos', function(req, res) {
 
 //		console.log("--------------------post-------------------");
 //		console.log(req.headers)
@@ -100,7 +100,7 @@ app.post('/api/v1/todos', function(req, res) {
 });
 
 
-app.get('/api/v1/todos', function(req, res) {
+app.get('/api/todos', function(req, res) {
 
     var results = [];
 
@@ -131,7 +131,7 @@ app.get('/api/v1/todos', function(req, res) {
 });
 
 
-app.put('/api/v1/todos/:todo_id', function(req, res) {
+app.put('/api/todos/:todo_id', function(req, res) {
 
     var results = [];
 
@@ -172,7 +172,7 @@ app.put('/api/v1/todos/:todo_id', function(req, res) {
 
 
 
-app.delete('/api/v1/todos/:todo_id', function(req, res) {
+app.delete('/api/todos/:todo_id', function(req, res) {
 
     var results = [];
 
