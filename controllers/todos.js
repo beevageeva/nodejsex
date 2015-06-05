@@ -88,19 +88,19 @@ exports.update = function(req, res) {
 
 
 exports.delete = function(req, res) {
-		console.log("--------------------post-------------------");
+//		console.log("--------------------post-------------------");
 //		console.log(req.headers);
-		console.log("--------------------post-params------------------");
-		console.log(req.params);
-		console.log("--------------------post-prop------------------");
-		console.log(Object.keys(req));
+//		console.log("--------------------post-params------------------");
+//		console.log(req.params);
+//		console.log("--------------------post-prop------------------");
+//		console.log(Object.keys(req));
 //		console.log("--------------------post-body------------------");
 //		console.log(req.body);
 //		console.log("--------------------post-query------------------");
 //		console.log(req.query);
 //		console.log("--------------------post-url------------------");
 //		console.log(req.url);
-console.log("--------------------post-end------------------");
+//console.log("--------------------post-end------------------");
 	  todo.findById(req.params.todo_id, function (err, obj) {
     	obj.remove(function (err) {
       if (!err) {
