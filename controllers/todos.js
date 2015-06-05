@@ -54,7 +54,7 @@ exports.show = function(req, res){
 
 exports.list = function(req, res) {
 
-	return todo.find(function (err, objss) {
+	return todo.find(function (err, objs) {
     if (!err) {
 			res.render('../views/todos/index', {
         todos: objs,
