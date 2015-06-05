@@ -8,5 +8,9 @@ app.put('/api/todos/:todo_id', todos.update);
 app.delete('/api/todos/:todo_id', todos.delete);
 
 
+app.get('/todos', function(req, res){
+	res.sendfile('./public/index.html');	
+
+});
 
 };

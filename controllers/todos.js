@@ -27,12 +27,12 @@ exports.create = function(req, res) {
   });
   obj.save(function (err) {
     if (!err) {
-      return console.log("created");
+      console.log("created");
     } else {
-      return console.log(err);
+      console.log(err);
     }
   });
-  return res.send(product);
+	 res.redirect('/api/todos');
 
 
 };
@@ -40,7 +40,7 @@ exports.create = function(req, res) {
 
 exports.show = function(req, res){
 
-  return todo.findById(req.params.id, function (err, product) {
+  todo.findById(req.params.id, function (err, product) {
     if (!err) {
       return res.send(product);
     } else {
@@ -54,14 +54,14 @@ exports.show = function(req, res){
 
 exports.list = function(req, res) {
 
-	return todo.find(function (err, objs) {
+	todo.find(function (err, objs) {
     if (!err) {
 			res.render('../views/todos/index', {
         todos: objs,
     	});
 
     } else {
-      return console.log(err);
+      console.log(err);
     }
   });
 
