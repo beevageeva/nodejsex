@@ -1,5 +1,5 @@
 var scotchTodo = angular.module('scotchTodo', []);
-var todo = require('../../mongoose_models.js').Todo;
+var todo = require('mongoose_models.js').Todo;
 
 function mainController($scope, $http) {
     $scope.formData = {};
