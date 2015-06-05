@@ -16,7 +16,6 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(flash()); // use connect-flash for flash messages stored in session
 //app.set('view engine', "ejs");
-app.set('view engine', "html");
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());  
