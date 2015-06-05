@@ -53,7 +53,6 @@ exports.User = mongoose.model('user', userSchema);
 
 //TODOS
 var todoSchema = mongoose.Schema({
-		_id  : ObjectId,
     text: String,
     complete: Boolean,
 		created_at: Date, 
@@ -61,8 +60,6 @@ var todoSchema = mongoose.Schema({
 })
 
 todoSchema.pre('save', function(next) {
-	//set id
-	 this._id = mongoose.Types.ObjectId();
 
   // get the current date
   var currentDate = new Date();
