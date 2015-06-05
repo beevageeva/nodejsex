@@ -101,7 +101,7 @@ exports.delete = function(req, res) {
 //		console.log("--------------------post-url------------------");
 //		console.log(req.url);
 console.log("--------------------post-end------------------");
-	  todo.findById(req.params.id, function (err, obj) {
+	  todo.findById(req.params.todo_id, function (err, obj) {
     	obj.remove(function (err) {
       if (!err) {
         console.log("removed");
