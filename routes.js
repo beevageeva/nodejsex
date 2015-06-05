@@ -1,6 +1,6 @@
 
 module.exports = function(app, passport) {
-var todos = require('controllers/todos.js');
+var todos = require('./controllers/todos.js');
 
 app.post('/api/todos', todos.create); 
 app.get('/api/todos', todos.list);

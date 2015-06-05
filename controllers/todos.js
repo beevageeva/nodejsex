@@ -1,6 +1,5 @@
 
-var pg = require('pg');
-connectionString = process.env.DATABASE_URL
+var todo = require('../mongoose_models').Todo;
 
 exports.create = function(req, res) {
 
@@ -18,153 +17,89 @@ exports.create = function(req, res) {
 //		console.log(req.url);
 //console.log("--------------------post-end------------------");
 
-    var results = [];
 
-    // Grab data from http request
-    //var data = {text: req.body.text, complete: false};
-    var textParam = req.body.text;
-		console.log("TEXT PARAM from request " + textParam);
 
-		if (typeof(textParam) === 'undefined'){
-  		textParam = "text1234";
-  	}
-    var data = {text: textParam, complete: false};
+  console.log("POST: ");
+  console.log(req.body);
+  var obj = new todo({
+    text: req.body.text,
+		complete: false
+  });
+  obj.save(function (err) {
+    if (!err) {
+      return console.log("created");
+    } else {
+      return console.log(err);
+    }
+  });
+  return res.send(product);
 
-    // Get a Postgres client from the connection pool
-    pg.connect(connectionString, function(err, client, done) {
 
-        // SQL Query > Insert Data
-        client.query("INSERT INTO items(text, complete) values($1, $2)", [data.text, data.complete]);
-
-        // SQL Query > Select Data
-        var query = client.query("SELECT * FROM items ORDER BY id ASC");
-
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            results.push(row);
-        });
-
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            client.end();
-            return res.json(results);
-        });
-
-        // Handle Errors
-        if(err) {
-          console.log(err);
-        }
-
-    });
 };
+
+
+exports.show = function(req, res){
+
+  return todo.findById(req.params.id, function (err, product) {
+    if (!err) {
+      return res.send(product);
+    } else {
+      return console.log(err);
+    }
+  });
+
+};
+
 
 
 exports.list = function(req, res) {
 
-    var results = [];
+	return todo.find(function (err, objss) {
+    if (!err) {
+			res.render('../views/todos/index', {
+        todos: objs,
+    	});
 
-    // Get a Postgres client from the connection pool
-    pg.connect(connectionString, function(err, client, done) {
+    } else {
+      return console.log(err);
+    }
+  });
 
-        // SQL Query > Select Data
-        var query = client.query("SELECT * FROM items ORDER BY id ASC;");
 
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            results.push(row);
-        });
 
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            client.end();
-            return res.json(results);
-        });
-
-        // Handle Errors
-        if(err) {
-          console.log(err);
-        }
-
-    });
 
 };
 
 
 exports.update = function(req, res) {
-
-    var results = [];
-
-    // Grab data from the URL parameters
-    var id = req.params.todo_id;
-
-    // Grab data from http request
-    var data = {text: req.body.text, complete: req.body.complete};
-
-    // Get a Postgres client from the connection pool
-    pg.connect(connectionString, function(err, client, done) {
-
-        // SQL Query > Update Data
-        client.query("UPDATE items SET text=($1), complete=($2) WHERE id=($3)", [data.text, data.complete, id]);
-
-        // SQL Query > Select Data
-        var query = client.query("SELECT * FROM items ORDER BY id ASC");
-
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            results.push(row);
-        });
-
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            client.end();
-            return res.json(results);
-        });
-
-        // Handle Errors
-        if(err) {
-          console.log(err);
-        }
-
+  return todo.findById(req.params.id, function (err, obj) {
+    obj.text = req.body.text;
+    return product.save(function (err) {
+      if (!err) {
+        console.log("updated");
+      } else {
+        console.log(err);
+      }
+      return res.send(product);
     });
+  });
 
 };
 
 
 
 exports.delete = function(req, res) {
-
-    var results = [];
-
-    // Grab data from the URL parameters
-    var id = req.params.todo_id;
-
-
-    // Get a Postgres client from the connection pool
-    pg.connect(connectionString, function(err, client, done) {
-
-        // SQL Query > Delete Data
-        client.query("DELETE FROM items WHERE id=($1)", [id]);
-
-        // SQL Query > Select Data
-        var query = client.query("SELECT * FROM items ORDER BY id ASC");
-
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            results.push(row);
-        });
-
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            client.end();
-            return res.json(results);
-        });
-
-        // Handle Errors
-        if(err) {
-          console.log(err);
-        }
-
+	  return todo.findById(req.params.id, function (err, obj) {
+    return obj.remove(function (err) {
+      if (!err) {
+        console.log("removed");
+        return res.send('');
+      } else {
+        console.log(err);
+      }
     });
+  });
+
 
 };
 

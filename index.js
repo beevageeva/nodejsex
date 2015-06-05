@@ -50,7 +50,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 
-require('./controllers')(app, passport); 
+require('./routes.js')(app, passport); 
 
 
 
