@@ -9,7 +9,7 @@ app.delete('/api/todos/:todo_id', todos.delete);
 
 
 app.get('/todos', function(req, res){
-	res.sendfile('./public/index.html');	
+	res.sendfile('./public/todos.html');	
 
 });
 

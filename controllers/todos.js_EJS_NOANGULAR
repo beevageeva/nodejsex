@@ -56,8 +56,9 @@ exports.list = function(req, res) {
 
 	todo.find(function (err, objs) {
     if (!err) {
-			
-			return res.json(objs);	
+			res.render('../views/todos/index', {
+        todos: objs,
+    	});
 
     } else {
       console.log(err);
@@ -73,13 +74,13 @@ exports.list = function(req, res) {
 exports.update = function(req, res) {
   return todo.findById(req.params.id, function (err, obj) {
     obj.text = req.body.text;
-    return obj.save(function (err) {
+    return product.save(function (err) {
       if (!err) {
         console.log("updated");
-				//TODO return 
       } else {
         console.log(err);
       }
+      return res.send(product);
     });
   });
 
@@ -92,18 +93,7 @@ exports.delete = function(req, res) {
     	obj.remove(function (err) {
       if (!err) {
         console.log("removed");
-
-
-				todo.find(function (err, objs) {
-			    if (!err) {
-						
-						return res.json(objs);	
-			
-			    } else {
-			      console.log(err);
-			    }
-			  });
-
+        return res.send('');
       } else {
         console.log(err);
       }

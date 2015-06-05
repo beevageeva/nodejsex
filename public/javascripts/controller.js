@@ -1,61 +1,41 @@
 var scotchTodo = angular.module('scotchTodo', []);
-var todo = require('mongoose_models.js').Todo;
 
 function mainController($scope, $http) {
     $scope.formData = {};
 
     // when landing on the page, get all todos and show them
-
-
-
-		todo.find(function (err, objs) {
-	    if (!err) {
-				$scope.todos = objs;
-	    } else {
-	      console.log(err);
-	    }
-	  });
-
-
+    $http.get('/api/todos')
+        .success(function(data) {
+            $scope.todos = data;
+            console.log(data);
+        })
+        .error(function(data) {
+            console.log('Error: ' + data);
+        });
 
     // when submitting the add form, send the text to the node API
     $scope.createTodo = function() {
-
-	  console.log("POST: ");
-	  console.log(req.body);
-	  var obj = new todo({
-	    text: $scope.formData.text,
-			complete: false
-	  });
-	  obj.save(function (err) {
-	    if (!err) {
-	      console.log("created");
-				$scope.todos.push(obj);
-	    } else {
-	      console.log(err);
-	    }
-	  });
-	
-
-
+        $http.post('/api/todos', $scope.formData)
+            .success(function(data) {
+                $scope.formData = {}; // clear the form so our user is ready to enter another
+                $scope.todos = data;
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
     };
 
     // delete a todo after checking it
     $scope.deleteTodo = function(id) {
-
-	  todo.findById(req.params.id, function (err, obj) {
-    	obj.remove(function (err) {
-      if (!err) {
-        console.log("removed");
-				$scope.todos.remove(obj);	
-      } else {
-        console.log(err);
-      }
-    });
-  });
-		
-
-
+        $http.delete('/api/todos/' + id)
+            .success(function(data) {
+                $scope.todos = data;
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
     };
 
 }
