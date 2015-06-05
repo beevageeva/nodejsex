@@ -89,8 +89,8 @@ exports.update = function(req, res) {
 
 
 exports.delete = function(req, res) {
-	  return todo.findById(req.params.id, function (err, obj) {
-    return obj.remove(function (err) {
+	  todo.findById(req.params.id, function (err, obj) {
+    	obj.remove(function (err) {
       if (!err) {
         console.log("removed");
         return res.send('');
