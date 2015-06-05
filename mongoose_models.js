@@ -53,9 +53,30 @@ exports.User = mongoose.model('user', userSchema);
 
 //TODOS
 var todoSchema = mongoose.Schema({
+		_id  : ObjectId,
     text: String,
-    complete: Boolean 
+    complete: Boolean,
+		created_at: Date, 
+		updated_at: Date 
 })
+
+todoSchema.pre('save', function(next) {
+	//set id
+	 this._id = mongoose.Types.ObjectId();
+
+  // get the current date
+  var currentDate = new Date();
+  
+  // change the updated_at field to current date
+  this.updated_at = currentDate;
+
+  // if created_at doesn't exist, add to that field
+  if (!this.created_at){
+    this.created_at = currentDate;
+	}
+
+  next();
+});
 
 exports.Todo = mongoose.model('todo', todoSchema);
 
