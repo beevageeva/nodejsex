@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var databaseConfig = require('config/databaseMongo.js')
+var databaseConfig = require('./config/databaseMongo.js')
 mongoose.connect(databaseConfig.url);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
