@@ -1,5 +1,7 @@
 
 module.exports = function(app, passport) {
+
+//TODOS
 var todos = require('./controllers/todos.js');
 
 app.post('/api/todos', todos.create); 
@@ -13,4 +15,10 @@ app.get('/todos', function(req, res){
 
 });
 
+
+//CHAT
+app.get('/chat', function(req, res){
+	res.sendfile('./public/chat.html');	
+
+});
 };
