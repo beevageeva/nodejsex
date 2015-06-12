@@ -14,10 +14,10 @@ function createGrid(m,n) {
                 width: size - 1,
                 height: size - 1
             	}).attr({
-    						coord-row: i,
-    						coord-col: j
+    						'coord-row': i,
+    						'coord-col': j
 							}).click(function(){
-							console.log('i=' + this.coord-row + ",j=" + this.coord-col);
+							console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
         	  }).appendTo(parent);
         }
     }
