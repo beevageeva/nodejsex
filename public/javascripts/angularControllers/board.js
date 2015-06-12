@@ -1,16 +1,15 @@
 //other javascript functions
-function createGrid(size) {
-    var ratioW = Math.floor($(window).width()/size),
-        ratioH = Math.floor($(window).height()/size);
+function createGrid(m,n) {
+    var size=50;
 
     var parent = $('<div />', {
         class: 'grid',
-        width: ratioW  * size,
-        height: ratioH  * size
+        width: m  * size,
+        height: n  * size
     }).addClass('grid').appendTo('body');
 
-    for (var i = 0; i < ratioH; i++) {
-        for(var j = 0; j < ratioW; j++){
+    for (var i = 0; i < m; i++) {
+        for(var j = 0; j < n; j++){
             $('<div />', {
                 width: size - 1,
                 height: size - 1,
@@ -36,7 +35,7 @@ function mainController($scope, $http) {
             console.log('Error: ' + data);
         });
 
-    createGrid(50);
+    createGrid(2,3);
 
     // when submitting the add form, send the text to the node API
     $scope.createTodo = function() {
