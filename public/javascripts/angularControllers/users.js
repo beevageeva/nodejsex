@@ -1,5 +1,5 @@
 var userApp = angular.module('userApp', ['vcRecaptcha']);
-function mainController($scope, $http, vcRecaptchaService) {
+function mainController(vcRecaptchaService, $scope, $http) {
     $scope.formData = {};
 		
     $scope.createUser = function() {
