@@ -12,9 +12,10 @@ function createGrid(m,n) {
         for(var j = 0; j < n; j++){
             $('<div />', {
                 width: size - 1,
-                height: size - 1,
-								onclick: function(){ console.log('i=' + i + ",j=" + j); }
-            }).appendTo(parent);
+                height: size - 1
+            }).click(function(){
+							console.log('i=' + i + ",j=" + j);
+        	  }).appendTo(parent);
         }
     }
 }
