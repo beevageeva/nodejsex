@@ -13,7 +13,7 @@ function createGrid(m,n) {
             $('<div />', {
                 width: size - 1,
                 height: size - 1,
-								onclick: function(){ alert('i=' + i + ",j=" + j); }
+								onclick: function(){ console.log('i=' + i + ",j=" + j); }
             }).appendTo(parent);
         }
     }
