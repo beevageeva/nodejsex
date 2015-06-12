@@ -35,9 +35,9 @@ function mainController($scope, $http) {
             console.log('Error: ' + data);
         });
 
-			angular.element(document).ready(function () {
+			//angular.element(document).ready(function () {
         createGrid(50);
-    	});
+    	//});
 
     // when submitting the add form, send the text to the node API
     $scope.createTodo = function() {
