@@ -1,10 +1,13 @@
-var userApp = angular.module('userApp', ['vcRecaptcha']);
-function mainController(vcRecaptchaService, $scope, $http) {
+var userApp = angular.module('userApp', ['reCAPTCHA']).
+	.config(function (reCAPTCHAProvider) {
+    reCAPTCHAProvider.setPublicKey('6LeKQggTAAAAAJUEnnM9uVhuT_1veQD9mkH5MgkD');
+ });
+function mainController($scope, $http) {
     $scope.formData = {};
 		
     $scope.createUser = function() {
 
-        $http.post('/api/recaptcha', vcRecaptchaService.getResponse())
+        $http.post('/api/recaptcha', $scope.captchaResponse)
 					.success(function(data){
 		        $http.post('/api/users', $scope.formData)
 		            .success(function(data) {

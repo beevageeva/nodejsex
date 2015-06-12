@@ -5,17 +5,15 @@
      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
     <script src="javascripts/angularControllers/users.js"></script>
-		<script type="text/javascript" src="angular-recaptcha.js"></script>
+		<script type="text/javascript" src="angular-re-captcha.js"></script>
   </head>
   <body ng-controller="mainController">
     <form>
       <input type="text" class="form-control input-lg text-center" placeholder="Username" ng-model="formData.username">
       <input type="password" class="form-control input-lg text-center" placeholder="Password" ng-model="formData.password">
       <input type="text" class="form-control input-lg text-center" placeholder="Name" ng-model="formData.name">
-      <div class="g-recaptcha" id="recaptchaId"></div>
 
-			<div vc-recaptcha key="'6LeKQggTAAAAAJUEnnM9uVhuT_1veQD9mkH5MgkD'"> </div>
-
+				<div re-captcha ng-model="captchaResponse"></div>
 
       <br/>
       <button type="submit" class="btn btn-primary btn-lg" ng-click="createUser()">Add</button>
