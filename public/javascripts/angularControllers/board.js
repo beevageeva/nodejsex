@@ -13,8 +13,11 @@ function createGrid(m,n) {
             $('<div />', {
                 width: size - 1,
                 height: size - 1
-            }).click(function(){
-							console.log('i=' + i + ",j=" + j);
+            	}).attr({
+    						coord-row: i,
+    						coord-col: j
+							}).click(function(){
+							console.log('i=' + this.coord-row + ",j=" + this.coord-col);
         	  }).appendTo(parent);
         }
     }
