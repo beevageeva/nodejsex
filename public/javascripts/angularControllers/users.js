@@ -1,8 +1,21 @@
 var userApp = angular.module('userApp', ['reCAPTCHA'])
 	.config(function (reCAPTCHAProvider) {
     reCAPTCHAProvider.setPublicKey('6LeKQggTAAAAAJUEnnM9uVhuT_1veQD9mkH5MgkD');
- });
-function mainController($scope, $http) {
+ })
+.factory('Recaptcha', function ($resource) {
+
+        return $resource(
+            '/email/send',
+            {id: '@id'},
+            {
+                send: {
+                    url: '/email/send',
+                    method: 'POST'
+                }
+            }
+        )
+    });
+function mainController(Recaptcha, $scope, $http) {
     $scope.formData = {};
 		
     $scope.createUser = function() {
