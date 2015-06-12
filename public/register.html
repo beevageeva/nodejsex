@@ -1,0 +1,18 @@
+<html ng-app="userApp">
+  <head>
+    <title>Register</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="javascripts/angularControllers/users.js"></script>
+  </head>
+  <body ng-controller="mainController">
+    <form>
+      <input type="text" class="form-control input-lg text-center" placeholder="Username" ng-model="formData.username">
+      <input type="password" class="form-control input-lg text-center" placeholder="Password" ng-model="formData.password">
+      <input type="text" class="form-control input-lg text-center" placeholder="Name" ng-model="formData.name">
+      <div class="g-recaptcha" data-sitekey="6LdKT-oSAAAAAKHBgkfMXSTZVCr_5p57PvoE1lfH"></div>
+      <br/>
+      <button type="submit" class="btn btn-primary btn-lg" ng-click="createUser()">Add</button>
+    </form>
+  </body>
+</html>
