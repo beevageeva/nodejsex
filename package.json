@@ -16,6 +16,7 @@
     "passport-local" : "~0.1.6",    
     "connect-flash" : "~0.1.1",     
     "bcrypt-nodejs" : "latest",
+    "angular-recaptcha" : "latest",
     "body-parser": "~1.0.0",
     "cookie-parser": "~1.0.0",
     "method-override": "~1.0.0",

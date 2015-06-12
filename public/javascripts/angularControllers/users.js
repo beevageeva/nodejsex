@@ -1,15 +1,10 @@
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-var userApp = angular.module('userApp', []);
-function mainController($scope, $http) {
+var userApp = angular.module('userApp', ['vcRecaptcha']);
+function mainController($scope, $http, vcRecaptchaService) {
     $scope.formData = {};
-		$scope.recaptchaRegister = grecaptcha.render("recaptchaId", {
-        'sitekey': '6LeKQggTAAAAAJUEnnM9uVhuT_1veQD9mkH5MgkD'
-    });
 		
     $scope.createUser = function() {
 
-        $http.post('/api/recaptcha', grecaptcha.getResponse($scope.recaptchaRegister))
+        $http.post('/api/recaptcha', vcRecaptchaService.getResponse())
 					.success(function(data){
 		        $http.post('/api/users', $scope.formData)
 		            .success(function(data) {
