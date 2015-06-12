@@ -1,31 +1,30 @@
 
 module.exports = function(app, passport) {
 
-//TODOS
-var todos = require('./controllers/todos.js');
-//BOARD
-var board = require('./controllers/board.js');
-//USERS
-var users = require('./controllers/users.js');
-
 
 //AJAX
 //TODOS
+var todos = require('./controllers/todos.js');
 app.post('/api/todos', todos.create); 
 app.get('/api/todos', todos.list);
 app.put('/api/todos/:todo_id', todos.update);
 app.delete('/api/todos/:todo_id', todos.delete);
 
 //USERS
+var users = require('./controllers/users.js');
 app.post('/api/users', users.create); 
 
 
 
 //BOARD
+var board = require('./controllers/board.js');
 app.get('/api/board', board.load);
 
 
 
+
+//RECAPTCHA
+app.post('/api/recaptcha', require('./controllers/recaptcha.js')); 
 
 
 //SINGLE PAGES

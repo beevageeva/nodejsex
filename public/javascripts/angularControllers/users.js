@@ -4,14 +4,27 @@ function mainController($scope, $http) {
 		
     $scope.createUser = function() {
 				console.log($scope);
-        $http.post('/api/users', $scope.formData)
-            .success(function(data) {
-                $scope.formData = {}; // clear the form so our user is ready to enter another
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
+
+        $http.post('/api/recaptcha', $scope.g-recaptcha-response)
+					.success(function(data){
+		        $http.post('/api/users', $scope.formData)
+		            .success(function(data) {
+		                $scope.formData = {}; // clear the form so our user is ready to enter another
+		                console.log(data);
+		            })
+		            .error(function(data) {
+		                console.log('Error: ' + data);
+		            });
+							
+					})
+					.error(function(data) {
+                    console.log('Error: ' + data);
+										grecaptcha.reset();
+          	});
+
+
+
+
     };
 
 
