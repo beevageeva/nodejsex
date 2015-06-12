@@ -24,7 +24,9 @@ exports.create = function(req, res) {
   var obj = new User({
     username: req.body.username,
     password: req.body.password,
-    name: req.body.name
+    name: req.body.name,
+		active: true,
+		admin: false
   });
   obj.save(function (err) {
     if (!err) {

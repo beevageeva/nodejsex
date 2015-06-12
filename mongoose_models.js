@@ -15,6 +15,8 @@ var userSchema = mongoose.Schema({
     name: String,
     username: String,
     password: String,
+		active: Boolean,
+		admin: Boolean,
 		created_at: Date,
   	updated_at: Date
 
