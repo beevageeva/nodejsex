@@ -2,8 +2,8 @@ var userApp = angular.module('userApp', []);
 function mainController($scope, $http) {
     $scope.formData = {};
 		$scope.recaptchaRegister = grecaptcha.render("recaptchaId", {
-03        'sitekey': '6LeKQggTAAAAAJUEnnM9uVhuT_1veQD9mkH5MgkD'
-04    });
+        'sitekey': '6LeKQggTAAAAAJUEnnM9uVhuT_1veQD9mkH5MgkD'
+    });
 		
     $scope.createUser = function() {
 
