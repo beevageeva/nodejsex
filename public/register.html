@@ -4,9 +4,19 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
-    <script src="https://code.angularjs.org/1.0.8/angular-resource.js"></script><!-- load angular-resource -->
     <script src="javascripts/angularControllers/users.js"></script>
-		<script type="text/javascript" src="angular-re-captcha.js"></script>
+
+		<script>
+			function verifyResponse(resp){
+				console.log(resp);
+				$.post('/api/recaptcha', {'captchaResp': resp}, function( data ) {
+  							console.log( data );
+				});
+			}
+			
+		</script>
+
+
   </head>
   <body ng-controller="mainController">
     <form>
@@ -14,7 +24,8 @@
       <input type="password" class="form-control input-lg text-center" placeholder="Password" ng-model="formData.password">
       <input type="text" class="form-control input-lg text-center" placeholder="Name" ng-model="formData.name">
 
-				<div re-captcha ng-model="captchaResponse"></div>
+			<div class="g-recaptcha" data-sitekey="6LcePAATAAAAAGPRWgx90814DTjgt5sXnNbV5WaW" data-callback="verifyResponse"></div>		
+
 
       <br/>
       <button type="submit" class="btn btn-primary btn-lg" ng-click="createUser()">Add</button>
