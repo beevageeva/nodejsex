@@ -10,10 +10,11 @@ function createGrid(size) {
     }).addClass('grid').appendTo('body');
 
     for (var i = 0; i < ratioH; i++) {
-        for(var p = 0; p < ratioW; p++){
+        for(var j = 0; j < ratioW; j++){
             $('<div />', {
                 width: size - 1,
-                height: size - 1
+                height: size - 1,
+								onclick: function(){ alert('i=' + i + ",j=" + j); }
             }).appendTo(parent);
         }
     }
@@ -35,9 +36,7 @@ function mainController($scope, $http) {
             console.log('Error: ' + data);
         });
 
-			//angular.element(document).ready(function () {
-        createGrid(50);
-    	//});
+    createGrid(50);
 
     // when submitting the add form, send the text to the node API
     $scope.createTodo = function() {
