@@ -75,7 +75,7 @@ if (navigator.mozGetUserMedia) {
   MediaStream.prototype.getAudioTracks = function() {
     return [];
   };
-} else if (navigator.webkitGetUserMedia) {
+} else if (navigator.webkitGetUserMedia || navigator.getUserMedia) {
   console.log("This appears to be Chrome");
 
   webrtcDetectedBrowser = "chrome";
