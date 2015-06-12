@@ -1,4 +1,4 @@
-var userApp = angular.module('userApp', ['reCAPTCHA'])
+var userApp = angular.module('userApp', ['reCAPTCHA', 'ngResource'])
 	.config(function (reCAPTCHAProvider) {
     reCAPTCHAProvider.setPublicKey('6LeKQggTAAAAAJUEnnM9uVhuT_1veQD9mkH5MgkD');
  })
