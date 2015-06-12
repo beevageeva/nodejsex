@@ -1,4 +1,4 @@
-var userApp = angular.module('userApp', []).
+var userApp = angular.module('userApp', []);
 function mainController($scope, $http) {
     $scope.formData = {};
 		
