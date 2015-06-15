@@ -41,7 +41,7 @@ function verifyCaptcha(response){
 	var req = http.request(options, callback);
 
 	req.on('error', function(e) {
-  	console.log('VCPACHA FUNC ERR problem with request: ' + e.message);
+  	console.log('VCPACHA FUNC ERR problem with request: ' + e);
 	});
 
 
