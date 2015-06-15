@@ -39,11 +39,11 @@ function verifyCaptcha(response){
 	  response.on('end', function () {
 	    console.log("END RESPONSE CALLBACK" + responseCaptcha);
 			//return str;
-			Fiber.current.run();
+			fiber.run();
 	  });
 	}
 
-
+	var fiber = Fiber.current;
 	var req = http.request(options, callback);
 	//var req = wait.for(http.request,options);
 
