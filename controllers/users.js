@@ -23,28 +23,25 @@ function verifyCaptcha(response){
 	  }
 	};
 	
-	var req = http.request(options, function(res) {
-	  console.log('STATUS: ' + res.statusCode);
-	  console.log('HEADERS: ' + JSON.stringify(res.headers));
-	  res.setEncoding('utf8');
-	  res.on('data', function (chunk) {
-	    console.log('BODY: ' + chunk);
-			return chunk;
+	callback = function(response) {
+		console.log('STATUS: ' + response.statusCode);
+	  console.log('HEADERS: ' + JSON.stringify(response.headers));
+	  response.setEncoding('utf8');
+	  var str = '';
+	  response.on('data', function (chunk) {
+	    str += chunk;
 	  });
-	});
 	
-	req.on('error', function(e) {
-	  console.log('problem with request: ' + e.message);
-		//return same type of response as google recaptcha
-		return {'success': false, 'error-codes' : [e.message]};
-	});
+	  response.on('end', function () {
+	    console.log("RESPONSE CALLBACK" + str);
+			return str;
+	  });
+	}
 
-// write data to request body
- req.write(postData);
- req.end();
-
-
-
+	var req = http.request(options, callback);
+ 	req.write(postData);
+	req.end();
+	console.log("*****************VERIFYCAPTCHA FUNCTION END" );	
 
 }
 
@@ -72,7 +69,7 @@ exports.create = function(req, res) {
 
 	cResp = verifyCaptcha(req.body.captchaResp);
 
-	console.log("CAPTCHA RESP " + cResp.success);
+	console.log("CAPTCHA RESP " + cResp);
 
 
 
