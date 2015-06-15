@@ -3,6 +3,7 @@ var User = require('../mongoose_models').User;
 
 
 function verifyCaptcha(response){
+	console.log("VERIFYCAPTCHA FUNCTION " + response);	
 	var querystring = require('querystring');
 	var http = require('http');
 
