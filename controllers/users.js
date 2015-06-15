@@ -6,7 +6,7 @@ var Fiber = require('fibers');
 
 function verifyCaptcha(response){
 	console.log("VERIFYCAPTCHA FUNCTION " + response);	
-	var responseCapctha = {};
+	var responseCaptcha = "";
 
 
 	var querystring = require('querystring');
