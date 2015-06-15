@@ -81,6 +81,7 @@ exports.create = function(req, res) {
 
   console.log("POST: ");
   console.log(req.body);
+	cResp = "";
 	Fiber(function() {
 		cResp = verifyCaptcha(req.body.captchaResp);
 		console.log("IN USERCREATE " +  cResp);	
