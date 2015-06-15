@@ -1,5 +1,7 @@
 
 var User = require('../mongoose_models').User;
+var wait = require('wait.for');
+
 
 
 function verifyCaptcha(response){
@@ -38,7 +40,8 @@ function verifyCaptcha(response){
 	  });
 	}
 
-	var req = http.request(options, callback);
+	//var req = http.request(options, callback);
+	var req = wait.for(http.request,options);
 
 	req.on('error', function(e) {
   	console.log('VCPACHA FUNC ERR problem with request: ' + e);
@@ -73,7 +76,8 @@ exports.create = function(req, res) {
   console.log("POST: ");
   console.log(req.body);
 
-	cResp = verifyCaptcha(req.body.captchaResp);
+	//cResp = verifyCaptcha(req.body.captchaResp);
+	cResp = wait.launchFiber(verifyCaptcha,req.body.captchaResp);
 
 	console.log("CAPTCHA RESP " + cResp);
 
