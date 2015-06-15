@@ -11,8 +11,7 @@
 		<script>
 			function verifyResponse(resp){
 				console.log(resp);
-				$('#captchaRespId').attr('value', resp);
-
+				$('#captchaRespId').attr('value', resp).triggerHandler('input');
 			}
 			
 		</script>

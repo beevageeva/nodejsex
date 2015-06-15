@@ -3,7 +3,7 @@ var User = require('../mongoose_models').User;
 
 
 function verifyCaptcha(response){
-
+	var querystring = require('querystring');
 
 	var postData = querystring.stringify({
   'secret' : process.env.RECAPTCHA_PRIVATE_KEY,
