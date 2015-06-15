@@ -8,6 +8,15 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
     <script src="javascripts/angularControllers/users.js"></script>
 
+		<script>
+				function verifyResponse(response){
+					console.log("JS RECAPTCHA HTML");
+					angular.element('#mainController').scope().verifyResponse(response);	
+					angular.element('#mainController').scope().$apply() 
+				}
+
+		</script>
+
 
 
   </head>
