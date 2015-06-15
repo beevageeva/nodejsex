@@ -1,6 +1,52 @@
 
 var User = require('../mongoose_models').User;
 
+
+function verifyCaptcha(response){
+
+
+	var postData = querystring.stringify({
+  'secret' : process.env.RECAPTCHA_PRIVATE_KEY,
+	'response' : response
+	});
+
+	var options = {
+	  hostname: 'www.google.com',
+	  port: 443,
+	  path: '/recaptcha/api/siteverify',
+	  method: 'POST',
+	  headers: {
+	    'Content-Type': 'application/x-www-form-urlencoded',
+	    'Content-Length': postData.length
+	  }
+	};
+	
+	var req = http.request(options, function(res) {
+	  console.log('STATUS: ' + res.statusCode);
+	  console.log('HEADERS: ' + JSON.stringify(res.headers));
+	  res.setEncoding('utf8');
+	  res.on('data', function (chunk) {
+	    console.log('BODY: ' + chunk);
+			return chunk;
+	  });
+	});
+	
+	req.on('error', function(e) {
+	  console.log('problem with request: ' + e.message);
+		//return same type of response as google recaptcha
+		return {'success': false, 'error-codes' : [e.message]};
+	});
+
+// write data to request body
+ req.write(postData);
+ req.end();
+
+
+
+
+}
+
+
 exports.create = function(req, res) {
 
 //		console.log("--------------------post-------------------");
@@ -21,6 +67,14 @@ exports.create = function(req, res) {
 
   console.log("POST: ");
   console.log(req.body);
+
+	cResp = verifyCaptcha(req.body.captchaResp);
+
+	console.log("CAPTCHA RESP " + cResp.success);
+
+
+
+
   var obj = new User({
     username: req.body.username,
     password: req.body.password,
