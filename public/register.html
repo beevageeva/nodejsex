@@ -8,13 +8,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
     <script src="javascripts/angularControllers/users.js"></script>
 
-		<script>
-			function verifyResponse(resp){
-				console.log(resp);
-				$('#captchaRespId').attr('value', resp).triggerHandler('input');
-			}
-			
-		</script>
 
 
   </head>
@@ -25,7 +18,6 @@
       <input type="text" class="form-control input-lg text-center" placeholder="Name" ng-model="formData.name" ng-minlength=3 ng-maxlength=20>
 
 			<div class="g-recaptcha" data-sitekey="6LeKQggTAAAAAJUEnnM9uVhuT_1veQD9mkH5MgkD" data-callback="verifyResponse"></div>		
-			<input type="hidden" id="captchaRespId" name="formData.captchaResp" ng-model="formData.captchaResp"   value="">
 
       <br/>
       <button type="submit" class="btn btn-primary btn-lg" ng-click="createUser()">Add</button>
