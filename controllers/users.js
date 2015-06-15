@@ -1,11 +1,14 @@
 
 var User = require('../mongoose_models').User;
-var wait = require('wait.for');
+var Fiber = require('fibers');
 
 
 
 function verifyCaptcha(response){
 	console.log("VERIFYCAPTCHA FUNCTION " + response);	
+	var responseCapctha = {};
+
+
 	var querystring = require('querystring');
 	var http = require('https');
 
@@ -29,19 +32,20 @@ function verifyCaptcha(response){
 		console.log('STATUS: ' + response.statusCode);
 	  console.log('HEADERS: ' + JSON.stringify(response.headers));
 	  response.setEncoding('utf8');
-	  var str = '';
 	  response.on('data', function (chunk) {
-	    str += chunk;
+	    responseCaptcha += chunk;
 	  });
 	
 	  response.on('end', function () {
 	    console.log("RESPONSE CALLBACK" + str);
-			return str;
+			//return str;
+			Fiber.current.run();
 	  });
 	}
 
-	//var req = http.request(options, callback);
-	var req = wait.for(http.request,options);
+
+	var req = http.request(options, callback);
+	//var req = wait.for(http.request,options);
 
 	req.on('error', function(e) {
   	console.log('VCPACHA FUNC ERR problem with request: ' + e);
@@ -50,7 +54,9 @@ function verifyCaptcha(response){
 
  	req.write(postData);
 	req.end();
-	console.log("*****************VERIFYCAPTCHA FUNCTION END" );	
+	Fiber.yield();
+	return responseCaptcha;	
+	console.log("*****************VERIFYCAPTCHA FUNCTION END " + responseCaptcha );	
 
 }
 
@@ -75,9 +81,11 @@ exports.create = function(req, res) {
 
   console.log("POST: ");
   console.log(req.body);
-
-	//cResp = verifyCaptcha(req.body.captchaResp);
-	cResp = wait.launchFiber(verifyCaptcha,req.body.captchaResp);
+	Fiber(function() {
+		cResp = verifyCaptcha(req.body.captchaResp);
+		console.log("IN USERCREATE " +  cResp);	
+	}).run();
+	//cResp = wait.launchFiber(verifyCaptcha,req.body.captchaResp);
 
 	console.log("CAPTCHA RESP " + cResp);
 

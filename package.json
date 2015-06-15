@@ -20,7 +20,7 @@
     "cookie-parser": "~1.0.0",
     "method-override": "~1.0.0",
     "express-session": "~1.0.0",
-    "wait.for": "latest"
+    "fibers": "latest"
   },
 
   "engines": {
