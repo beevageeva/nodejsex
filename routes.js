@@ -23,9 +23,6 @@ app.get('/api/board', board.load);
 
 
 
-//RECAPTCHA
-app.post('/api/recaptcha', require('./controllers/recaptcha.js')); 
-
 
 //SINGLE PAGES
 
