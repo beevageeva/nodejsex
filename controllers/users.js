@@ -37,7 +37,7 @@ function verifyCaptcha(response){
 	  });
 	
 	  response.on('end', function () {
-	    console.log("RESPONSE CALLBACK" + str);
+	    console.log("END RESPONSE CALLBACK" + responseCaptcha);
 			//return str;
 			Fiber.current.run();
 	  });
