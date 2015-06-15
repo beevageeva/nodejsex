@@ -38,14 +38,12 @@ function verifyCaptcha(response){
 	
 	  response.on('end', function () {
 	    console.log("END RESPONSE CALLBACK" + responseCaptcha);
-			//return str;
 			fiber.run();
 	  });
 	}
 
 	var fiber = Fiber.current;
 	var req = http.request(options, callback);
-	//var req = wait.for(http.request,options);
 
 	req.on('error', function(e) {
   	console.log('VCPACHA FUNC ERR problem with request: ' + e);
@@ -81,32 +79,35 @@ exports.create = function(req, res) {
 
   console.log("POST: ");
   console.log(req.body);
-	cResp = "";
 	Fiber(function() {
 		cResp = verifyCaptcha(req.body.captchaResp);
 		console.log("IN USERCREATE " +  cResp);	
+		//put this in the fiber!!!
+		if(cResp.success){
+		  var obj = new User({
+		    username: req.body.username,
+		    password: req.body.password,
+		    name: req.body.name,
+				active: true,
+				admin: false
+		  });
+		  obj.save(function (err) {
+		    if (!err) {
+		      console.log("created");
+		    } else {
+		      console.log(err);
+		    }
+		  });
+		}
+
+
+
 	}).run();
-	//cResp = wait.launchFiber(verifyCaptcha,req.body.captchaResp);
-
-	console.log("CAPTCHA RESP " + cResp);
 
 
 
 
-  var obj = new User({
-    username: req.body.username,
-    password: req.body.password,
-    name: req.body.name,
-		active: true,
-		admin: false
-  });
-  obj.save(function (err) {
-    if (!err) {
-      console.log("created");
-    } else {
-      console.log(err);
-    }
-  });
+
 	 res.redirect('/api/todos');
 
 
