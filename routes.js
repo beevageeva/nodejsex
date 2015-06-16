@@ -35,6 +35,7 @@ app.get('/todos', function(req, res){
 //BOARD
 });
 app.get('/board', function(req, res){
+	console.log("----------------get /board");	
 	res.sendfile('./public/board.html');	
 });
 //REGISTER
