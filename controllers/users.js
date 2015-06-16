@@ -83,7 +83,8 @@ exports.create = function(req, res) {
 		cResp = verifyCaptcha(req.body.captchaResp);
 		console.log("**************IN USERCREATE " +  cResp);	
 		//put this in the fiber!!!
-		if(JSON.parse(cResp)[0].success){
+		console.log("JSON PARSED " + JSON.parse(cResp));
+		if(JSON.parse(cResp).success){
 			console.log("captcha correct, user create ");
 		  var obj = new User({
 		    username: req.body.username,
