@@ -38,9 +38,11 @@ userModel = mongoose.model('user', userSchema);
 
 //validate unique username 
 userSchema.path('username').validate(function (value, respond) {
+		console.log("In validation mongoose_models . User");
     userModel.findOne({ username: value }, function (err, user) {
         if(user) respond(false);                                                                                
-    });                                                                                                                         
+    });
+		respond(true);
 }, 'This username is already registered');
 
 

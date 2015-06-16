@@ -93,6 +93,7 @@ exports.create = function(req, res) {
 				admin: false
 		  });
 		  obj.setPasswordHash(req.body.password);
+			console.log("BEFORE SAVE");
 		  obj.save(function (err) {
 		    if (!err) {
 		      console.log("User created");
@@ -103,6 +104,7 @@ exports.create = function(req, res) {
 	 				res.sendfile('/login');
 		    }
 		  });
+			console.log("AFTER SAVE");
 		}
 		else{
 			console.log("captcha incorrect, user not created ");
