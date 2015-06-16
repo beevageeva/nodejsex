@@ -1,5 +1,6 @@
 
-module.exports = function(app, passport) {
+//module.exports = function(app, passport) {
+module.exports = function(app) {
 
 
 //AJAX
@@ -13,6 +14,8 @@ app.delete('/api/todos/:todo_id', todos.delete);
 //USERS
 var users = require('./controllers/users.js');
 app.post('/api/users', users.create); 
+app.post('/api/login', users.login); 
+app.post('/api/logout', users.logout); 
 
 
 
@@ -39,6 +42,10 @@ app.get('/register', function(req, res){
 	res.sendfile('./public/register.html');	
 });
 
+//REGISTER
+app.get('/login', function(req, res){
+	res.sendfile('./public/login.html');	
+});
 
 
 //CHAT

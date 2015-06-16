@@ -28,6 +28,25 @@ function mainController($scope, $http) {
 
     };
 
+    $scope.login = function() {
+				console.log("ANGULAR CONTROLLER FORM DATA LOGIN");
+				console.log($scope.formData);
+				console.log("ANGULAR CONTROLLER FORM DATA LOGIN END");
+			
+        $http.post('/api/login', $scope.formData)
+            .success(function(data) {
+                $scope.formData = {}; // clear the form so our user is ready to enter another
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+							
+
+
+
+
+    };
 
 }
 

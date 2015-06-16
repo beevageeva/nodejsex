@@ -23,13 +23,13 @@ var userSchema = mongoose.Schema({
 })
 
 // generating a hash
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+userSchema.methods.setPasswordHash = function(password) {
+    this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
 // checking if password is valid
 userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
+    return bcrypt.compareSync(password, this.password);
 };
 
 // on every save, add the date
@@ -78,4 +78,12 @@ todoSchema.pre('save', function(next) {
 });
 
 exports.Todo = mongoose.model('todo', todoSchema);
+
+
+
+
+//SESSION STORE
+exports.SessionStore = require('mongoose-session')(mongoose)
+
+
 

@@ -5,7 +5,7 @@ var Fiber = require('fibers');
 
 
 function verifyCaptcha(response){
-	console.log("VERIFYCAPTCHA FUNCTION " + response);	
+	//console.log("VERIFYCAPTCHA FUNCTION " + response);	
 	var responseCaptcha = "";
 
 
@@ -53,8 +53,8 @@ function verifyCaptcha(response){
  	req.write(postData);
 	req.end();
 	Fiber.yield();
-	return responseCaptcha;	
 	console.log("*****************VERIFYCAPTCHA FUNCTION END " + responseCaptcha );	
+	return responseCaptcha;	
 
 }
 
@@ -81,27 +81,30 @@ exports.create = function(req, res) {
   console.log(req.body);
 	Fiber(function() {
 		cResp = verifyCaptcha(req.body.captchaResp);
-		console.log("IN USERCREATE " +  cResp);	
+		console.log("**************IN USERCREATE " +  cResp);	
 		//put this in the fiber!!!
-		if(cResp.success){
+		if(JSON.parse(cResp)[0].success){
+			console.log("captcha correct, user create ");
 		  var obj = new User({
 		    username: req.body.username,
-		    password: req.body.password,
 		    name: req.body.name,
 				active: true,
 				admin: false
 		  });
+		  obj.setPasswordHash(req.body.password);
 		  obj.save(function (err) {
 		    if (!err) {
 		      console.log("created");
+					req.session.username = username;
+	 				res.redirect('/board');
 		    } else {
-		      console.log(err);
+		      console.log("user save failed: " + err);
 		    }
 		  });
 		}
-
-
-
+		else{
+			console.log("captcha incorrect, user not created ");
+		}
 	}).run();
 
 
@@ -112,6 +115,31 @@ exports.create = function(req, res) {
 
 
 };
+
+exports.login = function(req, res){
+
+  User.find({username: req.body.username}, function (err, user) {
+    if (!err) {
+			if user.validPassword(req.body.password){
+				req.session.username = user.username;	
+      	res.redirect("/board");
+			}
+			else{
+				console.log("user/pass inv");
+			}	
+    } else {
+       console.log("No user or " + err);
+    }
+  });
+
+};
+
+exports.logout = function(req, res){
+	req.session.username = null;
+	res.redirect("/login");
+
+};
+
 
 
 exports.show = function(req, res){

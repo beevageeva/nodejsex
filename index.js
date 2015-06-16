@@ -4,8 +4,8 @@ var bodyParser = require("body-parser");
 
 var session      = require('express-session');
 var flash    = require('connect-flash');
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
+//var passport = require('passport')
+//  , LocalStrategy = require('passport-local').Strategy;
 
 var cookieParser = require('cookie-parser');
 
@@ -22,35 +22,37 @@ app.use(bodyParser.json());
 
 
 
-// required for passport
+// the session is required for passport ?? init before the passport
 //app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
 app.use(session({
-  secret: 'appsecret',
+  secret: 'skhsaufyewn$%g67hg65fFHHG/676hggj',
   resave: false,
   saveUninitialized: true,
   cookie: {
     secure: true,
     maxAge: new Date(Date.now() + 3600000)
-  }
+  },
+	store: require('./mongoose_models.js').SessionStore
 }));
 
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
+//passport.use(new LocalStrategy(
+//  function(username, password, done) {
+//
+//		//return done(null, {username: username});
+//		return done(null, false, {message: 'Incorrect'});
+//
+//
+//  }
+//));
+//
+//
+//app.use(passport.initialize());
+//app.use(passport.session()); // persistent login sessions
 
-		//return done(null, {username: username});
-		return done(null, false, {message: 'Incorrect'});
 
-
-  }
-));
-
-
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-
-
-require('./routes.js')(app, passport); 
+//require('./routes.js')(app, passport); 
+require('./routes.js')(app); 
 
 
 
