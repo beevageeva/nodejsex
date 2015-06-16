@@ -42,6 +42,7 @@ userSchema.path('username').validate(function (value, respond) {
     userModel.findOne({ username: value }, function (err, user) {
         if(user) respond(false);                                                                                
     });
+		console.log("In validation mongoose_models . User validation endss???");
 		respond(true);
 }, 'This username is already registered');
 
