@@ -120,7 +120,7 @@ exports.login = function(req, res){
 
   User.find({username: req.body.username}, function (err, user) {
     if (!err) {
-			if user.validPassword(req.body.password){
+			if(user.validPassword(req.body.password)){
 				req.session.username = user.username;	
       	res.redirect("/board");
 			}
