@@ -1,3 +1,5 @@
+var bcrypt = require("bcrypt-nodejs");
+
 var mongoose = require('mongoose');
 var databaseConfig = require('./config/databaseMongo.js')
 mongoose.connect(databaseConfig.url);
