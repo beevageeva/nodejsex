@@ -81,11 +81,11 @@ exports.create = function(req, res) {
   console.log(req.body);
 	Fiber(function() {
 		cResp = verifyCaptcha(req.body.captchaResp);
-		console.log("**************IN USERCREATE " +  cResp);	
+		console.log("**************IN USERCREATE CAPTCHA RESPONSE " +  cResp);	
 		//put this in the fiber!!!
-		console.log("JSON PARSED " + JSON.parse(cResp));
+		//console.log("JSON PARSED " + JSON.parse(cResp));
 		if(JSON.parse(cResp).success){
-			console.log("captcha correct, user create ");
+			console.log("captcha correct, try to create user:");
 		  var obj = new User({
 		    username: req.body.username,
 		    name: req.body.name,
@@ -95,24 +95,20 @@ exports.create = function(req, res) {
 		  obj.setPasswordHash(req.body.password);
 		  obj.save(function (err) {
 		    if (!err) {
-		      console.log("created");
+		      console.log("User created");
 					req.session.username = username;
 	 				res.redirect('/board');
 		    } else {
 		      console.log("user save failed: " + err);
+	 				res.sendfile('/login');
 		    }
 		  });
 		}
 		else{
 			console.log("captcha incorrect, user not created ");
+	 		res.sendfile('/login');
 		}
 	}).run();
-
-
-
-
-
-
 
 };
 
