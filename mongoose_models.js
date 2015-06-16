@@ -33,10 +33,11 @@ userSchema.methods.setPasswordHash = function(password) {
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
+//create a model user in collection 'user' which will be exported
+userModel = mongoose.model('user', userSchema)
 //validate unique username 
-User.schema.path('username').validate(function (value, respond) {                                                                                           
-    User.findOne({ username: value }, function (err, user) {                                                                                                
-        if(user) respond(false);                                                                                                                         
+userSchema.path('username').validate(function (value, respond) {                                                                            
+        if(user) respond(false);                                                                                                            
     });                                                                                                                                                  
 }, 'This username is already registered');
 
@@ -61,7 +62,7 @@ userSchema.pre('save', function(next) {
   next();
 });
 
-exports.User = mongoose.model('user', userSchema);
+exports.User = userModel;
 
 
 
