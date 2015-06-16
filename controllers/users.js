@@ -98,9 +98,10 @@ exports.create = function(req, res) {
 		    if (!err) {
 		      console.log("User created");
 					req.session.username = obj.username;
-	 				res.redirect('/board');
+					return true;	
 		    } else {
 		      console.log("user save failed: " + err);
+					return false;	
 	 				res.sendfile('/login');
 		    }
 		  });
@@ -108,7 +109,7 @@ exports.create = function(req, res) {
 		}
 		else{
 			console.log("captcha incorrect, user not created ");
-	 		res.sendfile('/login');
+			return false;	
 		}
 	}).run();
 

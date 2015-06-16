@@ -1,5 +1,5 @@
 var userApp = angular.module('userApp', []);
-function mainController($scope, $http) {
+function mainController($scope, $http, $window) {
     $scope.formData = {};
 	
 		$scope.verifyResponse = function(response){
@@ -17,6 +17,9 @@ function mainController($scope, $http) {
             .success(function(data) {
                 $scope.formData = {}; // clear the form so our user is ready to enter another
                 console.log(data);
+								if(data){
+									$window.location.replace("/board");
+								}
             })
             .error(function(data) {
                 console.log('Error: ' + data);
