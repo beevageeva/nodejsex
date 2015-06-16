@@ -14,9 +14,9 @@ db.once('open', function (callback) {
 
 //USERS
 var userSchema = mongoose.Schema({
-    name: String,
-    username: String,
-    password: String,
+    name: {type: String, required},
+    username: {type: String, minlength: 3 },
+    password: {type: String, minlength: 6 },
 		active: Boolean,
 		admin: Boolean,
 		created_at: Date,
@@ -33,6 +33,17 @@ userSchema.methods.setPasswordHash = function(password) {
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
+//validate unique username 
+User.schema.path('username').validate(function (value, respond) {                                                                                           
+    User.findOne({ username: value }, function (err, user) {                                                                                                
+        if(user) respond(false);                                                                                                                         
+    });                                                                                                                                                  
+}, 'This username is already registered');
+
+
+
+
+
 
 // on every save, add the date
 userSchema.pre('save', function(next) {
