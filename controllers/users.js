@@ -114,7 +114,7 @@ exports.create = function(req, res) {
 			console.log("captcha incorrect, user not created ");
 			//result = false;	
 		}
-	}).call();
+	}).run();
 
 	console.log(" before return user.create result " + result);
 	return result;
