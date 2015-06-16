@@ -97,7 +97,7 @@ exports.create = function(req, res) {
 		  obj.save(function (err) {
 		    if (!err) {
 		      console.log("User created");
-					req.session.username = username;
+					req.session.username = obj.username;
 	 				res.redirect('/board');
 		    } else {
 		      console.log("user save failed: " + err);
