@@ -14,7 +14,7 @@ db.once('open', function (callback) {
 
 //USERS
 var userSchema = mongoose.Schema({
-    name: {type: String, required},
+    name: {type: String, required: true},
     username: {type: String, minlength: 3 },
     password: {type: String, minlength: 6 },
 		active: Boolean,
