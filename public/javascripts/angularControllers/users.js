@@ -1,5 +1,7 @@
 var userApp = angular.module('userApp', []);
-function mainController($scope, $http, $window) {
+function mainController($scope, $http, $window, $compileProvider) {
+		//angular 1.3
+		$compileProvider.debugInfoEnabled(true);
     $scope.formData = {};
 	
 		$scope.verifyResponse = function(response){
