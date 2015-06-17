@@ -27,34 +27,35 @@ function verifyCaptcha(response){
 	  }
 	};
 
+	var responseCaptcha = "";
 
 	var promise = require('fibers-promise');
 	promise.start(function() {
 
-  var p = promise();
-
-  var req = http.request(options, p);
-	var response = p.get();
+	  var p = promise();
 	
-	console.log('STATUS: ' + response.statusCode);
-  console.log('HEADERS: ' + JSON.stringify(response.headers));
-  response.setEncoding('utf8');
-  response.on('data', p); 
-  response.on('end', p)
-	var responseCaptcha = "";
-	var chunk;
-	while (chunk = p.get()) {
-    	responseCaptcha += chunk;
-  }
-
-	req.on('error', function(e) {
-  	console.log('VCPACHA FUNC ERR problem with request: ' + e);
-	});
-
-
- 	req.write(postData);
-	req.end();
-	console.log("*****************VERIFYCAPTCHA FUNCTION END " + responseCaptcha );	
+	  var req = http.request(options, p);
+		var response = p.get();
+		
+		console.log('STATUS: ' + response.statusCode);
+	  console.log('HEADERS: ' + JSON.stringify(response.headers));
+	  response.setEncoding('utf8');
+	  response.on('data', p); 
+	  response.on('end', p)
+		var chunk;
+		while (chunk = p.get()) {
+	    	responseCaptcha += chunk;
+	  }
+	
+		req.on('error', function(e) {
+	  	console.log('VCPACHA FUNC ERR problem with request: ' + e);
+		});
+	
+	 	req.write(postData);
+		req.end();
+		console.log("*****************VERIFYCAPTCHA FUNCTION END " + responseCaptcha );
+	}	
+	console.log("*****************VERIFYCAPTCHA FUNCTION END OUTSIDE PROMISE " + responseCaptcha );
 	return responseCaptcha;	
 
 }
