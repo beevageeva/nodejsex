@@ -102,7 +102,7 @@ exports.Todo = mongoose.model('todo', todoSchema);
 
 
 //SESSION STORE
-exports.SessionStore = require('mongoose-session')(mongoose)
+//exports.SessionStore = require('mongoose-session')(mongoose)
 
 
 
