@@ -6,6 +6,7 @@ var Fiber = require('fibers');
 
 function verifyCaptcha(response){
 	//console.log("VERIFYCAPTCHA FUNCTION " + response);	
+	var responseCaptcha = "";
 
 
 	var querystring = require('querystring');
@@ -26,26 +27,23 @@ function verifyCaptcha(response){
 	    'Content-Length': postData.length
 	  }
 	};
-
-
-	var promise = require('fibers-promise');
-	promise.start(function() {
-
-  var p = promise();
-
-  var req = http.request(options, p);
-	var response = p.get();
 	
-	console.log('STATUS: ' + response.statusCode);
-  console.log('HEADERS: ' + JSON.stringify(response.headers));
-  response.setEncoding('utf8');
-  response.on('data', p); 
-  response.on('end', p)
-	var responseCaptcha = "";
-	var chunk;
-	while (chunk = p.get()) {
-    	responseCaptcha += chunk;
-  }
+	callback = function(response) {
+		console.log('STATUS: ' + response.statusCode);
+	  console.log('HEADERS: ' + JSON.stringify(response.headers));
+	  response.setEncoding('utf8');
+	  response.on('data', function (chunk) {
+	    responseCaptcha += chunk;
+	  });
+	
+	  response.on('end', function () {
+	    console.log("END RESPONSE CALLBACK" + responseCaptcha);
+			fiber.run();
+	  });
+	}
+
+	var fiber = Fiber.current;
+	var req = http.request(options, callback);
 
 	req.on('error', function(e) {
   	console.log('VCPACHA FUNC ERR problem with request: ' + e);
@@ -54,6 +52,7 @@ function verifyCaptcha(response){
 
  	req.write(postData);
 	req.end();
+	Fiber.yield();
 	console.log("*****************VERIFYCAPTCHA FUNCTION END " + responseCaptcha );	
 	return responseCaptcha;	
 
@@ -82,38 +81,40 @@ exports.create = function(req, res) {
   console.log(req.body);
 	result = false;
 
-	cResp = verifyCaptcha(req.body.captchaResp);
-	console.log("**************IN USERCREATE CAPTCHA RESPONSE " +  cResp);	
-	//put this in the fiber!!!
-	//console.log("JSON PARSED " + JSON.parse(cResp));
+	Fiber(function() {
+		cResp = verifyCaptcha(req.body.captchaResp);
+		console.log("**************IN USERCREATE CAPTCHA RESPONSE " +  cResp);	
+		//put this in the fiber!!!
+		//console.log("JSON PARSED " + JSON.parse(cResp));
 
-	if(JSON.parse(cResp).success){
-		console.log("captcha correct, try to create user:");
-	  var obj = new User({
-	    username: req.body.username,
-	    name: req.body.name,
-			active: true,
-			admin: false
-	  });
-	  obj.setPasswordHash(req.body.password);
-		console.log("BEFORE SAVE");
-	  obj.save(function (err) {
-	    if (!err) {
-	      console.log("User created");
-				req.session.username = obj.username;
-				result = true;	
-	    } else {
-	      console.log("user save failed: " + err);
-				//by default false
-				//result =  false;	
-	    }
-	  });
-		console.log("AFTER SAVE");
-	}
-	else{
-		console.log("captcha incorrect, user not created ");
-		//result = false;	
-	}
+		if(JSON.parse(cResp).success){
+			console.log("captcha correct, try to create user:");
+		  var obj = new User({
+		    username: req.body.username,
+		    name: req.body.name,
+				active: true,
+				admin: false
+		  });
+		  obj.setPasswordHash(req.body.password);
+			console.log("BEFORE SAVE");
+		  obj.save(function (err) {
+		    if (!err) {
+		      console.log("User created");
+					req.session.username = obj.username;
+					result = true;	
+		    } else {
+		      console.log("user save failed: " + err);
+					//by default false
+					//result =  false;	
+		    }
+		  });
+			console.log("AFTER SAVE");
+		}
+		else{
+			console.log("captcha incorrect, user not created ");
+			//result = false;	
+		}
+	}).run();
 
 	console.log(" before return user.create result " + result);
 	return result;
