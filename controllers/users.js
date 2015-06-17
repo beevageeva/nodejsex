@@ -1,7 +1,5 @@
 
 var User = require('../mongoose_models').User;
-var Fiber = require('fibers');
-
 
 
 function verifyCaptcha(response){
