@@ -41,7 +41,7 @@ var sessionMiddleware = session({
   saveUninitialized: true,
   cookie: {
     secure: true,
-    maxAge: 24 * 60 * 60 * 1000 )
+    maxAge: ( 24 * 60 * 60 * 1000 )
   },
 	store: require('./mongoose_models.js').SessionStore(session)
 });
