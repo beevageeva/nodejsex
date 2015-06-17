@@ -20,6 +20,7 @@
     "express-session": "~1.0.0",
     "fibers": "latest",
     "fibers-promise": "latest",
+    "common-node": "latest",
     "mongoose-session": "latest"
   },
 
