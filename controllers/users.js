@@ -77,17 +77,17 @@ exports.create = function(req, res) {
 			    if (!err) {
 			      console.log("User created");
 						req.session.username = obj.username;
-						return true;	
+						res.send(true);	
 			    } else {
 			      console.log("user save failed: " + err);
-						return false;
+						res.send(false);
 			    }
 			  });
 				console.log("AFTER SAVE");
 			}
 			else{
 				console.log("captcha incorrect, user not created ");
-				return false;	
+				res.send(false);	
 			}
 		
 			console.log(" before return user.create result THIS PRINTED BEFORE User created?" );

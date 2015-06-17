@@ -16,7 +16,7 @@ function mainController($scope, $http, $window) {
         $http.post('/api/users', $scope.formData)
             .success(function(data) {
                 $scope.formData = {}; // clear the form so our user is ready to enter another
-                console.log(data);
+                console.log("AFTER AJAX POST TO API, Response " + data);
 								if(data){
 									$window.location.replace("/board");
 								}
