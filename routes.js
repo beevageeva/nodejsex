@@ -1,5 +1,8 @@
 
 //module.exports = function(app, passport) {
+
+var auth = require('./controllers/auth.js');
+
 module.exports = function(app) {
 
 
@@ -32,18 +35,20 @@ app.get('/api/board', board.load);
 //TODOS
 app.get('/todos', function(req, res){
 	res.sendfile('./public/todos.html');	
-//BOARD
 });
-app.get('/board', function(req, res){
+
+//BOARD
+app.get('/board', auth.isLoggedIn, function(req, res){
 	console.log("----------------get /board");	
 	res.sendfile('./public/board.html');	
 });
+
 //REGISTER
 app.get('/register', function(req, res){
 	res.sendfile('./public/register.html');	
 });
 
-//REGISTER
+//LOGIN
 app.get('/login', function(req, res){
 	res.sendfile('./public/login.html');	
 });
