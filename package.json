@@ -10,7 +10,7 @@
     "express" : "~4.0.0",           
     "ejs" : "~0.8.5",               
     "cookie-parser" : "latest",               
-    "pg" : "latest",          
+    "socket.io" : "latest",          
     "mongoose" : "latest",          
     "connect-flash" : "~0.1.1",     
     "bcrypt-nodejs" : "latest",

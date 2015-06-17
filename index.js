@@ -21,10 +21,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());  
 
 
+//chat with jade listening same port
 
-// the session is required for passport ?? init before the passport
-//app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
-app.use(session({
+//app.set('views', __dirname + '/tpl');
+//app.set('view engine', "jade");
+//app.engine('jade', require('jade').__express);
+//app.get("/", function(req, res){
+//    res.render("page");
+//});
+//
+//
+
+
+//create session object
+var sessionMiddleware = session({
   secret: 'skhsaufyewn$%g67hg65fFHHG/676hggj',
   resave: false,
   saveUninitialized: true,
@@ -33,7 +43,32 @@ app.use(session({
     maxAge: new Date(Date.now() + 3600000)
   },
 	store: require('./mongoose_models.js').SessionStore
-}));
+});
+
+//socket io chat
+var io = require('socket.io').listen(app.listen(app.get('port')));
+
+//share session between express and socket io
+app.use(sessionMiddleware);
+io.use(function(socket, next) {
+    sessionMiddleware(socket.request, socket.request.res, next);
+});
+
+io.sockets.on('connection', function (socket) {
+		console.log("ON SOCKET CONNECTION  " + socket.request.session.username);	
+    socket.emit('message', { message: 'welcome to the chat' });
+		//receive send messages from client and broadcast to all
+    //socket.on('send', function (data) {
+    //    io.sockets.emit('message', data);
+    //});
+});
+//socket io chat end
+
+//chat with jade end
+
+//else no socket io listening
+//app.listen(app.get('port'));
+//no socket listening end
 
 
 //passport.use(new LocalStrategy(
@@ -46,7 +81,7 @@ app.use(session({
 //  }
 //));
 //
-//
+//!!!Init app session before passport
 //app.use(passport.initialize());
 //app.use(passport.session()); // persistent login sessions
 
@@ -63,31 +98,6 @@ require('./routes.js')(app);
 
 
 
-//chat with jade listening same port
-
-//app.set('views', __dirname + '/tpl');
-//app.set('view engine', "jade");
-//app.engine('jade', require('jade').__express);
-//app.get("/", function(req, res){
-//    res.render("page");
-//});
-//
-//
-////socket io chat
-//var io = require('socket.io').listen(app.listen(app.get('port')));
-//io.sockets.on('connection', function (socket) {
-//    socket.emit('message', { message: 'welcome to the chat' });
-//    socket.on('send', function (data) {
-//        io.sockets.emit('message', data);
-//    });
-//});
-////socket io chat end
-
-//chat with jade end
-
-//else no socket io listening
-app.listen(app.get('port'));
-//no socket listening end
 
 
 

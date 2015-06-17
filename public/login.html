@@ -11,8 +11,8 @@
 
 
   </head>
-  <body ng-controller="mainController" id="mainController">
-    <form>
+  <body>
+    <form ng-controller="mainController" id="mainController" >
       <input type="text" class="form-control input-lg text-center" placeholder="Username" ng-model="formData.username" ng-minlength=5 ng-maxlength=30 required>
       <input type="password" class="form-control input-lg text-center" placeholder="Password" ng-model="formData.password" ng-minlength=6  ng-maxlength=30>
 
@@ -20,5 +20,9 @@
       <br/>
       <button type="submit" class="btn btn-primary btn-lg" ng-click="login()">Add</button>
     </form>
+		<div>
+			<a href="/register">register</a>
+		</div>
+		
   </body>
 </html>

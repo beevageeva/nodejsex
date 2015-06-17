@@ -113,13 +113,15 @@ exports.login = function(req, res){
     if (!err) {
 			if(user.validPassword(req.body.password)){
 				req.session.username = user.username;	
-      	res.redirect("/board");
+      	res.send(true);
 			}
 			else{
+      	res.send(false);
 				console.log("user/pass inv");
 			}	
     } else {
-       console.log("No user or " + err);
+      	res.send(false);
+       	console.log("No user or " + err);
     }
   });
 
