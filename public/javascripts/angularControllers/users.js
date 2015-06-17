@@ -1,12 +1,16 @@
-var userApp = angular.module('userApp', []).config(['$controllerProvider',
+var userApp = angular.module('userApp', [])
+		.config(['$controllerProvider',
   		function($controllerProvider) {
     		$controllerProvider.allowGlobals();
-  		}
-		]);
+  		}])
+		.config(['$compileProvider',
+		 function($compileProvider) {
+				$compileProvider.debugInfoEnabled(true);
+      }
+    ]);
 
-function mainController($scope, $http, $window, $compileProvider) {
+function mainController($scope, $http, $window) {
 		//angular 1.3
-		$compileProvider.debugInfoEnabled(true);
     $scope.formData = {};
 	
 		$scope.verifyResponse = function(response){
