@@ -54,7 +54,7 @@ function verifyCaptcha(response){
 	 	req.write(postData);
 		req.end();
 		console.log("*****************VERIFYCAPTCHA FUNCTION END " + responseCaptcha );
-	}	
+	});	
 	console.log("*****************VERIFYCAPTCHA FUNCTION END OUTSIDE PROMISE " + responseCaptcha );
 	return responseCaptcha;	
 
