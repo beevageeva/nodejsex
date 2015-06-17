@@ -1,5 +1,5 @@
 // route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
+exports.isLoggedIn = function(req, res, next) {
 
     // if user is authenticated in the session, carry on 
     if (req.session.username!=null)
