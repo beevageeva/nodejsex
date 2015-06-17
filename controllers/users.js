@@ -94,15 +94,15 @@ exports.create = function(req, res) {
 	  });
 	}
 
-	var req = http.request(options, callback);
+	var reqGoogle = http.request(options, callback);
 
-	req.on('error', function(e) {
+	reqGoogle.on('error', function(e) {
   	console.log('VCPACHA FUNC ERR problem with request: ' + e);
 	});
 
 
- 	req.write(postData);
-	req.end();
+ 	reqGoogle.write(postData);
+	reqGoogle.end();
 
 
 
