@@ -90,7 +90,7 @@ exports.create = function(req, res) {
 				return false;	
 			}
 		
-			console.log(" before return user.create result THIS NEVER PRINT" + result);
+			console.log(" before return user.create result THIS PRINTED BEFORE User created?" );
 	  });
 	}
 
