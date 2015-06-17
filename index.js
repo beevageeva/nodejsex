@@ -3,8 +3,6 @@ var app = express();
 var bodyParser = require("body-parser");
 
 var session      = require('express-session');
-var MongoStore = require('connect-mongo')(session);
-
 
 var flash    = require('connect-flash');
 //var passport = require('passport')
@@ -43,10 +41,9 @@ var sessionMiddleware = session({
   saveUninitialized: true,
   cookie: {
     secure: true,
-    maxAge: new Date(Date.now() + 3600000)
+    maxAge: 24 * 60 * 60 * 1000 )
   },
-	//store: require('./mongoose_models.js').SessionStore
-	store: new MongoStore({ url: require('./config/databaseMongo.js').url })
+	store: require('./mongoose_models.js').SessionStore(session)
 });
 
 //socket io chat
