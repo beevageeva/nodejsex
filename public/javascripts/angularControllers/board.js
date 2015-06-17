@@ -1,4 +1,3 @@
-//other javascript functions
 
 //controller functions
 var boardApp = angular.module('boardApp', [])
@@ -36,13 +35,8 @@ $scope.createGrid = function(m,n) {
     						//'ng-click': clickCell($(this).attr('coord-row'), $(this).attr('coord-col'))
 							})
 							.click(function(){
-								console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
-
-							//	scope = angular.element("#mainController").scope();
-			        // update the model with a wrap in $apply(fn) which will refresh the view for us
-      			  //  scope.$apply(function() {
-            			$scope.clickCell($(this).attr('coord-row'), $(this).attr('coord-col'));
-          		//	}); 
+								//console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
+            		$scope.clickCell($(this).attr('coord-row'), $(this).attr('coord-col'));
 
 
         	  	})
@@ -69,13 +63,14 @@ $scope.createGrid = function(m,n) {
         });
 
     $scope.createGrid(30,20);
+		$scope.moved = "NONE";
 
     // when submitting the add form, send the text to the node API
 
 
 		$scope.clickCell = function(i,j){
 			console.log("SCOPE FUNCION Row = " + i + "  COL = " + j);
-
+			$scope.moved = "i=" + i + ",j=" + j;
 		}
 
 
