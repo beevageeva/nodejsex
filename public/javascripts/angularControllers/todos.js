@@ -1,4 +1,8 @@
-var scotchTodo = angular.module('scotchTodo', []);
+var scotchTodo = angular.module('scotchTodo', [])
+    .config(['$controllerProvider',
+      function($controllerProvider) {
+        $controllerProvider.allowGlobals();
+      }]);
 
 function mainController($scope, $http) {
     $scope.formData = {};

@@ -24,7 +24,11 @@ function createGrid(m,n) {
 }
 
 //controller functions
-var boardApp = angular.module('boardApp', []);
+var boardApp = angular.module('boardApp', [])
+    .config(['$controllerProvider',
+      function($controllerProvider) {
+        $controllerProvider.allowGlobals();
+      }]);
 
 function mainController($scope, $http) {
     $scope.formData = {};
