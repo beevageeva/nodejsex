@@ -71,6 +71,8 @@ $scope.createGrid = function(m,n) {
 		$scope.clickCell = function(i,j){
 			console.log("SCOPE FUNCION Row = " + i + "  COL = " + j);
 			$scope.moved = "i=" + i + ",j=" + j;
+			//TODO why?
+			$scope.$apply();
 		}
 
 
