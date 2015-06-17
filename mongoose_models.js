@@ -103,7 +103,8 @@ exports.Todo = mongoose.model('todo', todoSchema);
 
 //SESSION STORE
 exports.SessionStore = function (expressSession){
-	return new require('connect-mongo')(expressSession)(db);
+	var MongoStore = require('connect-mongo')(expressSession);
+	return new MongoStore(db);
 }
 
 
