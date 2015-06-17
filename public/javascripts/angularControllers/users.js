@@ -1,4 +1,9 @@
-var userApp = angular.module('userApp', []);
+var userApp = angular.module('userApp', []).config(['$controllerProvider',
+  		function($controllerProvider) {
+    		$controllerProvider.allowGlobals();
+  		}
+		]);
+
 function mainController($scope, $http, $window, $compileProvider) {
 		//angular 1.3
 		$compileProvider.debugInfoEnabled(true);
