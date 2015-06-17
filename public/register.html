@@ -11,8 +11,16 @@
 		<script>
 				function verifyResponse(response){
 					console.log("JS RECAPTCHA HTML");
-					angular.element('#mainController').scope().verifyResponse(response);	
-					angular.element('#mainController').scope().$apply() 
+
+				 scope = angular.element("#mainController").scope();
+		    // update the model with a wrap in $apply(fn) which will refresh the view for us
+    			scope.$apply(function() {
+        		scope.verifyResponse(response);
+    			}); 
+
+
+					//angular.element('#mainController').scope().verifyResponse(response);	
+					//angular.element('#mainController').scope().$apply() 
 				}
 
 		</script>
