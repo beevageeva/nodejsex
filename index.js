@@ -46,7 +46,7 @@ var sessionMiddleware = session({
     maxAge: new Date(Date.now() + 3600000)
   },
 	//store: require('./mongoose_models.js').SessionStore
-	store: new MongoStore(require('./config/databaseMongo.js').url)
+	store: new MongoStore({ url: require('./config/databaseMongo.js').url })
 });
 
 //socket io chat
