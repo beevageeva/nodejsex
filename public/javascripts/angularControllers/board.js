@@ -15,10 +15,13 @@ function createGrid(m,n) {
                 height: size - 1
             	}).attr({
     						'coord-row': i,
-    						'coord-col': j
-							}).click(function(){
-							console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
-        	  }).appendTo(parent);
+    						'coord-col': j,
+    						'ng-click': clickCell($(this).attr('coord-row'), $(this).attr('coord-col'))
+							})
+							//.click(function(){
+							//	console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
+        	  	//})
+						.appendTo(parent);
         }
     }
 }
@@ -43,32 +46,16 @@ function mainController($scope, $http) {
             console.log('Error: ' + data);
         });
 
-    createGrid(2,3);
+    createGrid(30,20);
 
     // when submitting the add form, send the text to the node API
-    $scope.createTodo = function() {
-        $http.post('/api/todos', $scope.formData)
-            .success(function(data) {
-                $scope.formData = {}; // clear the form so our user is ready to enter another
-                $scope.todos = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
-    };
 
-    // delete a todo after checking it
-    $scope.deleteTodo = function(id) {
-        $http.delete('/api/todos/' + id)
-            .success(function(data) {
-                $scope.todos = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
-    };
+
+		$scope.clickCell = function(i,j){
+			console.log("SCOPE FUNCION Row = " + i + "  COL = " + j);
+
+		}
+
 
 }
 
