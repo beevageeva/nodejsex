@@ -1,5 +1,22 @@
 //other javascript functions
-function createGrid(m,n) {
+
+//controller functions
+var boardApp = angular.module('boardApp', [])
+    .config(['$controllerProvider',
+      function($controllerProvider) {
+        $controllerProvider.allowGlobals();
+      }])
+		.config(['$compileProvider',
+     function($compileProvider) {
+        $compileProvider.debugInfoEnabled(true);
+      }
+    ]);
+
+function mainController($scope, $http) {
+
+
+//other js function moved here
+$scope.createGrid = function(m,n) {
     var size=50;
 
     var parent = $('<div />', {
@@ -21,11 +38,11 @@ function createGrid(m,n) {
 							.click(function(){
 								console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
 
-								scope = angular.element("#mainController").scope();
+							//	scope = angular.element("#mainController").scope();
 			        // update the model with a wrap in $apply(fn) which will refresh the view for us
-      			    scope.$apply(function() {
-            			scope.clickCell($(this).attr('coord-row'), $(this).attr('coord-col'));
-          			}); 
+      			  //  scope.$apply(function() {
+            			$scope.clickCell($(this).attr('coord-row'), $(this).attr('coord-col'));
+          		//	}); 
 
 
         	  	})
@@ -33,20 +50,12 @@ function createGrid(m,n) {
         }
     }
 }
+	
 
-//controller functions
-var boardApp = angular.module('boardApp', [])
-    .config(['$controllerProvider',
-      function($controllerProvider) {
-        $controllerProvider.allowGlobals();
-      }])
-		.config(['$compileProvider',
-     function($compileProvider) {
-        $compileProvider.debugInfoEnabled(true);
-      }
-    ]);
 
-function mainController($scope, $http) {
+
+
+
     $scope.formData = {};
 
     // when landing on the page, get all todos and show them
@@ -59,7 +68,7 @@ function mainController($scope, $http) {
             console.log('Error: ' + data);
         });
 
-    createGrid(30,20);
+    $scope.createGrid(30,20);
 
     // when submitting the add form, send the text to the node API
 
