@@ -1,6 +1,6 @@
 
 var User = require('../mongoose_models').User;
-var Fiber = require('fibers');
+global.Fiber = require('fibers');
 
 
 
