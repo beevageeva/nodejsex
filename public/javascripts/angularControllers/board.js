@@ -16,11 +16,19 @@ function createGrid(m,n) {
             	}).attr({
     						'coord-row': i,
     						'coord-col': j,
-    						'ng-click': clickCell($(this).attr('coord-row'), $(this).attr('coord-col'))
+    						//'ng-click': clickCell($(this).attr('coord-row'), $(this).attr('coord-col'))
 							})
-							//.click(function(){
-							//	console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
-        	  	//})
+							.click(function(){
+								console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
+
+								scope = angular.element("#mainController").scope();
+			        // update the model with a wrap in $apply(fn) which will refresh the view for us
+      			    scope.$apply(function() {
+            			scope.clickCell($(this).attr('coord-row'), $(this).attr('coord-col'));
+          			}); 
+
+
+        	  	})
 						.appendTo(parent);
         }
     }
@@ -31,7 +39,12 @@ var boardApp = angular.module('boardApp', [])
     .config(['$controllerProvider',
       function($controllerProvider) {
         $controllerProvider.allowGlobals();
-      }]);
+      }])
+		.config(['$compileProvider',
+     function($compileProvider) {
+        $compileProvider.debugInfoEnabled(true);
+      }
+    ]);
 
 function mainController($scope, $http) {
     $scope.formData = {};
