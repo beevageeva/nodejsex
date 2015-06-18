@@ -41,7 +41,9 @@ var sessionMiddleware = session({
   saveUninitialized: true,
   cookie: {
     secure: true,
+		domain: "secure-badlands-6804.herokuapp.com",
     maxAge: ( 24 * 60 * 60 * 1000 )
+		
   },
 	store: require('./mongoose_models.js').SessionStore(session)
 });
