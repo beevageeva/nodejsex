@@ -17,7 +17,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(flash()); // use connect-flash for flash messages stored in session
 //app.set('view engine', "ejs");
-app.use(cookieParser("secret77"));
+//app.use(cookieParser("secret77"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());  
@@ -37,11 +37,11 @@ app.use(bodyParser.json());
 
 //create session object
 var sessionMiddleware = session({
-  secret: 'secret77',
+  //secret: 'secret77',
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: true,
+    //secure: true,
 		domain: "secure-badlands-6804.herokuapp.com",
     maxAge: ( 24 * 60 * 60 * 1000 )
 		
