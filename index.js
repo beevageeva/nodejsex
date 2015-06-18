@@ -55,11 +55,13 @@ var io = require('socket.io').listen(app.listen(app.get('port')));
 
 //share session between express and socket io
 app.use(sessionMiddleware);
-io.use(require("express-socket.io-session")(sessionMiddleware));
+//TODO following not working
+//io.use(require("express-socket.io-session")(sessionMiddleware));
 //TODO uncomment to share session
-//io.use(function(socket, next) {
-//    sessionMiddleware(socket.request, socket.request.res, next);
-//});
+io.use(function(socket, next) {
+    //sessionMiddleware(socket.request, socket.request.res, next);
+    sessionMiddleware(socket.request, {}, next);
+});
 
 io.sockets.on('connection', function (socket) {
 		//console.log("ON SOCKET CONNECTION  " + socket.request.session.username);	
