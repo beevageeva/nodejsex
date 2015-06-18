@@ -57,6 +57,7 @@ $scope.createGrid = function(m,n) {
         .success(function(data) {
             $scope.players = data.users;
             $scope.clients = data.clients;
+            $scope.username = data.username;
 	
             console.log(data);
         })
@@ -73,6 +74,11 @@ $scope.createGrid = function(m,n) {
 			$scope.moved = data.message;
 			$scope.$apply();
 		});
+		socket.on('newRoom', function (data) {
+			console.log("new room " +  data.room + " from username " + data.username);
+			$scope.clients[data.username].push(data.room);
+			$scope.$apply();
+		});
 
     // when submitting the add form, send the text to the node API
 
@@ -82,6 +88,10 @@ $scope.createGrid = function(m,n) {
 			$scope.moved = "i=" + i + ",j=" + j;
 			//TODO why?
 			$scope.$apply();
+		}
+
+		$scope.createRoom = function(){
+			socket.emit('room', { message: $scope.formData.room });			
 		}
 
 

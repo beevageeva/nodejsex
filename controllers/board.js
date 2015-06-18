@@ -61,14 +61,14 @@ exports.load = function(req, res) {
 		//	console.log("Prop " + k);
 		//}
 		console.log("id = "+ id + ", value = " + io.sockets.connected[id].request.session.username);
-		clients.push(io.sockets.connected[id].request.session.username);
+		clients.push({io.sockets.connected[id].request.session.username: io.sockets.connected[id].rooms});
 		
 	}
 	console.log("*******************IO in controller board.js" + io);
 	User.find(function (err, objs) {
     if (!err) {
 			
-			return res.json({'users':objs, 'clients': clients});	
+			return res.json({'users':objs, 'clients': clients, 'username': req.session.username});	
 
     } else {
       console.log(err);

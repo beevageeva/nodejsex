@@ -82,9 +82,10 @@ io.sockets.on('connection', function (socket) {
 		}
     socket.emit('message', { message: 'welcome to the chat' });
 		//receive send messages from client and broadcast to all
-    //socket.on('send', function (data) {
-    //    io.sockets.emit('message', data);
-    //});
+    socket.on('room', function (data) {
+				socket.join(data.message);
+        io.sockets.emit('newRoom', {'room': data.message, 'username': socket.request.session.username});
+    });
 });
 //socket io chat end
 

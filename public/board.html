@@ -32,13 +32,12 @@
 	<div class="navbar navbar-inverse">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand">Example App</a>
+            <a class="brand">{{username}}</a>
 
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li class="active"><a href="home.html">Home</a></li>
-                    <li><a href="second.html">Second</a></li>
-                    <li><a href="third.html">Third</a></li>
+                    <li class="active"><a href="/todos">Todos</a></li>
+                    <li><a href="/logout">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -67,11 +66,25 @@
                         {{ p.name }}
                     </label>
                 </div>
-                <div class="checkbox" ng-repeat="c in clients">
+                <div class="checkbox" ng-repeat="(username, rooms) in clients">
                     <label>
-                        {{ c }}
+                        {{ username }} 
                     </label>
+                		<div  ng-repeat="r in rooms">
+											{{ r }}
+										</div>
                 </div>
+								<!-- join room form --> 
+                <form>
+                    <div class="form-group">
+
+                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                        <input type="text" class="form-control input-lg text-center" placeholder="New room" ng-model="formData.room">
+                    </div>
+
+                    <!-- createToDo() WILL CREATE NEW TODOS -->
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createRoom()">Join</button>
+                </form>
 
             </div>
         </div>
