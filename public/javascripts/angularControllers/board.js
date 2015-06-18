@@ -69,6 +69,7 @@ $scope.createGrid = function(m,n) {
 		socket.on('message', function (data) {
 			console.log("client message data " +  data);
 			$scope.moved = data.message;
+			$scope.$apply();
 		});
 
     // when submitting the add form, send the text to the node API
