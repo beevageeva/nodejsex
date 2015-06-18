@@ -1,21 +1,3 @@
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex ;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
 
 
 
@@ -84,12 +66,12 @@ $scope.createGrid = function(m,n) {
                 height: size - 1
             	}).attr({
     						'data-table-row': i,
-								'style': "background-image: url('/cards/1.png'); height: 200px; width: 400px; border: 1px solid black;"
+								'style': "background-image: url('/cards/1.png'); border: 1px solid black;"
     						//'ng-click': clickCell($(this).attr('coord-row'), $(this).attr('coord-col'))
 							})
 							.click(function(){
 								//console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
-            		$scope.clickTableCard($(this).attr('coord-row'), $(this).attr('coord-col'));
+            		$scope.clickTableCard($(this).attr('data-table-row'));
 
 
         	  	})
@@ -142,6 +124,10 @@ $scope.createGrid = function(m,n) {
 				$scope.createTableCards(data.nPlayers);
 				$scope.$apply();
 			}
+		});
+		socket.on('cards', function (data) {
+			console.log("start room " +  data.cards );
+			//TODO
 		});
 		socket.on('moveUser', function (data) {
 			console.log("move user " +  data.username );
