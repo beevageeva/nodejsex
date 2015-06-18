@@ -76,7 +76,7 @@ io.use(function(socket, next) {
 });
 
 io.sockets.on('connection', function (socket) {
-		console.log("ON SOCKET CONNECTION  SESSION USERNAME" + socket.request.session.username);	
+		console.log("ON SOCKET CONNECTION  SESSION " + socket.request.session);	
     socket.emit('message', { message: 'welcome to the chat' });
 		//receive send messages from client and broadcast to all
     //socket.on('send', function (data) {
