@@ -59,7 +59,7 @@ $scope.createGrid = function(m,n) {
             $scope.clients = data.clients;
             $scope.username = data.username;
 	
-            console.log(data);
+            console.log("CLIENTS after get api/board" + data.clients);
         })
         .error(function(data) {
             console.log('Error: ' + data);
