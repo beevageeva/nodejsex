@@ -1,0 +1,64 @@
+cp 2_of_hearts.png  ../1.png
+cp 2_of_diamonds.png  ../2.png
+cp 2_of_clubs.png  ../3.png
+cp 2_of_spades.png  ../4.png
+
+cp 3_of_hearts.png  ../5.png
+cp 3_of_diamonds.png  ../6.png
+cp 3_of_clubs.png  ../7.png
+cp 3_of_spades.png  ../8.png
+
+cp 4_of_hearts.png  ../9.png
+cp 4_of_diamonds.png  ../10.png
+cp 4_of_clubs.png  ../11.png
+cp 4_of_spades.png  ../12.png
+
+cp 5_of_hearts.png  ../13.png
+cp 5_of_diamonds.png  ../14.png
+cp 5_of_clubs.png  ../15.png
+cp 5_of_spades.png  ../16.png
+
+cp 6_of_hearts.png  ../17.png
+cp 6_of_diamonds.png  ../18.png
+cp 6_of_clubs.png  ../19.png
+cp 6_of_spades.png  ../20.png
+
+cp 7_of_hearts.png  ../21.png
+cp 7_of_diamonds.png  ../22.png
+cp 7_of_clubs.png  ../23.png
+cp 7_of_spades.png  ../24.png
+
+cp 8_of_hearts.png  ../25.png
+cp 8_of_diamonds.png  ../26.png
+cp 8_of_clubs.png  ../27.png
+cp 8_of_spades.png  ../28.png
+
+cp 9_of_hearts.png  ../29.png
+cp 9_of_diamonds.png  ../30.png
+cp 9_of_clubs.png  ../31.png
+cp 9_of_spades.png  ../32.png
+
+cp 10_of_hearts.png  ../33.png
+cp 10_of_diamonds.png  ../34.png
+cp 10_of_clubs.png  ../35.png
+cp 10_of_spades.png  ../36.png
+
+cp jack_of_hearts2.png  ../37.png
+cp jack_of_diamonds2.png  ../38.png
+cp jack_of_clubs2.png  ../39.png
+cp jack_of_spades2.png  ../40.png
+
+cp queen_of_hearts2.png  ../41.png
+cp queen_of_diamonds2.png  ../42.png
+cp queen_of_clubs2.png  ../43.png
+cp queen_of_spades2.png  ../44.png
+
+cp king_of_hearts2.png  ../45.png
+cp king_of_diamonds2.png  ../46.png
+cp king_of_clubs2.png  ../47.png
+cp king_of_spades2.png  ../48.png
+
+cp ace_of_hearts.png  ../49.png
+cp ace_of_diamonds.png  ../50.png
+cp ace_of_clubs.png  ../51.png
+cp ace_of_spades.png  ../52.png

@@ -88,6 +88,8 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('startRoom', function (data) {
+				nPlayers = Object.keys(io.nsps["/"].adapter.rooms[data.message]).length;
+				console.log("NUMBER PLAYERS IN THE ROOM start message on server : "  + nPlayers);
         io.to(data.message).emit('startRoom', {'room': data.message});
     });
 		
