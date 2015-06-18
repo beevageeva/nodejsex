@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 
 //create session object
 var sessionMiddleware = session({
-  //secret: 'secret77',
+  secret: 'secret77',
   resave: false,
   saveUninitialized: true,
   cookie: {
