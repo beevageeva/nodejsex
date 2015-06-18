@@ -54,7 +54,7 @@ exports.show = function(req, res){
 
 exports.load = function(req, res) {
 	var io = require("../index.js").io;
-
+	console.log("*******************IO in controller board.js" + io);
 	User.find(function (err, objs) {
     if (!err) {
 			
