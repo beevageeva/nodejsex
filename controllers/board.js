@@ -61,7 +61,9 @@ exports.load = function(req, res) {
 		//	console.log("Prop " + k);
 		//}
 		console.log("id = "+ id + ", value = " + io.sockets.connected[id].request.session.username);
-		clients.push({io.sockets.connected[id].request.session.username: io.sockets.connected[id].rooms});
+		hc = {};
+		hc[io.sockets.connected[id].request.session.username] = io.sockets.connected[id].rooms;
+		clients.push(hc);
 		
 	}
 	console.log("*******************IO in controller board.js" + io);
