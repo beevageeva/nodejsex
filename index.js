@@ -16,17 +16,17 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 app.use(flash()); // use connect-flash for flash messages stored in session
-//app.set('view engine', "ejs");
 //app.use(cookieParser("secret77"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());  
 
 
-//chat with jade listening same port
+// jade / ejs rendering engine instead of using angular
 
 //app.set('views', __dirname + '/tpl');
 //app.set('view engine', "jade");
+//app.set('view engine', "ejs"); //Use ejs instead of jade
 //app.engine('jade', require('jade').__express);
 //app.get("/", function(req, res){
 //    res.render("page");
@@ -41,6 +41,7 @@ var sessionMiddleware = session({
   resave: false,
   saveUninitialized: true,
   cookie: {
+		//TODO comment the following:(secure: true) to avoid creating a new session on every request(setting the secret as parameter to cookieParser does not work!)
     //secure: true,
 		domain: "secure-badlands-6804.herokuapp.com",
     maxAge: ( 24 * 60 * 60 * 1000 )
@@ -54,9 +55,10 @@ var io = require('socket.io').listen(app.listen(app.get('port')));
 
 //share session between express and socket io
 app.use(sessionMiddleware);
-io.use(function(socket, next) {
-    sessionMiddleware(socket.request, socket.request.res, next);
-});
+//TODO uncomment to share session
+//io.use(function(socket, next) {
+//    sessionMiddleware(socket.request, socket.request.res, next);
+//});
 
 io.sockets.on('connection', function (socket) {
 		console.log("ON SOCKET CONNECTION  " + socket.request.session.username);	
