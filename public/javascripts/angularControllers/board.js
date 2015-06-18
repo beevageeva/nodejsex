@@ -68,6 +68,7 @@ $scope.createGrid = function(m,n) {
 		var socket = io.connect('https://secure-badlands-6804.herokuapp.com');
 		socket.on('message', function (data) {
 			console.log("client message data " +  data);
+			$scope.moved = data.message;
 		});
 
     // when submitting the add form, send the text to the node API
