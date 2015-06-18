@@ -17,7 +17,8 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(flash()); // use connect-flash for flash messages stored in session
 //app.set('view engine', "ejs");
-app.use(cookieParser("skhsaufyewng67hg65fFHHG676hggj"));
+//app.use(cookieParser("skhsaufyewng67hg65fFHHG676hggj"));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());  
 
@@ -36,7 +37,7 @@ app.use(bodyParser.json());
 
 //create session object
 var sessionMiddleware = session({
-  secret: 'skhsaufyewng67hg65fFHHG676hggj',
+//  secret: 'skhsaufyewng67hg65fFHHG676hggj',
   resave: false,
   saveUninitialized: true,
   cookie: {
