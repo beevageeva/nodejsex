@@ -54,6 +54,7 @@
         <!-- HEADER AND TODO COUNT -->
         <div class="jumbotron text-center">
             <h1>Players <span class="label label-info">{{ players.length }}</span></h1>
+            <h1>Clients <span class="label label-info">{{ clients.length }}</span></h1>
         </div>
 
         <!-- TODO LIST -->
@@ -64,6 +65,11 @@
                 <div class="checkbox" ng-repeat="p in players">
                     <label>
                         {{ p.name }}
+                    </label>
+                </div>
+                <div class="checkbox" ng-repeat="c in clients">
+                    <label>
+                        {{ c }}
                     </label>
                 </div>
 

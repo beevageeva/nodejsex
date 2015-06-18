@@ -53,11 +53,12 @@ exports.show = function(req, res){
 
 
 exports.load = function(req, res) {
+	var io = require("../index.js").io;
 
 	User.find(function (err, objs) {
     if (!err) {
 			
-			return res.json(objs);	
+			return res.json({'users':objs, 'clients': io.sockets.clients()});	
 
     } else {
       console.log(err);

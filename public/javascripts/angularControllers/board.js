@@ -55,7 +55,9 @@ $scope.createGrid = function(m,n) {
     // when landing on the page, get all todos and show them
     $http.get('/api/board')
         .success(function(data) {
-            $scope.players = data;
+            $scope.players = data.users;
+            $scope.clients = data.clients;
+	
             console.log(data);
         })
         .error(function(data) {

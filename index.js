@@ -64,6 +64,7 @@ app.use(sessionMiddleware);
 io.use(function(socket, next) {
     //sessionMiddleware(socket.request, socket.request.res, next);
     //sessionMiddleware(socket.request, {}, next);
+    //ONLY the following is working in order to share the session!	
     cookieParser(sessionSecret)(socket.request, {}, function(err) {
       var sessionId = socket.request.signedCookies['connect.sid'];
 
@@ -87,6 +88,7 @@ io.sockets.on('connection', function (socket) {
 });
 //socket io chat end
 
+exports.io = io;
 //chat with jade end
 
 //else no socket io listening
