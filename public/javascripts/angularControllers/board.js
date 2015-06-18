@@ -44,6 +44,7 @@ $scope.createGrid = function(m,n) {
         }
     }
 }
+
 	
 
 
@@ -67,6 +68,7 @@ $scope.createGrid = function(m,n) {
 
     $scope.createGrid(30,20);
 		$scope.moved = "NONE";
+		$scope.startedRoom = null;
 
 		var socket = io.connect('https://secure-badlands-6804.herokuapp.com');
 		socket.on('message', function (data) {
@@ -78,6 +80,13 @@ $scope.createGrid = function(m,n) {
 			console.log("new room " +  data.room + " from username " + data.username);
 			$scope.clients[data.username].push(data.room);
 			$scope.$apply();
+		});
+		socket.on('startRoom', function (data) {
+			console.log("start room " +  data.room );
+			if($scope.startedRoom == null){
+				$scope.startedRoom = data.room;
+				$scope.$apply();
+			}
 		});
 
     // when submitting the add form, send the text to the node API
@@ -92,6 +101,11 @@ $scope.createGrid = function(m,n) {
 
 		$scope.createRoom = function(){
 			socket.emit('room', { message: $scope.formData.room });			
+		}
+
+
+		$scope.startRoom = function(room){
+			socket.emit('startRoom', { message: room });			
 		}
 
 

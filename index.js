@@ -86,6 +86,13 @@ io.sockets.on('connection', function (socket) {
 				socket.join(data.message);
         io.sockets.emit('newRoom', {'room': data.message, 'username': socket.request.session.username});
     });
+
+    socket.on('startRoom', function (data) {
+        io.to(data.message).emit('startRoom', {'room': data.message});
+    });
+		
+
+
 });
 //socket io chat end
 

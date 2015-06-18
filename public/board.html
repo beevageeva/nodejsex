@@ -54,6 +54,7 @@
         <div class="jumbotron text-center">
             <h1>Players <span class="label label-info">{{ players.length }}</span></h1>
             <h1>Clients <span class="label label-info">{{ clients.length }}</span></h1>
+            <h1>Started room <span class="label label-info">{{ startedRoom }}</span></h1>
         </div>
 
         <!-- TODO LIST -->
@@ -71,7 +72,7 @@
                         {{ username }} 
                     </label>
                 		<div  ng-repeat="r in rooms">
-											{{ r }}
+											{{ r }} <a href="#" ng-click="startRoom(r)">Start</a>
 										</div>
                 </div>
 								<!-- join room form --> 
