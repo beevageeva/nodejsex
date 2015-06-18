@@ -16,6 +16,7 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 app.use(flash()); // use connect-flash for flash messages stored in session
+var sessionSecret = "secret77";
 //app.use(cookieParser("secret77"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,9 +36,11 @@ app.use(bodyParser.json());
 //
 
 
+var mongoStore = require('./mongoose_models.js').SessionStore(session);
+
 //create session object
 var sessionMiddleware = session({
-  secret: 'secret77',
+  secret: sessionSecret,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -47,7 +50,7 @@ var sessionMiddleware = session({
     maxAge: ( 24 * 60 * 60 * 1000 )
 		
   },
-	store: require('./mongoose_models.js').SessionStore(session)
+	store: mongoStore
 });
 
 //socket io chat
@@ -60,7 +63,15 @@ app.use(sessionMiddleware);
 //TODO uncomment to share session
 io.use(function(socket, next) {
     //sessionMiddleware(socket.request, socket.request.res, next);
-    sessionMiddleware(socket.request, {}, next);
+    //sessionMiddleware(socket.request, {}, next);
+    cookieParser(sessionSecret)(socket.request, {}, function(err) {
+      var sessionId = socket.request.signedCookies['connect.sid'];
+
+      mongoStore.get(sessionId, function(err, session) {
+        socket.request.session = session;
+			});
+		});
+        
 });
 
 io.sockets.on('connection', function (socket) {
