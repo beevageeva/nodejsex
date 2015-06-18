@@ -69,6 +69,7 @@ io.use(function(socket, next) {
 
       mongoStore.get(sessionId, function(err, session) {
         socket.request.session = session;
+				next();
 			});
 		});
         
