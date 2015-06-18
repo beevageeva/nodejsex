@@ -76,6 +76,9 @@ io.use(function(socket, next) {
         
 });
 
+
+startedRooms = {};
+
 io.sockets.on('connection', function (socket) {
 		if(socket.request.session!=null){
 			console.log("ON SOCKET CONNECTION  SESSION USERNAME" + socket.request.session.username);	
@@ -83,19 +86,30 @@ io.sockets.on('connection', function (socket) {
     socket.emit('message', { message: 'welcome to the chat' });
 		//receive send messages from client and broadcast to all
     socket.on('room', function (data) {
-				socket.join(data.message);
-        io.sockets.emit('newRoom', {'room': data.message, 'username': socket.request.session.username});
+				if(!data.message in startedRooms){
+					socket.join(data.message);
+        	io.sockets.emit('newRoom', {'room': data.message, 'username': socket.request.session.username});
+				}
     });
 
     socket.on('startRoom', function (data) {
-				nPlayers = Object.keys(io.nsps["/"].adapter.rooms[data.message]).length;
-				console.log("NUMBER PLAYERS IN THE ROOM start message on server : "  + nPlayers);
-        io.to(data.message).emit('startRoom', {'room': data.message});
+				conSockets = Object.keys(io.nsps["/"].adapter.rooms[data.message]);
+				nPlayers = conSockets.length;
+				if(nPlayers>=3 && nPlayers<=6 && !(data.message in startedRooms)){
+					startedRooms[data.message] = [0,0];
+					firstUser = io.sockets.connected[conSockets[0]].request.session.username;
+					console.log("NUMBER PLAYERS IN THE ROOM start message on server : "  + nPlayers);
+        	io.to(data.message).emit('startRoom', {'room': data.message, 'nPlayers': nPlayers});
+        	io.to(data.message).emit('moveUser', {'username': firstUser});
+
+				}
     });
 		
 
 
 });
+
+
 //socket io chat end
 
 exports.io = io;

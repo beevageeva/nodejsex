@@ -68,6 +68,36 @@ $scope.createGrid = function(m,n) {
     }
 }
 
+
+	$scope.createTableCards = function(n){
+    var size=50;
+
+    var parent = $('<div />', {
+        class: 'grid',
+        width: n  * size,
+        height:  size
+    }).addClass('grid').appendTo('body');
+
+    for (var i = 0; i < n; i++) {
+            $('<div />', {
+                width: size - 1,
+                height: size - 1
+            	}).attr({
+    						'data-table-row': i,
+								'style': "background-image: url('/cards/1.png'); height: 200px; width: 400px; border: 1px solid black;"
+    						//'ng-click': clickCell($(this).attr('coord-row'), $(this).attr('coord-col'))
+							})
+							.click(function(){
+								//console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
+            		$scope.clickTableCard($(this).attr('coord-row'), $(this).attr('coord-col'));
+
+
+        	  	})
+						.appendTo(parent);
+    }
+
+	}
+
 	
 
 
@@ -89,7 +119,7 @@ $scope.createGrid = function(m,n) {
             console.log('Error: ' + data);
         });
 
-    $scope.createGrid(30,20);
+    //$scope.createGrid(30,20);
 		$scope.moved = "NONE";
 		$scope.startedRoom = null;
 
@@ -108,8 +138,15 @@ $scope.createGrid = function(m,n) {
 			console.log("start room " +  data.room );
 			if($scope.startedRoom == null){
 				$scope.startedRoom = data.room;
+				$scope.nPlayers = data.nPlayers;
+				$scope.createTableCards(data.nPlayers);
 				$scope.$apply();
 			}
+		});
+		socket.on('moveUser', function (data) {
+			console.log("move user " +  data.username );
+			//$scope.moveUser = data.username;
+			//$scope.$apply();
 		});
 
     // when submitting the add form, send the text to the node API
@@ -120,6 +157,19 @@ $scope.createGrid = function(m,n) {
 			$scope.moved = "i=" + i + ",j=" + j;
 			//TODO why?
 			$scope.$apply();
+		}
+
+		$scope.clickTableCard = function(i){
+			console.log("SCOPE FUNCION Click Table card= " + i );
+			//$scope.moved = "i=" + i + ",j=" + j;
+			//TODO why?
+			//$scope.$apply();
+		}
+		$scope.clickMyCard = function(i){
+			console.log("SCOPE FUNCION Click My card= " + i );
+			//$scope.moved = "i=" + i + ",j=" + j;
+			//TODO why?
+			//$scope.$apply();
 		}
 
 		$scope.createRoom = function(){
