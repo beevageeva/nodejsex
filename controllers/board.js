@@ -55,15 +55,13 @@ exports.show = function(req, res){
 exports.load = function(req, res) {
 	var io = require("../index.js").io;
 	//replace io.sockets by io.of("/namespace")	 if using a namespace
-	clients = [];
+	clients = {};
 	for (var id in io.sockets.connected) {
 		//for (k in io.sockets.connected[id]){
 		//	console.log("Prop " + k);
 		//}
 		console.log("id = "+ id + ", value = " + io.sockets.connected[id].request.session.username);
-		hc = {};
-		hc[io.sockets.connected[id].request.session.username] = io.sockets.connected[id].rooms;
-		clients.push(hc);
+		clients[io.sockets.connected[id].request.session.username] = io.sockets.connected[id].rooms;
 		
 	}
 	console.log("*******************IO in controller board.js" + io);
