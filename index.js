@@ -58,7 +58,7 @@ app.use(sessionMiddleware);
 //TODO following not working
 //io.use(require("express-socket.io-session")(sessionMiddleware));
 //TODO uncomment to share session
-io.use(function(socket, next) {
+io(app).use(function(socket, next) {
     //sessionMiddleware(socket.request, socket.request.res, next);
     sessionMiddleware(socket.request, {}, next);
 });
