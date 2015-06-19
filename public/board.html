@@ -98,16 +98,16 @@
 	<div ng-show="startedRoom!=null">
 	<div class="container"> Table Cards:
 		<table>
-			<tr ng-repeat="c in tableCards  track by $index"> 
-				<td><img  width="50" height="72" ng-src="/cards/{{c}}.png"></td> 
+			<tr> 
+				<td ng-repeat="c in tableCards  track by $index"><img  width="50" height="72" ng-src="/cards/{{c}}.png"></td> 
 			</tr>
 		</table>
 	</div>
 
 	<div class="container">My Cards
 		<table>
-			<tr ng-repeat="c in myCards  track by $index"> 
-				<td><img  width="50" height="72" ng-src="/cards/{{c}}.png"></td> 
+			<tr> 
+				<td ng-repeat="c in myCards  track by $index"><img  width="50" height="72" ng-src="/cards/{{c}}.png"></td> 
 			</tr>
 		</table>
 	</div>
