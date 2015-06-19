@@ -52,9 +52,7 @@
 
         <!-- HEADER AND TODO COUNT -->
         <div class="jumbotron text-center">
-            <h1>Players <span class="label label-info">{{ players.length }}</span></h1>
-            <h1>Clients <span class="label label-info">{{ clients.length }}</span></h1>
-            <h1>Started room <span class="label label-info">{{ startedRoom }}</span></h1>
+            <h1>Started room <span class="label label-info">{{ startedRoom }}, move {{moveUser}}</span></h1>
         </div>
 
         <!-- TODO LIST -->
@@ -62,11 +60,7 @@
             <div class="col-sm-4 col-sm-offset-4">
 
                 <!-- LOOP OVER THE TODOS IN $scope.todos -->
-                <div class="checkbox" ng-repeat="p in players">
-                    <label>
-                        {{ p.name }}
-                    </label>
-                </div>
+								<h1>Clients</h1>
                 <div class="checkbox" ng-repeat="(username, rooms) in clients">
                     <label>
                         {{ username }} 
