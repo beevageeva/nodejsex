@@ -108,6 +108,7 @@ function getCards(nPlayers, nCards){
 	for(var i = 0;i<nPlayers;i++){
 		playerCards.push(newCards.slice(i*nCards, nCards));
 	}
+	return playerCards;
 }
 
 
