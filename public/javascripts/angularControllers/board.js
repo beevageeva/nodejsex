@@ -93,7 +93,7 @@ function mainController($scope, $http) {
 //			if(moveUser!=null){
 				console.log("move user: " + $scope.moveUser + ", username: " + $scope.username + " test ineq: " + ($scope.moveUser!=$scope.username));
 				return $scope.moveUser!=$scope.username;
-			}
+//			}
 //			else{
 //				console.log("moveUser is null");
 //				return true;	
