@@ -105,7 +105,8 @@ $scope.createGrid = function(m,n) {
 		$scope.moved = "NONE";
 		$scope.startedRoom = null;
 		$scope.tableCards = [0,0,0,0,0,0];
-		$scope.myCards = [0,0,0,0,0,0,0,0];			
+		$scope.myCards = [0,0,0,0,0,0,0,0];		
+		$scope.atu = 0;	
 
 
 		var socket = io.connect('https://secure-badlands-6804.herokuapp.com');
@@ -132,6 +133,7 @@ $scope.createGrid = function(m,n) {
 			console.log("get cards  " +  data.cards );
 			for(var i = 0; i< data.cards.length; i++){
 				$scope.myCards[i] = data.cards[i];
+				$scope.atu = data.atu;
 			}
 			$scope.$apply();
 		});
