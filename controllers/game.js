@@ -70,6 +70,8 @@ io.sockets.on('connection', function (socket) {
 					console.log("SERVER PLAYER CARDS " + resCards);
 					for(var i = 0; i<nPlayers; i++){
 						io.to(conSockets[i]).emit("cards", {"cards": resCards["cards"][i], "atu": resCards["atu"]});
+						//put room in session for every user
+						io.sockets.connected[conSockets[i]].request.session.room = data.message;
 					}
 
         	io.to(data.message).emit('moveUser', {'username': firstUser});
@@ -78,7 +80,9 @@ io.sockets.on('connection', function (socket) {
     });
 		
     socket.on('sendCard', function (data) {
-			console.log("SERVER SEND CARD " + data.card);	
+			console.log("SERVER SEND CARD " + data.card);
+			//send card to all users in the room kept as a variable in session map	
+			io.to(socket.request.session.room).emit("cardMoved", {"card": data.card, "position": 0});	
     });
 
 

@@ -40,9 +40,10 @@ function mainController($scope, $http) {
         });
 
     //$scope.createGrid(30,20);
-		$scope.moved = "NONE";
+		$scope.moved = false;
 		$scope.startedRoom = null;
 		$scope.nPlayers = 0;
+		$scope.nCards = 0;
 		$scope.tableCards = [0,0,0,0,0,0];
 		$scope.myCards = [0,0,0,0,0,0,0,0];	
 		$scope.selected = 0;	
@@ -52,7 +53,7 @@ function mainController($scope, $http) {
 		var socket = io.connect('https://secure-badlands-6804.herokuapp.com');
 		socket.on('message', function (data) {
 			console.log("client message data " +  data);
-			$scope.moved = data.message;
+			//$scope.moved = data.message;
 			$scope.$apply();
 		});
 		socket.on('newRoom', function (data) {
@@ -73,6 +74,7 @@ function mainController($scope, $http) {
 		//receive cards
 		socket.on('cards', function (data) {
 			console.log("get cards  " +  data.cards );
+			$scope.nCards = data.cards.length;
 			for(var i = 0; i< data.cards.length; i++){
 				$scope.myCards[i] = data.cards[i];
 			}
@@ -86,18 +88,17 @@ function mainController($scope, $http) {
 			$scope.moveUser = data.username;
 			$scope.$apply();
 		});
+		socket.on('cardMoved', function (data) {
+			console.log("move card " +  data.card + " on position " + data.position);
+			$scope.tableCards[data.position] = data.card;
+			$scope.$apply();
+		});
 
     // when submitting the add form, send the text to the node API
 
 		$scope.isSendCardDisabled = function(){
-//			if(moveUser!=null){
-				console.log("move user: " + $scope.moveUser + ", username: " + $scope.username + " test ineq: " + ($scope.moveUser!=$scope.username));
-				return $scope.moveUser!=$scope.username;
-//			}
-//			else{
-//				console.log("moveUser is null");
-//				return true;	
-//			}
+			//	console.log("move user: " + $scope.moveUser + ", username: " + $scope.username + " test ineq: " + ($scope.moveUser!=$scope.username));
+				return $scope.moveUser!=$scope.username && !moved;
 			
 		}
 
@@ -106,7 +107,7 @@ function mainController($scope, $http) {
 			console.log("SCOPE FUNCION Click My card= " + i );
 			//$scope.moved = "i=" + i + ",j=" + j;
 			console.log("my cards length " + $scope.myCards.length);
-			if($scope.selected != $scope.myCards[i]){
+			if($scope.myCards[i]!=0 && $scope.selected != $scope.myCards[i]){
 				$scope.selected = $scope.myCards[i];
 				$scope.$apply();
 			}
@@ -123,6 +124,14 @@ function mainController($scope, $http) {
 
 		$scope.sendCard = function(){
 			console.log("SCOPE FUNCION send card= " + $scope.selected );
+			$scope.moved = true;
+			for(var i = 0; i<$scope.nCards; i++){
+				if($scope.myCards[i]== $scope.selected){
+					$scope.myCards[i] = 0;
+					break;	
+				}
+			}
+			$scope.$apply();
 			socket.emit("sendCard", {"card": $scope.selected});	
 		}
 
