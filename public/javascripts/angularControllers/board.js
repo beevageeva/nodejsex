@@ -19,68 +19,6 @@ var boardApp = angular.module('boardApp', [])
 function mainController($scope, $http) {
 
 
-//other js function moved here
-$scope.createGrid = function(m,n) {
-    var size=50;
-
-    var parent = $('<div />', {
-        class: 'grid',
-        width: m  * size,
-        height: n  * size
-    }).addClass('grid').appendTo('body');
-
-    for (var i = 0; i < m; i++) {
-        for(var j = 0; j < n; j++){
-            $('<div />', {
-                width: size - 1,
-                height: size - 1
-            	}).attr({
-    						'coord-row': i,
-    						'coord-col': j,
-    						//'ng-click': clickCell($(this).attr('coord-row'), $(this).attr('coord-col'))
-							})
-							.click(function(){
-								//console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
-            		$scope.clickCell($(this).attr('coord-row'), $(this).attr('coord-col'));
-
-
-        	  	})
-						.appendTo(parent);
-        }
-    }
-}
-
-
-	$scope.createTableCards = function(n){
-    var size=50;
-
-    var parent = $('<div />', {
-        class: 'grid',
-        width: n  * size,
-        height:  size
-    }).addClass('grid').appendTo('body');
-
-    for (var i = 0; i < n; i++) {
-            $('<div />', {
-                width: size - 1,
-                height: size - 1
-            	}).attr({
-    						'data-table-row': i,
-								'style': "background-image: url('/cards/1.png'); border: 1px solid black;"
-    						//'ng-click': clickCell($(this).attr('coord-row'), $(this).attr('coord-col'))
-							})
-							.click(function(){
-								//console.log('i=' + $(this).attr('coord-row') + ",j=" + $(this).attr('coord-col'));
-            		$scope.clickTableCard($(this).attr('data-table-row'));
-
-
-        	  	})
-						.appendTo(parent);
-    }
-
-	}
-
-	
 
 
 
@@ -104,8 +42,10 @@ $scope.createGrid = function(m,n) {
     //$scope.createGrid(30,20);
 		$scope.moved = "NONE";
 		$scope.startedRoom = null;
+		$scope.nPlayers = 0;
 		$scope.tableCards = [0,0,0,0,0,0];
-		$scope.myCards = [0,0,0,0,0,0,0,0];		
+		$scope.myCards = [0,0,0,0,0,0,0,0];	
+		$scope.selected = 0;	
 		$scope.atu = 0;	
 
 
@@ -129,41 +69,32 @@ $scope.createGrid = function(m,n) {
 				$scope.$apply();
 			}
 		});
+
+		//receive cards
 		socket.on('cards', function (data) {
 			console.log("get cards  " +  data.cards );
 			for(var i = 0; i< data.cards.length; i++){
 				$scope.myCards[i] = data.cards[i];
-				$scope.atu = data.atu;
 			}
+			$scope.atu = data.atu;
+			$scope.selected = $scope.myCards[0];
 			$scope.$apply();
 		});
+
 		socket.on('moveUser', function (data) {
 			console.log("move user " +  data.username );
-			//$scope.moveUser = data.username;
-			//$scope.$apply();
+			$scope.moveUser = data.username;
+			$scope.$apply();
 		});
 
     // when submitting the add form, send the text to the node API
 
 
-		$scope.clickCell = function(i,j){
-			console.log("SCOPE FUNCION Row = " + i + "  COL = " + j);
-			$scope.moved = "i=" + i + ",j=" + j;
-			//TODO why?
-			$scope.$apply();
-		}
-
-		$scope.clickTableCard = function(i){
-			console.log("SCOPE FUNCION Click Table card= " + i );
-			//$scope.moved = "i=" + i + ",j=" + j;
-			//TODO why?
-			//$scope.$apply();
-		}
 		$scope.clickMyCard = function(i){
 			console.log("SCOPE FUNCION Click My card= " + i );
 			//$scope.moved = "i=" + i + ",j=" + j;
-			//TODO why?
-			//$scope.$apply();
+			$scope.selected = $scope.tableCards[i]
+			$scope.$apply();
 		}
 
 		$scope.createRoom = function(){
@@ -173,6 +104,11 @@ $scope.createGrid = function(m,n) {
 
 		$scope.startRoom = function(room){
 			socket.emit('startRoom', { message: room });			
+		}
+
+		$scope.sendCard = function(){
+			console.log("SCOPE FUNCION send card= " + $scope.selected );
+			socket.emit("sendCard", {"card": $scope.selected});	
 		}
 
 

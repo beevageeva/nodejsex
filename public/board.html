@@ -100,18 +100,21 @@
 		<table>
 			<tr> 
 				<td ng-repeat="c in tableCards  track by $index"><img  width="50" height="72" ng-src="/cards/{{c}}.png"></td>
-				<td style="border: 1px solid green; "><img  width="50" height="72" ng-src="/cards/{{atu}}.png"></td>
 			</tr>
 		</table>
+	<div ng-show="atu!=0">atu<img style="border: 1px solid green;" width="50" height="72" ng-src="/cards/{{atu}}.png"></div>
 	</div>
 
 	<div class="container">My Cards
 		<table>
 			<tr> 
-				<td ng-repeat="c in myCards  track by $index"><img  width="50" height="72" ng-src="/cards/{{c}}.png"></td> 
+				<td ng-repeat="c in myCards  track by $index"><img  width="50" height="72" ng-src="/cards/{{c}}.png" ng-click="clickMyCard($index)" ></td> 
 			</tr>
 		</table>
+		<div>Selected<img style="border: 1px solid green; " width="50" height="72" ng-src="/cards/{{selected}}.png"></div>
+    <button type="submit" class="btn btn-primary btn-lg" ng-click="sendCard()">Done</button>
 	</div>
+
 	</div>
 
 

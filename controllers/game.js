@@ -77,6 +77,9 @@ io.sockets.on('connection', function (socket) {
 				}
     });
 		
+    socket.on('sendCard', function (data) {
+			console.log("SERVER SEND CARD " + dara.card);	
+    });
 
 
 });
