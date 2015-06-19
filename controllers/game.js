@@ -1,5 +1,18 @@
 module.exports = function(io){
 
+var Room = require('../mongoose_models').Room;
+//remove all rooms at the beginning
+Room.remove({}, function (err) {
+  if (err){
+	 return console.log("Error removing rooms: " + err);
+	}
+	else{
+  	// removed!
+	  console.log("removed all rooms!");
+  }
+});
+
+
 //START IO MOVE IN A SEPARTE FILE
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex ;
@@ -42,7 +55,6 @@ function getCards(nPlayers, nCards){
 
 
 
-startedRooms = {};
 
 io.sockets.on('connection', function (socket) {
 		if(socket.request.session!=null){
@@ -60,13 +72,25 @@ io.sockets.on('connection', function (socket) {
     socket.on('startRoom', function (data) {
 				conSockets = Object.keys(io.nsps["/"].adapter.rooms[data.message]);
 				nPlayers = conSockets.length;
+				roomUsernames = [];
+				for(var i = 0; i<conSockets.length; i++){
+					roomUsernames.push(io.sockets.connected[conSockets[i]].request.session.username);
+				}
 				//if(nPlayers>=3 && nPlayers<=6 && !(data.message in startedRooms)){
 				if(nPlayers>=3 && nPlayers<=6){
-					startedRooms[data.message] = [0,1];
-					firstUser = io.sockets.connected[conSockets[0]].request.session.username;
+
+					resCards = getCards(nPlayers, 1);
+					var newRoom = new Room({"name": data.message, "usernames": roomUsernames , "finished": false, "games": [resCards]});
+				  newRoom.save(function (err) {
+				    if (!err) {
+				      console.log("created");
+				    } else {
+				      console.log(err);
+				    }
+				  });
+
 					console.log("NUMBER PLAYERS IN THE ROOM start message on server : "  + nPlayers);
         	io.to(data.message).emit('startRoom', {'room': data.message, 'nPlayers': nPlayers});
-					resCards = getCards(nPlayers, 1);
 					console.log("SERVER PLAYER CARDS " + resCards);
 					for(var i = 0; i<nPlayers; i++){
 						io.to(conSockets[i]).emit("cards", {"cards": resCards["cards"][i], "atu": resCards["atu"]});
@@ -74,7 +98,7 @@ io.sockets.on('connection', function (socket) {
 						io.sockets.connected[conSockets[i]].request.session.room = data.message;
 					}
 
-        	io.to(data.message).emit('moveUser', {'username': firstUser});
+        	io.to(data.message).emit('moveUser', {'username': roomUsernames[0]});
 
 				}
     });

@@ -71,6 +71,54 @@ exports.User = userModel;
 
 
 
+var roomSchema = mongoose.Schema({
+    name: String,
+    finished: Boolean,
+		usernames: [String],
+		games: [{'cards': [Number], 'atu': Number, 'moves': [[Number]]}],
+    created_at: Date,
+    updated_at: Date
+})
+
+roomSchema.pre('save', function(next) {
+
+  // get the current date
+  var currentDate = new Date();
+  
+  // change the updated_at field to current date
+  this.updated_at = currentDate;
+
+  // if created_at doesn't exist, add to that field
+  if (!this.created_at){
+    this.created_at = currentDate;
+	}
+
+  next();
+});
+
+
+roomSchema.methods.addMove = function(card){
+	//finished game = 0, finished round = 1, unfinished = 2	
+	//TODO
+	nPlayers = this.usernames.length;
+	g = this.games[this.games.length - 1];
+	nCards = g.cards.length;
+	lastRound = g.cards.moves[g.cards.moves.length - 1];
+	lastRound.push(card);
+	if(lastRound.length == nPlayers){
+		g.card.moves.push([])
+		return 1;
+	}
+	
+
+}
+
+exports.Room = mongoose.model('room', roomSchema);
+
+
+
+
+
 
 //TODOS
 var todoSchema = mongoose.Schema({

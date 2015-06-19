@@ -124,6 +124,9 @@ function mainController($scope, $http) {
 
 		$scope.sendCard = function(){
 			console.log("SCOPE FUNCION send card= " + $scope.selected );
+			if($scope.moved){
+				return;
+			}	
 			$scope.moved = true;
 			for(var i = 0; i<$scope.nCards; i++){
 				if($scope.myCards[i]== $scope.selected){
@@ -131,7 +134,7 @@ function mainController($scope, $http) {
 					break;	
 				}
 			}
-			$scope.$apply();
+			//$scope.$apply();
 			socket.emit("sendCard", {"card": $scope.selected});	
 		}
 
