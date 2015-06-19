@@ -133,7 +133,8 @@ $scope.createGrid = function(m,n) {
 			for(var i = 0; i< data.cards.length; i++){
 				$scope.myCards[i] = data.cards[i];
 			}
-			$scope.$apply();
+			//TODO
+			//$scope.$apply();
 		});
 		socket.on('moveUser', function (data) {
 			console.log("move user " +  data.username );
