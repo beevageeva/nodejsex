@@ -69,7 +69,7 @@ io.sockets.on('connection', function (socket) {
 					resCards = getCards(nPlayers, 1);
 					console.log("SERVER PLAYER CARDS " + resCards);
 					for(var i = 0; i<nPlayers; i++){
-						io.to(conSockets[i]).emit("cards", resCards);
+						io.to(conSockets[i]).emit("cards", {"cards": resCards["cards"][i], "atu": resCards["atu"]});
 					}
 
         	io.to(data.message).emit('moveUser', {'username': firstUser});
