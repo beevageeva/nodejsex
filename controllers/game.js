@@ -21,7 +21,7 @@ function shuffle(array) {
 }
 
 function getCards(nPlayers, nCards){
-	var start = 52 - nPlayers * 8;
+	var start = 51 - nPlayers * 8;
 	var end = 52;
 	var cards = [];	
 	for(var i = start; i<=end; i++){
