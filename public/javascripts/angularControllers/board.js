@@ -94,8 +94,10 @@ function mainController($scope, $http) {
 			console.log("SCOPE FUNCION Click My card= " + i );
 			//$scope.moved = "i=" + i + ",j=" + j;
 			console.log("my cards length " + $scope.myCards.length);
-			$scope.selected = $scope.myCards[i];
-			$scope.$apply();
+			if($scope.selected != $scope.myCards[i]){
+				$scope.selected = $scope.myCards[i];
+				$scope.$apply();
+			}
 		}
 
 		$scope.createRoom = function(){

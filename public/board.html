@@ -112,7 +112,7 @@
 			</tr>
 		</table>
 		<div>Selected<img style="border: 1px solid green; " width="50" height="72" ng-src="/cards/{{selected}}.png"></div>
-    <button type="submit" class="btn btn-primary btn-lg" ng-active="username===moveUser" ng-click="sendCard()">Done</button>
+    <button type="submit" class="btn btn-primary btn-lg" disabled="username!=moveUser" ng-click="sendCard()">Done</button>
 	</div>
 
 	</div>
