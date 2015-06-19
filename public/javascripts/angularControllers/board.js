@@ -90,14 +90,14 @@ function mainController($scope, $http) {
     // when submitting the add form, send the text to the node API
 
 		$scope.isSendCardDisabled = function(){
-			if(moveUser!=null){
-				console.log("move user: " + moveUser + ", username: " + username + " test ineq: " + (moveUser!=username));
-				return moveUser!=username;
+//			if(moveUser!=null){
+				console.log("move user: " + $scope.moveUser + ", username: " + $scope.username + " test ineq: " + ($scope.moveUser!=$scope.username));
+				return $scope.moveUser!=$scope.username;
 			}
-			else{
-				console.log("moveUser is null");
-				return true;	
-			}
+//			else{
+//				console.log("moveUser is null");
+//				return true;	
+//			}
 			
 		}
 
