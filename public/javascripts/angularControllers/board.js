@@ -93,7 +93,8 @@ function mainController($scope, $http) {
 		$scope.clickMyCard = function(i){
 			console.log("SCOPE FUNCION Click My card= " + i );
 			//$scope.moved = "i=" + i + ",j=" + j;
-			$scope.selected = $scope.tableCards[i];
+			console.log("my cards length " + $scope.myCards.length);
+			$scope.selected = $scope.myCards[i];
 			$scope.$apply();
 		}
 
