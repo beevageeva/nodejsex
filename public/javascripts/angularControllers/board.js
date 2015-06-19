@@ -127,7 +127,7 @@ $scope.createGrid = function(m,n) {
 			}
 		});
 		socket.on('cards', function (data) {
-			console.log("start room " +  data.cards );
+			console.log("get cards  " +  data.cards );
 			//TODO
 		});
 		socket.on('moveUser', function (data) {

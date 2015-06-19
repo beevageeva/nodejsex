@@ -138,6 +138,7 @@ io.sockets.on('connection', function (socket) {
 					console.log("NUMBER PLAYERS IN THE ROOM start message on server : "  + nPlayers);
         	io.to(data.message).emit('startRoom', {'room': data.message, 'nPlayers': nPlayers});
 					pCards = getCards(nPlayers, 1);
+					console.log("SERVER PLAYER CARDS " + pCards);
 					for(var i = 0; i<nPlayers; i++){
 						io.to(conSockets[i]).emit("cards", {"cards": pCards[i]});
 					}
