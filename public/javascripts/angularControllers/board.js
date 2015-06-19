@@ -122,13 +122,18 @@ $scope.createGrid = function(m,n) {
 			if($scope.startedRoom == null){
 				$scope.startedRoom = data.room;
 				$scope.nPlayers = data.nPlayers;
+				$scope.tableCards = [0,0,0,0,0,0];
+				$scope.myCards = [0,0,0,0,0,0];			
 				//$scope.createTableCards(data.nPlayers);
 				$scope.$apply();
 			}
 		});
 		socket.on('cards', function (data) {
 			console.log("get cards  " +  data.cards );
-			//TODO
+			for(var i = 0; i< data.cards.length; i++){
+				$scope.myCards[i] = data.cards[i];
+			}
+			$scope.$apply();
 		});
 		socket.on('moveUser', function (data) {
 			console.log("move user " +  data.username );
