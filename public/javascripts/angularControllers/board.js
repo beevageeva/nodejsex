@@ -98,7 +98,7 @@ function mainController($scope, $http) {
 
 		$scope.isSendCardDisabled = function(){
 			//	console.log("move user: " + $scope.moveUser + ", username: " + $scope.username + " test ineq: " + ($scope.moveUser!=$scope.username));
-				return $scope.moveUser!=$scope.username && !moved;
+				return $scope.moveUser!=$scope.username && !$scope.moved;
 			
 		}
 
