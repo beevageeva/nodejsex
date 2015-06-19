@@ -104,9 +104,10 @@ function getCards(nPlayers, nCards){
 		cards.push(i);
 	}
 	var newCards = shuffle(cards);
+	console.log("new cards length " + newCards.length);
 	var playerCards = [];
 	for(var i = 0;i<nPlayers;i++){
-		playerCards.push(newCards.slice(i*nCards, nCards));
+		playerCards.push(newCards.slice(i*nCards, (i+1)*nCards));
 	}
 	return playerCards;
 }
