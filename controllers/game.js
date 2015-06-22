@@ -33,25 +33,6 @@ function shuffle(array) {
   return array;
 }
 
-function getCards(nPlayers, nCards){
-	var start = 51 - nPlayers * 8;
-	var end = 52;
-	var cards = [];	
-	for(var i = start; i<=end; i++){
-		cards.push(i);
-	}
-	var newCards = shuffle(cards);
-	console.log("new cards length " + newCards.length);
-	var playerCards = [];
-	for(var i = 0;i<nPlayers;i++){
-		playerCards.push(newCards.slice(i*nCards, (i+1)*nCards));
-	}
-	atu = 0;
-	if(nCards<8){
-		atu = newCards[nPlayers * nCards];
-	}	
-	return {"cards": playerCards, "atu": atu};
-}
 
 
 
@@ -78,9 +59,9 @@ io.sockets.on('connection', function (socket) {
 				}
 				//if(nPlayers>=3 && nPlayers<=6 && !(data.message in startedRooms)){
 				if(nPlayers>=3 && nPlayers<=6){
-
-					resCards = getCards(nPlayers, 1);
-					var newRoom = new Room({"name": data.message, "usernames": roomUsernames , "finished": false, "games": [resCards]});
+					var newRoom = new Room({"name": data.message, "usernames": roomUsernames , "finished": false, "games": []});
+					//nCards = 1 for the first game
+					newRoom.addGame(1);
 				  newRoom.save(function (err) {
 				    if (!err) {
 				      console.log("created");
@@ -90,7 +71,7 @@ io.sockets.on('connection', function (socket) {
 				  });
 
 					console.log("NUMBER PLAYERS IN THE ROOM start message on server : "  + nPlayers);
-        	io.to(data.message).emit('startRoom', {'room': data.message, 'nPlayers': nPlayers});
+        	io.to(data.message).emit('startRoom', {'room': data.message, 'nPlayers': nPlayers, 'username': roomUsernames[0] });
 					console.log("SERVER PLAYER CARDS " + resCards);
 					for(var i = 0; i<nPlayers; i++){
 						io.to(conSockets[i]).emit("cards", {"cards": resCards["cards"][i], "atu": resCards["atu"]});
@@ -98,15 +79,34 @@ io.sockets.on('connection', function (socket) {
 						io.sockets.connected[conSockets[i]].request.session.room = data.message;
 					}
 
-        	io.to(data.message).emit('moveUser', {'username': roomUsernames[0]});
 
 				}
     });
 		
+    socket.on('sendBet', function (data) {
+			console.log("SERVER SEND BET " + data.bet);
+			resBet = null;
+			Room.findOne({ name: socket.request.session.room }, function (err, room) {
+        if(room){
+					resBet = username = room.addHandBet(data.bet,  socket.request.session.username);	
+				}
+		   });
+			//send card to all users in the room kept as a variable in session map	
+				io.to(socket.request.session.room).emit("betMade", {"bet": data.bet, "fromUsename": socket.request.session.username, "username": resBet[1], "res": resBet[0], "position": resMove[2]});
+			
+				
+    });
+
     socket.on('sendCard', function (data) {
 			console.log("SERVER SEND CARD " + data.card);
+			resMove = null;
+			Room.findOne({ name: socket.request.session.room }, function (err, room) {
+        if(room){
+					resMove = room.addMove(data.card,  socket.request.session.username);	
+				}
+		   });
 			//send card to all users in the room kept as a variable in session map	
-			io.to(socket.request.session.room).emit("cardMoved", {"card": data.card, "position": 0});	
+			io.to(socket.request.session.room).emit("cardMoved", {"card": data.card, "position": resMove[2], "fromUsename": socket.request.session.username}, "username": resMove[0], "res": resMove[1]);	
     });
 
 

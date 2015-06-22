@@ -107,6 +107,22 @@
 		</table>
 		<div>Selected<img style="border: 1px solid green; " width="50" height="72" ng-src="/cards/{{selected}}.png"></div>
     <button type="submit" class="btn btn-primary btn-lg" ng-disabled="isSendCardDisabled()" ng-click="sendCard()">Done</button>
+
+		<table>
+			<tr> 
+				<td ng-repeat="b in gameBets  track by $index">{{b}}</td> 
+			</tr>
+		</table>
+    <form>
+        <div class="form-group">
+
+            <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+            <input type="text" class="form-control input-lg text-center" placeholder="New room" ng-model="formData.bet">
+        </div>
+
+        <!-- createToDo() WILL CREATE NEW TODOS -->
+        <button type="submit" class="btn btn-primary btn-lg" ng-disabled="isBetDisabled()" ng-click="sendBet()">Join</button>
+    </form>
 	</div>
 
 	</div>

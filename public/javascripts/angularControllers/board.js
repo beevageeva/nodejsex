@@ -40,7 +40,7 @@ function mainController($scope, $http) {
         });
 
     //$scope.createGrid(30,20);
-		$scope.moved = false;
+		$scope.moved = 0;
 		$scope.startedRoom = null;
 		$scope.nPlayers = 0;
 		$scope.nCards = 0;
@@ -53,7 +53,6 @@ function mainController($scope, $http) {
 		var socket = io.connect('https://secure-badlands-6804.herokuapp.com');
 		socket.on('message', function (data) {
 			console.log("client message data " +  data);
-			//$scope.moved = data.message;
 			$scope.$apply();
 		});
 		socket.on('newRoom', function (data) {
@@ -65,8 +64,9 @@ function mainController($scope, $http) {
 			console.log("start room " +  data.room );
 			if($scope.startedRoom == null){
 				$scope.startedRoom = data.room;
+				$scope.moved = 1;
 				$scope.nPlayers = data.nPlayers;
-				//$scope.createTableCards(data.nPlayers);
+				$scope.moveUser = data.username;
 				$scope.$apply();
 			}
 		});
@@ -78,19 +78,26 @@ function mainController($scope, $http) {
 			for(var i = 0; i< data.cards.length; i++){
 				$scope.myCards[i] = data.cards[i];
 			}
+			//new game bets!
+			$scop.gameBets = [];
+			for(var i = 0; i< $scope.nPlayers; i++){
+				$scope.gameBets.push(0);
+			}
 			$scope.atu = data.atu;
 			$scope.selected = $scope.myCards[0];
 			$scope.$apply();
 		});
 
-		socket.on('moveUser', function (data) {
-			console.log("move user " +  data.username );
-			$scope.moveUser = data.username;
-			$scope.$apply();
-		});
 		socket.on('cardMoved', function (data) {
 			console.log("move card " +  data.card + " on position " + data.position);
 			$scope.tableCards[data.position] = data.card;
+			$scope.moveUser = data.username;
+			$scope.$apply();
+		});
+		socket.on('betMade', function (data) {
+			console.log("bet made " +  data.bet + " on position " + data.position);
+			$scope.gameBets[data.position] = data.bet;
+			$scope.moveUser = data.username;
 			$scope.$apply();
 		});
 
@@ -98,7 +105,12 @@ function mainController($scope, $http) {
 
 		$scope.isSendCardDisabled = function(){
 			//	console.log("move user: " + $scope.moveUser + ", username: " + $scope.username + " test ineq: " + ($scope.moveUser!=$scope.username));
-				return $scope.moveUser!=$scope.username && !$scope.moved;
+				return $scope.moveUser!=$scope.username && scope.moved!=2;
+			
+		}
+
+		$scope.isBetDisabled = function(){
+				return $scope.moveUser!=$scope.username && scope.moved!=1;
 			
 		}
 
@@ -127,7 +139,7 @@ function mainController($scope, $http) {
 			if($scope.moved){
 				return;
 			}	
-			$scope.moved = true;
+			$scope.moved = 3;
 			for(var i = 0; i<$scope.nCards; i++){
 				if($scope.myCards[i]== $scope.selected){
 					$scope.myCards[i] = 0;
@@ -136,6 +148,16 @@ function mainController($scope, $http) {
 			}
 			//$scope.$apply();
 			socket.emit("sendCard", {"card": $scope.selected});	
+		}
+
+		$scope.sendBet = function(){
+			console.log("SCOPE FUNCION send bet from form= " + $scope.formData.bet );
+			if($scope.moved){
+				return;
+			}	
+			$scope.moved = 2;
+			//$scope.$apply();
+			socket.emit("sendBet", {"bet": $scope.formData.bet});	
 		}
 
 
