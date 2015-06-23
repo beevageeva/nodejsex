@@ -92,7 +92,7 @@ function mainController($scope, $http) {
 		});
 
 		socket.on('cardMoved', function (data) {
-			console.log("move card " +  data.card + " on position " + data.position);
+			console.log("move card " +  data.card + " on position " + data.position  + ", moveUser " + data.username );
 			$scope.tableCards[data.position] = data.card;
 			$scope.moveUser = data.username;
 			$scope.$apply();

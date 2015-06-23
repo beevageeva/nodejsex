@@ -197,12 +197,12 @@ roomSchema.methods.addMove = function(card, username){
 		//check bp
 		if(g.moves.length < nCards){
 			g.moves.push([]);	
-			username = this.usernames[0];
 		}
 		else{
 			console.log("INVALID MOVE");
 			return null;
 		}
+		username = this.usernames[this.usernames.length - 1];
 	}
 	else{
 		username = this.usernames[indexUsername + 1];
@@ -222,7 +222,8 @@ roomSchema.methods.addMove = function(card, username){
 				this.addGame(nextGameNCards);
 			}
 	}
-	return [username, res, g.moves[g.moves.length - 1].length];
+	console.log("in saveMove username = " + username);
+	return [username, res, g.moves[g.moves.length - 1].length - 1];
 }
 
 
