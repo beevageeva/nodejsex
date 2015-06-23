@@ -95,7 +95,7 @@ function mainController($scope, $http) {
 			$scope.$apply();
 		});
 		socket.on('betMade', function (data) {
-			console.log("bet made " +  data.bet + " on position " + data.position);
+			console.log("bet made " +  data.bet + " on position " + data.position + ", moveUser " + data.username);
 			$scope.gameBets[data.position] = data.bet;
 			$scope.moveUser = data.username;
 			$scope.moved = 2;
