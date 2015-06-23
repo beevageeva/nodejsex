@@ -72,9 +72,16 @@ io.sockets.on('connection', function (socket) {
 			console.log("SERVER SEND BET " + data.bet);
 			Room.findOne({ name: socket.request.session.room }, function (err, room) {
 				if(!err && room){
-					resBet = room.addHandBet(data.bet,  socket.request.session.username);	
-					//send card to all users in the room kept as a variable in session map	
-					io.to(socket.request.session.room).emit("betMade", {"bet": data.bet, "fromUsename": socket.request.session.username, "username": resBet[1], "res": resBet[0], "position": resBet[2]});
+					resBet = room.addHandBet(data.bet,  socket.request.session.username);
+					room.save(function(err){
+						if(!err){
+							//send card to all users in the room kept as a variable in session map	
+							io.to(socket.request.session.room).emit("betMade", {"bet": data.bet, "fromUsename": socket.request.session.username, "username": resBet[1], "res": resBet[0], "position": resBet[2]});
+						}
+						else{
+							console.log(err);
+						}
+					});				
 				}
 		   });
 			
@@ -86,8 +93,14 @@ io.sockets.on('connection', function (socket) {
 			Room.findOne({ name: socket.request.session.room }, function (err, room) {
         if(!err && room){
 					resMove = room.addMove(data.card,  socket.request.session.username);	
+					room.save(function(err){
+					if(!err){
 					//send card to all users in the room kept as a variable in session map	
-					io.to(socket.request.session.room).emit("cardMoved", {"card": data.card, "position": resMove[2], "fromUsename": socket.request.session.username, "username": resMove[0], "res": resMove[1]});	
+					io.to(socket.request.session.room).emit("cardMoved", {"card": data.card, "position": resMove[2], "fromUsename": socket.request.session.username, "username": resMove[0], "res": resMove[1]});
+					
+						else{
+							console.log(err);
+						}
 				}
 		   });
     });
