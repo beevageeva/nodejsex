@@ -70,17 +70,7 @@ userSchema.pre('save', function(next) {
 exports.User = userModel;
 
 
-//GAME ROOM
-//Game object
-//var gameSchema = mongoose.Schema({
-//	//'cards': [[Number]], 
-//	'cards': Array, 
-//	'hands': [{'bet': Number, 'done': Number}], 
-//	'atu': Number, 
-//	//'moves': [[Number]]
-//	'moves': Array
-//});
-
+//ROOM
 var roomSchema = mongoose.Schema({
     name: String,
     finished: Boolean,
@@ -90,7 +80,6 @@ var roomSchema = mongoose.Schema({
     updated_at: Date
 });
 
-//Game =  mongoose.model('game', gameSchema);
 
 roomSchema.pre('save', function(next) {
 
@@ -170,41 +159,21 @@ function getCards(nPlayers, nCards){
 	if(nCards<8){
 		atu = newCards[nPlayers * nCards];
 	}
-	console.log("GET CARDS in mongoose_model");
-	console.log(typeof(playerCards));	
-	console.log(playerCards);
-	console.log(JSON.stringify(playerCards));	
-	console.log("GET CARDS in mongoose_model END");
+//	console.log("GET CARDS in mongoose_model");
+//	console.log(typeof(playerCards));	
+//	console.log(playerCards);
+//	console.log(JSON.stringify(playerCards));	
+//	console.log("GET CARDS in mongoose_model END");
 	return {"cards": playerCards, "atu": atu};
 }
 
 roomSchema.methods.addGame = function(nCards){
 	nPlayers = this.usernames.length;
 	resCards = getCards(nPlayers, nCards);
-	console.log("RES CARDS in mongoose_model addGame");
-	console.log(typeof(resCards["cards"]));	
-	console.log(resCards["cards"]);
-	console.log(JSON.stringify(resCards["cards"]));	
-	console.log("RES CARDS in mongoose_model  addGame END");
-	//create a new Schema	
-	//game = new Game({"cards": resCards["cards"], "atu": resCards["atu"], "moves": [], "hands": []});
-//	game = new Game({"cards": [], "atu": resCards["atu"], "moves": [], "hands": []});
-	//TODO is this necessary? because it's an array and not an object of primitive type??
-//	for(var i = 0; i<nPlayers; i++){
-//		var newArr = [];
-//		for(var j=0;j<nCards;j++){
-//			newArr.push(parseInt(resCards["cards"][i][j]));
-//		}	
-//		game.cards.push(newArr);
-//	}
-	//console.log("in create game resCards ");
-	//console.log(game["cards"]);	
-	//console.log("in create game resCards end");
 	//add rest of hash variables to this one , it's the same as newRoom.games[0] afterwards
 	resCards["moves"] = []; //array of length = nCards for each game each of length = nPlayers (matrix nCards x nPlayers)
 	resCards["hands"] = []; //array of length = nPlayers for each game
 	this.games.push(resCards);
-	//this.games.push(game);
 }
 
 

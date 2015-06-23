@@ -42,17 +42,7 @@ io.sockets.on('connection', function (socket) {
 					var newRoom = new Room({"name": data.message, "usernames": roomUsernames , "finished": false, "games": []});
 					//nCards = 1 for the first game
 					newRoom.addGame(1);
-
-					console.log("********cards first game object before save : ");
-					c1 =  newRoom.games[0].cards;
-					console.log("TYPE VAR :" + typeof(c1));
-					console.log("JSON var: " + JSON.stringify(c1));
-					console.log("********cards first game object before save END!!!! ");
 					
-
-
-
-
 				  newRoom.save(function (err) {
 				    if (!err) {
 				      console.log("created");
@@ -63,9 +53,13 @@ io.sockets.on('connection', function (socket) {
 
 					console.log("NUMBER PLAYERS IN THE ROOM start message on server : "  + nPlayers);
         	io.to(data.message).emit('startRoom', {'room': data.message, 'nPlayers': nPlayers, 'username': roomUsernames[0] });
-					console.log("SERVER PLAYER CARDS " + resCards);
 					for(var i = 0; i<nPlayers; i++){
-						io.to(conSockets[i]).emit("cards", {"cards": resCards["cards"][i], "atu": resCards["atu"]});
+						console.log("send Cards to player " + i);
+						console.log(newRoom.games[0].cards[i]);		
+						console.log("send Cards to player END ");
+				
+						console.log();
+						io.to(conSockets[i]).emit("cards", {"cards":  newRoom.games[0].cards[i], "atu":  newRoom.games[0].atu});
 						//put room in session for every user
 						io.sockets.connected[conSockets[i]].request.session.room = data.message;
 					}
