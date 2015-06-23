@@ -157,7 +157,11 @@ function getCards(nPlayers, nCards){
 	atu = 0;
 	if(nCards<8){
 		atu = newCards[nPlayers * nCards];
-	}	
+	}
+	console.log("GET CARDS in mongoose_model");
+	console.log(typeof(playerCards));	
+	console.debug((playerCards));	
+	console.log("GET CARDS in mongoose_model END");
 	return {"cards": playerCards, "atu": atu};
 }
 
