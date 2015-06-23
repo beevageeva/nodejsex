@@ -73,15 +73,21 @@ io.sockets.on('connection', function (socket) {
 			Room.findOne({ name: socket.request.session.room }, function (err, room) {
 				if(!err){
 					resBet = room.addHandBet(data.bet,  socket.request.session.username);
-					room.save(function(err){
-						if(!err){
-							//send card to all users in the room kept as a variable in session map	
-							io.to(socket.request.session.room).emit("betMade", {"bet": data.bet, "fromUsename": socket.request.session.username, "username": resBet[1], "res": resBet[0], "position": resBet[2]});
-						}
-						else{
-							console.log(err);
-						}
-					});				
+					if(resBet!=null){
+						room.save(function(err){
+							if(!err){
+								
+								//send card to all users in the room kept as a variable in session map	
+								io.to(socket.request.session.room).emit("betMade", {"bet": data.bet, "fromUsename": socket.request.session.username, "username": resBet[1], "res": resBet[0], "position": resBet[2]});
+							}
+							else{
+								console.log(err);
+							}
+						});
+					}		
+					else{
+						console.log("resBet == null");
+					}		
 				}
 				else{
 					console.log(err);
