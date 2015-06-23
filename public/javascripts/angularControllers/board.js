@@ -136,7 +136,7 @@ function mainController($scope, $http) {
 
 		$scope.sendCard = function(){
 			console.log("SCOPE FUNCION send card= " + $scope.selected );
-			if($scope.moved){
+			if($scope.moved!=2){
 				return;
 			}	
 			$scope.moved = 3;
