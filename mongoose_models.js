@@ -160,7 +160,8 @@ function getCards(nPlayers, nCards){
 	}
 	console.log("GET CARDS in mongoose_model");
 	console.log(typeof(playerCards));	
-	console.debug((playerCards));	
+	console.log(playerCards);
+	console.log(JSON.stringify(playerCards));	
 	console.log("GET CARDS in mongoose_model END");
 	return {"cards": playerCards, "atu": atu};
 }
