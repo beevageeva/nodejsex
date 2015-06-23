@@ -105,12 +105,12 @@ function mainController($scope, $http) {
 
 		$scope.isSendCardDisabled = function(){
 			//	console.log("move user: " + $scope.moveUser + ", username: " + $scope.username + " test ineq: " + ($scope.moveUser!=$scope.username));
-				return $scope.moveUser!=$scope.username && scope.moved!=2;
+				return $scope.moveUser!=$scope.username && $scope.moved!=2;
 			
 		}
 
 		$scope.isBetDisabled = function(){
-				return $scope.moveUser!=$scope.username && scope.moved!=1;
+				return $scope.moveUser!=$scope.username && $scope.moved!=1;
 			
 		}
 
