@@ -71,14 +71,24 @@ exports.User = userModel;
 
 
 //GAME ROOM
+//Game object
+var gameSchema = mongoose.Schema({
+	'cards': [[Number]], 
+	'hands': [{'bet': Number, 'done': Number}], 
+	'atu': Number, 
+	'moves': [[Number]]
+});
+
 var roomSchema = mongoose.Schema({
     name: String,
     finished: Boolean,
 		usernames: [String],
-		games: [{'cards': [[Number]], 'hands': [{'bet': Number, 'done': Number}], 'atu': Number, 'moves': [[Number]]}],
+		games: [gameSchema],
     created_at: Date,
     updated_at: Date
-})
+});
+
+Game =  mongoose.model('game', gameSchema);
 
 roomSchema.pre('save', function(next) {
 
@@ -169,10 +179,16 @@ function getCards(nPlayers, nCards){
 roomSchema.methods.addGame = function(nCards){
 	nPlayers = this.usernames.length;
 	resCards = getCards(nPlayers, nCards);
+	//create a new Schema	
+	game = new Game({"cards": resCards["cards"], "atu": resCards["atu"], "moves": [], "hands": []});
+	console.log("in create game resCards");
+	console.log(game);	
+	console.log("in create game resCards end");
 	//add rest of hash variables to this one , it's the same as newRoom.games[0] afterwards
-	resCards["moves"] = []; //array of length = nCards for each game each of length = nPlayers (matrix nCards x nPlayers)
-	resCards["hands"] = []; //array of length = nPlayers for each game
-	this.games.push(resCards);
+	//resCards["moves"] = []; //array of length = nCards for each game each of length = nPlayers (matrix nCards x nPlayers)
+	//resCards["hands"] = []; //array of length = nPlayers for each game
+	//this.games.push(resCards);
+	this.games.push(game);
 }
 
 
