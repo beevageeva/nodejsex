@@ -195,7 +195,7 @@ roomSchema.methods.addMove = function(card, username){
 		//round finished
 		//calculate who took it and add one to done to that username
 		//check bp
-		if(g.moves.length == nCards){
+		if(g.moves.length < nCards){
 			g.moves.push([]);	
 			username = this.usernames[0];
 		}
