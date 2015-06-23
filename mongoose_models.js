@@ -179,6 +179,11 @@ function getCards(nPlayers, nCards){
 roomSchema.methods.addGame = function(nCards){
 	nPlayers = this.usernames.length;
 	resCards = getCards(nPlayers, nCards);
+	console.log("RES CARDS in mongoose_model addGame");
+	console.log(typeof(resCards["cards"]));	
+	console.log(resCards["cards"]);
+	console.log(JSON.stringify(resCards["cards"]));	
+	console.log("RES CARDS in mongoose_model  addGame END");
 	//create a new Schema	
 	game = new Game({"cards": resCards["cards"], "atu": resCards["atu"], "moves": [], "hands": []});
 	console.log("in create game resCards");
