@@ -149,8 +149,11 @@ function mainController($scope, $http) {
 					break;	
 				}
 			}
+			socket.emit("sendCard", {"card": $scope.selected});
+			$scope.selected = 0;
+			//TODO no apply		
 			//$scope.$apply();
-			socket.emit("sendCard", {"card": $scope.selected});	
+
 		}
 
 		$scope.sendBet = function(){
