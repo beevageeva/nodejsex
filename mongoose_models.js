@@ -204,12 +204,10 @@ roomSchema.methods.addMove = function(card, username){
 			return null;
 		}
 		username = this.usernames[nPlayers - 1];
-		position = nPlayers - 1;
 
 	}
 	else{
 		username = this.usernames[indexUsername + 1];
-		position = g.moves[g.moves.length - 1].length - 1;	
 	}	
 	g.moves[g.moves.length - 1].push(card);
 	//test if this last move was the last in the game
@@ -227,7 +225,7 @@ roomSchema.methods.addMove = function(card, username){
 			}
 	}
 	console.log("in saveMove username = " + username);
-	return [username, res, position];
+	return [username, res, g.moves[g.moves.length - 1].length - 1  ];
 }
 
 
