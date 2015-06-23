@@ -190,6 +190,7 @@ roomSchema.methods.addMove = function(card, username){
 	nCards = g.cards[0].length;
 	res = 3;
 	username = null;
+	position = null;
 	if (addNewRound){
 		res = 2;
 		//round finished
@@ -202,10 +203,13 @@ roomSchema.methods.addMove = function(card, username){
 			console.log("INVALID MOVE");
 			return null;
 		}
-		username = this.usernames[this.usernames.length - 1];
+		username = this.usernames[nPlayers - 1];
+		position = nPlayers - 1;
+
 	}
 	else{
 		username = this.usernames[indexUsername + 1];
+		position = g.moves[g.moves.length - 1].length - 1;	
 	}	
 	g.moves[g.moves.length - 1].push(card);
 	//test if this last move was the last in the game
@@ -223,7 +227,7 @@ roomSchema.methods.addMove = function(card, username){
 			}
 	}
 	console.log("in saveMove username = " + username);
-	return [username, res, g.moves[g.moves.length - 1].length - 1];
+	return [username, res, position];
 }
 
 

@@ -37,6 +37,8 @@ io.sockets.on('connection', function (socket) {
 					roomUsernames.push(io.sockets.connected[conSockets[i]].request.session.username);
 				}
 				if(nPlayers>=3 && nPlayers<=6){
+					//delete already saved rooms with this name
+					Room.remove({"name": data.message});
 					var newRoom = new Room({"name": data.message, "usernames": roomUsernames , "finished": false, "games": []});
 					//nCards = 1 for the first game
 					newRoom.addGame(1);
