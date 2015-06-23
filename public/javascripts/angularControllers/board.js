@@ -98,6 +98,7 @@ function mainController($scope, $http) {
 			console.log("bet made " +  data.bet + " on position " + data.position);
 			$scope.gameBets[data.position] = data.bet;
 			$scope.moveUser = data.username;
+			$scope.moved = 2;
 			$scope.$apply();
 		});
 
