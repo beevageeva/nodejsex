@@ -71,7 +71,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('sendBet', function (data) {
 			console.log("SERVER SEND BET " + data.bet);
 			Room.findOne({ name: socket.request.session.room }, function (err, room) {
-				if(!err && room){
+				if(!err){
 					resBet = room.addHandBet(data.bet,  socket.request.session.username);
 					room.save(function(err){
 						if(!err){
@@ -83,9 +83,10 @@ io.sockets.on('connection', function (socket) {
 						}
 					});				
 				}
+				else{
+					console.log(err);
+				}
 		   });
-			
-				
     });
 
     socket.on('sendCard', function (data) {
@@ -108,3 +109,6 @@ io.sockets.on('connection', function (socket) {
 
 
 	});
+
+}
+
