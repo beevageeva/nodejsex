@@ -20,14 +20,13 @@ Room.remove({}, function (err) {
 io.sockets.on('connection', function (socket) {
 		if(socket.request.session!=null){
 			console.log("ON SOCKET CONNECTION  SESSION USERNAME" + socket.request.session.username);	
+      io.sockets.emit('newUsername', {'username': socket.request.session.username, 'room': socket.id });
 		}
     socket.emit('message', { message: 'welcome to the chat' });
 		//receive send messages from client and broadcast to all
     socket.on('room', function (data) {
-				//if(!data.message in startedRooms){
-					socket.join(data.message);
-        	io.sockets.emit('newRoom', {'room': data.message, 'username': socket.request.session.username});
-				//}
+				socket.join(data.message);
+        io.sockets.emit('newRoom', {'room': data.message, 'username': socket.request.session.username});
     });
 
     socket.on('startRoom', function (data) {
@@ -37,7 +36,6 @@ io.sockets.on('connection', function (socket) {
 				for(var i = 0; i<conSockets.length; i++){
 					roomUsernames.push(io.sockets.connected[conSockets[i]].request.session.username);
 				}
-				//if(nPlayers>=3 && nPlayers<=6 && !(data.message in startedRooms)){
 				if(nPlayers>=3 && nPlayers<=6){
 					var newRoom = new Room({"name": data.message, "usernames": roomUsernames , "finished": false, "games": []});
 					//nCards = 1 for the first game
