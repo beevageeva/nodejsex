@@ -191,7 +191,7 @@ roomSchema.methods.addGame = function(nCards){
 	for(var i = 0; i<nPlayers; i++){
 		var newArr = [];
 		for(var j=0;j<nCards;j++){
-			newArr.push(resCards[i][j]);
+			newArr.push(resCards["cards"][i][j]);
 		}	
 		game.cards.push(newArr);
 	}
