@@ -152,7 +152,7 @@ function mainController($scope, $http) {
 
 		$scope.sendBet = function(){
 			console.log("SCOPE FUNCION send bet from form= " + $scope.formData.bet );
-			if($scope.moved){
+			if($scope.moved == 2){
 				return;
 			}	
 			$scope.moved = 2;
