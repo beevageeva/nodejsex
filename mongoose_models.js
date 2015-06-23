@@ -77,7 +77,8 @@ var gameSchema = mongoose.Schema({
 	'cards': Array, 
 	'hands': [{'bet': Number, 'done': Number}], 
 	'atu': Number, 
-	'moves': [[Number]]
+	//'moves': [[Number]]
+	'moves': Array
 });
 
 var roomSchema = mongoose.Schema({
@@ -186,16 +187,16 @@ roomSchema.methods.addGame = function(nCards){
 	console.log(JSON.stringify(resCards["cards"]));	
 	console.log("RES CARDS in mongoose_model  addGame END");
 	//create a new Schema	
-	//game = new Game({"cards": resCards["cards"], "atu": resCards["atu"], "moves": [], "hands": []});
-	game = new Game({"cards": [], "atu": resCards["atu"], "moves": [], "hands": []});
+	game = new Game({"cards": resCards["cards"], "atu": resCards["atu"], "moves": [], "hands": []});
+//	game = new Game({"cards": [], "atu": resCards["atu"], "moves": [], "hands": []});
 	//TODO is this necessary? because it's an array and not an object of primitive type??
-	for(var i = 0; i<nPlayers; i++){
-		var newArr = [];
-		for(var j=0;j<nCards;j++){
-			newArr.push(parseInt(resCards["cards"][i][j]));
-		}	
-		game.cards.push(newArr);
-	}
+//	for(var i = 0; i<nPlayers; i++){
+//		var newArr = [];
+//		for(var j=0;j<nCards;j++){
+//			newArr.push(parseInt(resCards["cards"][i][j]));
+//		}	
+//		game.cards.push(newArr);
+//	}
 	console.log("in create game resCards ");
 	console.log(game["cards"]);	
 	console.log("in create game resCards end");
