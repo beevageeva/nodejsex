@@ -189,10 +189,11 @@ roomSchema.methods.addGame = function(nCards){
 	game = new Game({"cards": [], "atu": resCards["atu"], "moves": [], "hands": []});
 	//TODO is this necessary? because it's an array and not an object of primitive type??
 	for(var i = 0; i<nPlayers; i++){
-		game.cards.push([]);
+		var newArr = [];
 		for(var j=0;j<nCards;j++){
-			game.cards[i].push(resCards[i][j]);
+			newArr.push(resCards[i][j]);
 		}	
+		game.cards.push(newArr);
 	}
 	console.log("in create game resCards ");
 	console.log(game["cards"]);	
