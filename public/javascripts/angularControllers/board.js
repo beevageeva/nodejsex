@@ -57,7 +57,7 @@ function mainController($scope, $http) {
 		});
 		socket.on('newUsername', function (data) {
 			$scope.clients[data.username] = [data.room];
-		}
+		});
 		socket.on('newRoom', function (data) {
 			console.log("new room " +  data.room + " from username " + data.username);
 			$scope.clients[data.username].push(data.room);
