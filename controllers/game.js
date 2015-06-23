@@ -96,8 +96,8 @@ io.sockets.on('connection', function (socket) {
 					room.save(function(err){
 					if(!err){
 					//send card to all users in the room kept as a variable in session map	
-					io.to(socket.request.session.room).emit("cardMoved", {"card": data.card, "position": resMove[2], "fromUsename": socket.request.session.username, "username": resMove[0], "res": resMove[1]});
-					
+						io.to(socket.request.session.room).emit("cardMoved", {"card": data.card, "position": resMove[2], "fromUsename": socket.request.session.username, "username": resMove[0], "res": resMove[1]});
+					}	
 						else{
 							console.log(err);
 						}
