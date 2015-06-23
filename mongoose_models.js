@@ -240,6 +240,7 @@ roomSchema.methods.addHandBet = function(bet, username){
 		return null;
 	}
 	indexUsername = this.games.length % nPlayers +  g.hands.length
+	console.log("INDEX username " + indexUsername);
 	//TODO check username
 	console.log("IS USER AUTH: "  + (this.usernames[indexUsername] == username));
 	username = null;
@@ -252,6 +253,7 @@ roomSchema.methods.addHandBet = function(bet, username){
 	else{
 		username =  this.usernames[indexUsername + 1];
 	}
+	console.log("addHANDBET username " + username);
 	return [res, username, g.hands.length - 1];
 }
 
