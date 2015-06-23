@@ -79,7 +79,7 @@ function mainController($scope, $http) {
 				$scope.myCards[i] = data.cards[i];
 			}
 			//new game bets!
-			$scop.gameBets = [];
+			$scope.gameBets = [];
 			for(var i = 0; i< $scope.nPlayers; i++){
 				$scope.gameBets.push(0);
 			}
