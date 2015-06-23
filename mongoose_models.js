@@ -73,7 +73,8 @@ exports.User = userModel;
 //GAME ROOM
 //Game object
 var gameSchema = mongoose.Schema({
-	'cards': [[Number]], 
+	//'cards': [[Number]], 
+	'cards': Array, 
 	'hands': [{'bet': Number, 'done': Number}], 
 	'atu': Number, 
 	'moves': [[Number]]
