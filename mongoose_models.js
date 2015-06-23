@@ -252,7 +252,7 @@ roomSchema.methods.addHandBet = function(bet, username){
 	else{
 		username =  this.usernames[indexUsername + 1];
 	}
-	return [res, username, g.hands.length];
+	return [res, username, g.hands.length - 1];
 }
 
 
