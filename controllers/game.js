@@ -42,6 +42,7 @@ io.sockets.on('connection', function (socket) {
 					var newRoom = new Room({"name": data.message, "usernames": roomUsernames , "finished": false, "games": []});
 					//nCards = 1 for the first game
 					newRoom.addGame(1);
+					console.log("********cards first game object before save : " + newRoom.games[0].cards);
 				  newRoom.save(function (err) {
 				    if (!err) {
 				      console.log("created");
