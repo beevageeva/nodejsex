@@ -204,8 +204,9 @@ roomSchema.methods.addMove = function(card, username){
 			console.log("INVALID MOVE");
 			return null;
 		}
-		username = this.usernames[nPlayers - 1];
-
+	}
+	if(g.moves[g.moves.length-1].length == nPlayers){
+		username = this.usernames[0];
 	}
 	else{
 		username = this.usernames[indexUsername + 1];
