@@ -61,12 +61,15 @@
 
                 <!-- LOOP OVER THE TODOS IN $scope.todos -->
 								<h1>Clients</h1>
-                <div class="checkbox" ng-repeat="(username, rooms) in clients">
+                <div class="checkbox" ng-repeat="(u, rooms) in clients">
                     <label>
-                        {{ username }} 
+                        {{ u }} 
                     </label>
                 		<div  ng-repeat="r in rooms">
-											{{ r }} <a href="#" ng-click="startRoom(r)">Start</a>
+											{{ r }} 
+											<a href="#" ng-if="u==username" ng-click="startRoom(r)">Start</a>
+											<a href="#" ng-if="u!=username"  ng-click="joinRoom(r)">Join</a>
+		
 										</div>
                 </div>
 								<!-- join room form --> 

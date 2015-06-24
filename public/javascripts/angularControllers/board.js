@@ -131,6 +131,9 @@ function mainController($scope, $http) {
 		$scope.createRoom = function(){
 			socket.emit('room', { message: $scope.formData.room });			
 		}
+		$scope.joinRoom = function(room){
+			socket.emit('room', { message: room });			
+		}
 
 
 		$scope.startRoom = function(room){
