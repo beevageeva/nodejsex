@@ -205,7 +205,7 @@ roomSchema.methods.addMove = function(card, username){
 			return null;
 		}
 	}
-	if(g.moves[g.moves.length-1].length == nPlayers){
+	if(indexUsername == nPlayers -1){
 		username = this.usernames[0];
 	}
 	else{
@@ -213,7 +213,7 @@ roomSchema.methods.addMove = function(card, username){
 	}	
 	g.moves[g.moves.length - 1].push(card);
 	//test if this last move was the last in the game
-	if(g.moves[g.moves.length-1].length == nPlayers && g.moves.length == nCards){
+	if(indexUsername == nPlayers - 1 && g.moves.length == nCards){
 			//insert next game
 			nextGameNCards = getNextGameNCards(nPlayers, this.games.length);
 			if(nextGameNCards == -1){
@@ -226,8 +226,8 @@ roomSchema.methods.addMove = function(card, username){
 				this.addGame(nextGameNCards);
 			}
 	}
-	console.log("in saveMove username = " + username + ", position = " + g.moves[g.moves.length - 1].length - 1);
-	return [username, res, g.moves[g.moves.length - 1].length - 1  ];
+	console.log("in saveMove username = " + username + ", position = " + indexUsername);
+	return [username, res, indexUsername];
 }
 
 
