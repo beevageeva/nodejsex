@@ -17,7 +17,6 @@ git push heroku master
 ../heroku-client/bin/heroku open
 
 
-../heroku-client/bin/heroku pg:psql
 
 create a database(postgres)
  ../heroku-client/bin/heroku addons:docs heroku-postgresql
