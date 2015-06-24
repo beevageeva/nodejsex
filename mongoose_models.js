@@ -192,6 +192,7 @@ roomSchema.methods.addMove = function(card, username){
 	username = null;
 	position = null;
 	if (addNewRound){
+		console.log("mongoose_models.addMove: add new round");
 		res = 2;
 		//round finished
 		//calculate who took it and add one to done to that username
@@ -224,7 +225,7 @@ roomSchema.methods.addMove = function(card, username){
 				this.addGame(nextGameNCards);
 			}
 	}
-	console.log("in saveMove username = " + username);
+	console.log("in saveMove username = " + username + ", position = " + g.moves[g.moves.length - 1].length - 1);
 	return [username, res, g.moves[g.moves.length - 1].length - 1  ];
 }
 

@@ -60,8 +60,10 @@ exports.load = function(req, res) {
 		//for (k in io.sockets.connected[id]){
 		//	console.log("Prop " + k);
 		//}
-		console.log("id = "+ id + ", value = " + io.sockets.connected[id].request.session.username);
-		clients[io.sockets.connected[id].request.session.username] = io.sockets.connected[id].rooms;
+		if(io.sockets.connected[id].request.session){
+			console.log("id = "+ id + ", value = " + io.sockets.connected[id].request.session.username);
+			clients[io.sockets.connected[id].request.session.username] = io.sockets.connected[id].rooms;
+		}
 		
 	}
 	console.log("*******************IO in controller board.js" + io);
