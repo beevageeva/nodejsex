@@ -220,6 +220,9 @@ roomSchema.methods.addMove = function(card, username){
 		username = this.usernames[indexUsername + 1];
 	}	
 	g.moves[g.moves.length - 1].push(card);
+	//TODO mark modified
+	g.markModified("moves");
+	this.markModified("games");
 	console.log("AFTER ADDING");
 	console.log(g.moves[g.moves.length - 1]);	
 	//test if this last move was the last in the game
