@@ -67,6 +67,19 @@ io.sockets.on('connection', function (socket) {
 
 				}
     });
+
+		socket.on('getCards', function (data) {
+			 Room.findOne({ name: socket.request.session.room }, function (err, room) {
+				for(var i = 0;i<room.usernames.length; i++){
+					if(socket.request.session.username == room.usernames[i]){
+						g = room.games[room.games.length - 1];
+						socket.emit("cards", {"cards":  g.cards[i], "atu":  g.atu});
+						break;	
+					}
+				}
+			 });	
+		});
+
 		
     socket.on('sendBet', function (data) {
 			console.log("SERVER SEND BET " + data.bet);

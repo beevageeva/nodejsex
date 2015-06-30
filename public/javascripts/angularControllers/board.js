@@ -71,6 +71,7 @@ function mainController($scope, $http) {
 				$scope.startedRoom = data.room;
 				$scope.moved = 1;
 				$scope.nPlayers = data.nPlayers;
+				$scope.isGetCardsDisabled = true;
 				//initialize tableCards
 				for(var i = 0;i<data.nPlayers; i++){
 					$scope.tableCards.push(0);
@@ -99,9 +100,12 @@ function mainController($scope, $http) {
 		});
 
 		socket.on('cardMoved', function (data) {
-			console.log("move card " +  data.card + " on position " + data.position  + ", moveUser " + data.username );
+			console.log("move card " +  data.card + " on position " + data.position  + ", moveUser " + data.username  + ", res = " + data.res);
 			$scope.tableCards[data.position] = data.card;
 			$scope.moveUser = data.username;
+			if(data.res == 1){
+				$scope.isGetCardsDisabled = false;
+			}
 			$scope.$apply();
 		});
 		socket.on('betMade', function (data) {
@@ -140,6 +144,10 @@ function mainController($scope, $http) {
 		}
 		$scope.joinRoom = function(room){
 			socket.emit('room', { message: room });			
+		}
+
+		$scope.getCards = function(){
+			socket.emit('getCards');			
 		}
 
 

@@ -227,7 +227,7 @@ roomSchema.methods.addMove = function(card, username){
 	//console.log(g.moves[g.moves.length - 1]);	
 	//test if this last move was the last in the game
 	if(indexUsername == nPlayers - 1 && g.moves.length == nCards){
-			//insert next game
+			//insert next game, calculate points
 			nextGameNCards = getNextGameNCards(nPlayers, this.games.length);
 			if(nextGameNCards == -1){
 				//game finished
