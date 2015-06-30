@@ -147,7 +147,12 @@ function mainController($scope, $http) {
 		}
 
 		$scope.getCards = function(){
-			socket.emit('getCards');			
+			socket.emit('getCards');
+			//reinit vars	
+			$scope.myCards.length = 0;		
+			for(var i = 0;i<$scope.tableCards.length; i++){
+				$scope.tableCards[i] = 0;
+			}
 		}
 
 
@@ -181,7 +186,8 @@ function mainController($scope, $http) {
 			}	
 			$scope.moved = 2;
 			//$scope.$apply();
-			socket.emit("sendBet", {"bet": $scope.formData.bet});	
+			socket.emit("sendBet", {"bet": $scope.formData.bet});
+				
 		}
 
 
