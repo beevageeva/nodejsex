@@ -44,8 +44,8 @@ function mainController($scope, $http) {
 		$scope.startedRoom = null;
 		$scope.nPlayers = 0;
 		$scope.nCards = 0;
-		$scope.tableCards = [0,0,0,0,0,0];
-		$scope.myCards = [0,0,0,0,0,0,0,0];	
+		$scope.tableCards = [];
+		$scope.myCards = [];	
 		$scope.selected = 0;	
 		$scope.atu = 0;	
 
@@ -71,6 +71,10 @@ function mainController($scope, $http) {
 				$scope.startedRoom = data.room;
 				$scope.moved = 1;
 				$scope.nPlayers = data.nPlayers;
+				//initialize tableCards
+				for(var i = 0;i<data.nPlayers; i++){
+					$scope.tableCards.push(0);
+				}
 				$scope.moveUser = data.username;
 				$scope.$apply();
 			}
@@ -80,8 +84,9 @@ function mainController($scope, $http) {
 		socket.on('cards', function (data) {
 			console.log("get cards  " +  data.cards );
 			$scope.nCards = data.cards.length;
+			//init myCards
 			for(var i = 0; i< data.cards.length; i++){
-				$scope.myCards[i] = data.cards[i];
+				$scope.myCards.push(data.cards[i]);
 			}
 			//new game bets!
 			$scope.gameBets = [];
