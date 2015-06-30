@@ -149,10 +149,13 @@ function mainController($scope, $http) {
 		$scope.getCards = function(){
 			socket.emit('getCards');
 			//reinit vars	
-			$scope.myCards.length = 0;		
+			$scope.myCards.length = 0;	
+			$scope.isSendCardDisabled = true;	
+			$scope.moved = 1;
 			for(var i = 0;i<$scope.tableCards.length; i++){
 				$scope.tableCards[i] = 0;
 			}
+			
 		}
 
 
