@@ -190,7 +190,7 @@ roomSchema.methods.addMove = function(card, username){
 		console.log("lg ml length = " + g.moves[g.moves.length - 1].length);	
 	}
 
-	indexUsername = (this.games.length -1) % nPlayers + (addNewRound?0:g.moves[g.moves.length - 1].length - 1)
+	indexUsername = (this.games.length -1) % nPlayers + (addNewRound?0:g.moves[g.moves.length - 1].length )
 
 	//TODO check username
 	console.log("IS USER AUTH: "  + (this.usernames[indexUsername] == username));
