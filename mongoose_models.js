@@ -187,7 +187,8 @@ roomSchema.methods.addMove = function(card, username){
 	
 	console.log("addNewRound = " + addNewRound );
 	if(g.moves.length > 0){
-		console.log("lg ml length = " + g.moves[g.moves.length - 1].length);	
+		console.log("lg ml length = " + g.moves[g.moves.length - 1].length + ", type = " + typeof( g.moves[g.moves.length - 1]));
+		console.log(g.moves[g.moves.length - 1]);	
 	}
 
 	indexUsername = (this.games.length -1) % nPlayers + (addNewRound?0:g.moves[g.moves.length - 1].length )
