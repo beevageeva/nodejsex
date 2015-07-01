@@ -269,7 +269,7 @@ roomSchema.methods.addHandBet = function(bet, username){
 	else{
 		res = 1;
 	}
-	if (indexUsername == nPlayers-1){
+	if (indexUsername == nPlayers - 1){
 		username = this.usernames[0];
 	}
 	else{
