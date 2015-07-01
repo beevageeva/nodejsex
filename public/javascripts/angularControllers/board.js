@@ -149,7 +149,6 @@ function mainController($scope, $http) {
 		}
 
 		$scope.getCards = function(){
-			socket.emit('getCards');
 			//reinit vars	
 			$scope.myCards.length = 0;	
 			//$scope.myCards = [];	
@@ -158,6 +157,8 @@ function mainController($scope, $http) {
 			for(var i = 0;i<$scope.tableCards.length; i++){
 				$scope.tableCards[i] = 0;
 			}
+			//send server request
+			socket.emit('getCards');
 			
 		}
 
