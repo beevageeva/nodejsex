@@ -41,6 +41,7 @@ function mainController($scope, $http) {
 
     //$scope.createGrid(30,20);
 		$scope.moved = 0;
+		$scope.message = "";
 		$scope.startedRoom = null;
 		$scope.nPlayers = 0;
 		$scope.nCards = 0;
@@ -177,8 +178,13 @@ function mainController($scope, $http) {
 		$scope.sendCard = function(){
 			console.log("SCOPE FUNCION send card= " + $scope.selected );
 			if($scope.moved!=2){
+				$scope.message = "INVALID MOVE SEND CARD";
 				return;
 			}	
+			if($scope.selected==0){
+				$scope.message = "You must choose a card";
+				return;
+			}
 			$scope.moved = 3;
 			for(var i = 0; i<$scope.nCards; i++){
 				if($scope.myCards[i]== $scope.selected){
@@ -195,9 +201,15 @@ function mainController($scope, $http) {
 
 		$scope.sendBet = function(){
 			console.log("SCOPE FUNCION send bet from form= " + $scope.formData.bet );
-			if($scope.moved == 2){
+			if($scope.moved != 1){
+				$scope.message = "INVALID MOVE SEND BET";
 				return;
-			}	
+			}
+				//test it's a number
+			if(!/^\d+$/.test($scope.formData.bet)){
+				$scope.message = "Bet is not a number";
+				return;
+			}
 			$scope.moved = 2;
 			//$scope.$apply();
 			socket.emit("sendBet", {"bet": $scope.formData.bet});

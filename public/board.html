@@ -52,7 +52,7 @@
 
         <!-- HEADER AND TODO COUNT -->
         <div class="jumbotron text-center">
-            <h1>Started room <span class="label label-info">{{ startedRoom }}, move {{moveUser}}</span></h1>
+            <h1>Started room </h1>
         </div>
 
         <!-- TODO LIST -->
@@ -93,6 +93,7 @@
 		<h2> MOVED : {{moved}}</h2>
 
 	<div ng-show="startedRoom!=null">
+	<span class="label label-info">move {{moveUser}}, {{message}}</span>
 	<div class="container"> Table Cards:
 		<table>
 			<tr> 
