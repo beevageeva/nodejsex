@@ -84,6 +84,7 @@ function mainController($scope, $http) {
 		//receive cards
 		socket.on('cards', function (data) {
 			$scope.$apply(function () {
+				try {
 				console.log("get cards  " +  data.cards );
 				$scope.nCards = data.cards.length;
 				//init myCards
@@ -99,6 +100,10 @@ function mainController($scope, $http) {
 				$scope.atu = data.atu;
 				$scope.selected = $scope.myCards[0];
 				console.log("selected = " + $scope.selected);
+				}
+				catch (e) {
+        	console.log(e);
+      	}
 
 			});
 
@@ -186,7 +191,7 @@ function mainController($scope, $http) {
 			}
 			socket.emit("sendCard", {"card": $scope.selected});
 			$scope.selected = 0;
-			//TODO no apply		
+			//TODO no apply	in click events , this is already wrapped in an apply call and calling it here again (from apply function) will throw an error
 			//$scope.$apply();
 
 		}
