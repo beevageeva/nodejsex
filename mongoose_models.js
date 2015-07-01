@@ -229,6 +229,7 @@ roomSchema.methods.addMove = function(card, username){
 	if(g.moves[g.moves.length - 1].length == nPlayers && g.moves.length == nCards){
 			//insert next game, calculate points
 			nextGameNCards = getNextGameNCards(nPlayers, this.games.length);
+			console.log("****nextGameNCards = " + nextGameNCards);
 			if(nextGameNCards == -1){
 				//game finished
 				res = 0;
