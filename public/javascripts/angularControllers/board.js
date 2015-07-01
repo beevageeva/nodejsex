@@ -89,7 +89,7 @@ function mainController($scope, $http) {
 			for(var i = 0; i< data.cards.length; i++){
 				$scope.myCards.push(data.cards[i]);
 			}
-			console.log($scope.myCards);
+			console.log("mycards 0 = " + $scope.myCards[0]);
 			//new game bets!
 			$scope.gameBets = [];
 			for(var i = 0; i< $scope.nPlayers; i++){
@@ -97,6 +97,7 @@ function mainController($scope, $http) {
 			}
 			$scope.atu = data.atu;
 			$scope.selected = $scope.myCards[0];
+			console.log("selected = " + $scope.selected);
 			$scope.$apply();
 		});
 
@@ -150,8 +151,8 @@ function mainController($scope, $http) {
 		$scope.getCards = function(){
 			socket.emit('getCards');
 			//reinit vars	
-			//$scope.myCards.length = 0;	
-			$scope.myCards = [];	
+			$scope.myCards.length = 0;	
+			//$scope.myCards = [];	
 			$scope.isSendCardDisabled = true;	
 			$scope.moved = 1;
 			for(var i = 0;i<$scope.tableCards.length; i++){
