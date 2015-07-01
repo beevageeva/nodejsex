@@ -180,7 +180,7 @@ roomSchema.methods.addGame = function(nCards){
 
 //also checks for turn username variable from session map 
 roomSchema.methods.addMove = function(card, username){
-	//finished game completely = 0, finished game = 1(addNewGame), finished round = 2, unfinished = 3
+	//finished game completely = 0, finished game = 1(addNewGame), 2 finish last round , finished round = 3, unfinished = 4
 	g = this.games[this.games.length - 1];
 	nPlayers = this.usernames.length;
 	addNewRound = g.moves.length == 0 || g.moves[g.moves.length-1].length == nPlayers;
@@ -196,12 +196,12 @@ roomSchema.methods.addMove = function(card, username){
 	//TODO check username
 	console.log("IS USER AUTH: "  + (this.usernames[indexUsername] == username));
 	nCards = g.cards[0].length;
-	res = 3;
+	res = 4;
 	username = null;
 	position = null;
 	if (addNewRound){
 		console.log("mongoose_models.addMove: add new round");
-		res = 2;
+		res = 3;
 		//round finished
 		//calculate who took it and add one to done to that username
 		//check bp
@@ -226,7 +226,8 @@ roomSchema.methods.addMove = function(card, username){
 	//console.log("AFTER ADDING");
 	//console.log(g.moves[g.moves.length - 1]);	
 	//test if this last move was the last in the game
-	if(g.moves[g.moves.length - 1].length == nPlayers && g.moves.length == nCards){
+	if(g.moves[g.moves.length - 1].length == nPlayers){
+		if(g.moves.length == nCards){
 			//insert next game, calculate points
 			nextGameNCards = getNextGameNCards(nPlayers, this.games.length);
 			console.log("****nextGameNCards = " + nextGameNCards);
@@ -239,6 +240,10 @@ roomSchema.methods.addMove = function(card, username){
 				res = 1;
 				this.addGame(nextGameNCards);
 			}
+		}
+		else{
+			res = 2;
+		}	
 	}
 	console.log("in saveMove username = " + username + ", position = " +  (g.moves[g.moves.length - 1].length - 1)   + ", res = " +  res);
 	return [username, res, g.moves[g.moves.length - 1].length - 1];

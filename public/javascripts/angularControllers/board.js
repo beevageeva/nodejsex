@@ -109,6 +109,10 @@ function mainController($scope, $http) {
 			if(data.res == 1){
 				$scope.isGetCardsDisabled = false;
 			}
+			else if(data.res == 2){
+				//another round finished, I must have button activated
+				$scope.moved = 2;
+			}
 			$scope.$apply();
 		});
 		socket.on('betMade', function (data) {
@@ -140,7 +144,7 @@ function mainController($scope, $http) {
 			console.log("my cards length " + $scope.myCards.length);
 			if($scope.myCards[i]!=0 && $scope.selected != $scope.myCards[i]){
 				$scope.selected = $scope.myCards[i];
-				$scope.$apply();
+				//$scope.$apply();
 			}
 		}
 
