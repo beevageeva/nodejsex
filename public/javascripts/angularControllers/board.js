@@ -83,22 +83,25 @@ function mainController($scope, $http) {
 
 		//receive cards
 		socket.on('cards', function (data) {
-			console.log("get cards  " +  data.cards );
-			$scope.nCards = data.cards.length;
-			//init myCards
-			for(var i = 0; i< data.cards.length; i++){
-				$scope.myCards.push(data.cards[i]);
-			}
-			console.log("mycards 0 = " + $scope.myCards[0]);
-			//new game bets!
-			$scope.gameBets = [];
-			for(var i = 0; i< $scope.nPlayers; i++){
-				$scope.gameBets.push(0);
-			}
-			$scope.atu = data.atu;
-			$scope.selected = $scope.myCards[0];
-			console.log("selected = " + $scope.selected);
-			$scope.$apply();
+			$scope.$apply(function () {
+				console.log("get cards  " +  data.cards );
+				$scope.nCards = data.cards.length;
+				//init myCards
+				for(var i = 0; i< data.cards.length; i++){
+					$scope.myCards.push(data.cards[i]);
+				}
+				console.log("mycards 0 = " + $scope.myCards[0]);
+				//new game bets!
+				$scope.gameBets = [];
+				for(var i = 0; i< $scope.nPlayers; i++){
+					$scope.gameBets.push(0);
+				}
+				$scope.atu = data.atu;
+				$scope.selected = $scope.myCards[0];
+				console.log("selected = " + $scope.selected);
+
+			});
+
 		});
 
 		socket.on('cardMoved', function (data) {
@@ -130,6 +133,8 @@ function mainController($scope, $http) {
 			
 		}
 
+
+		
 
 		$scope.clickMyCard = function(i){
 			console.log("SCOPE FUNCION Click My card= " + i );
