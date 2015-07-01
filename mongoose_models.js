@@ -191,7 +191,7 @@ roomSchema.methods.addMove = function(card, username){
 		console.log(g.moves[g.moves.length - 1]);	
 	}
 
-	indexUsername = (this.games.length -1) % nPlayers + (addNewRound?0:g.moves[g.moves.length - 1].length )
+	indexUsername = (this.games.length -1  +   (addNewRound?0:g.moves[g.moves.length - 1].length )) % nPlayers 
 
 	//TODO check username
 	console.log("IS USER AUTH: "  + (this.usernames[indexUsername] == username));
@@ -257,7 +257,7 @@ roomSchema.methods.addHandBet = function(bet, username){
 		console.log("INVALID MOVE ");
 		return null;
 	}
-	indexUsername = (this.games.length -1) % nPlayers +  g.hands.length -1
+	indexUsername = (this.games.length -1 + g.hands.length -1) % nPlayers 
 	console.log("INDEX username " + indexUsername);
 	//TODO check username
 	console.log("IS USER AUTH: "  + (this.usernames[indexUsername] == username));
