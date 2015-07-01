@@ -262,11 +262,15 @@ roomSchema.methods.addHandBet = function(bet, username){
 	//TODO check username
 	console.log("IS USER AUTH: "  + (this.usernames[indexUsername] == username));
 	username = null;
-	res = 1;
 	if (g.hands.length == nPlayers){
 		console.log("roomSchema.methods.addHandBet:  alreday at max ");
-		username = this.usernames[0];
 		res = 0;
+	}
+	else{
+		res = 1;
+	}
+	if (indexUsername == nPlayers-1){
+		username = this.usernames[0];
 	}
 	else{
 		username =  this.usernames[indexUsername + 1];

@@ -84,14 +84,12 @@ function mainController($scope, $http) {
 		//receive cards
 		socket.on('cards', function (data) {
 			$scope.$apply(function () {
-				try {
 				console.log("get cards  " +  data.cards );
 				$scope.nCards = data.cards.length;
 				//init myCards
 				for(var i = 0; i< data.cards.length; i++){
 					$scope.myCards.push(data.cards[i]);
 				}
-				console.log("mycards 0 = " + $scope.myCards[0]);
 				//new game bets!
 				$scope.gameBets = [];
 				for(var i = 0; i< $scope.nPlayers; i++){
@@ -99,11 +97,6 @@ function mainController($scope, $http) {
 				}
 				$scope.atu = data.atu;
 				$scope.selected = $scope.myCards[0];
-				console.log("selected = " + $scope.selected);
-				}
-				catch (e) {
-        	console.log(e);
-      	}
 
 			});
 
