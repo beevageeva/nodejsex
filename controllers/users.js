@@ -110,7 +110,7 @@ exports.create = function(req, res) {
 exports.login = function(req, res){
 
   User.findOne({username: req.body.username}, function (err, user) {
-    if (!err) {
+    if (user && !err) {
 			if(user.validPassword(req.body.password)){
 				req.session.username = user.username;	
       	res.send(true);
