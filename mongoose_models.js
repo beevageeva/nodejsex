@@ -239,8 +239,8 @@ roomSchema.methods.addMove = function(card, username){
 				this.addGame(nextGameNCards);
 			}
 	}
-	console.log("in saveMove username = " + username + ", position = " + indexUsername + ", res = " +  res);
-	return [username, res, indexUsername];
+	console.log("in saveMove username = " + username + ", position = " +  (g.moves[g.moves.length - 1].length - 1)   + ", res = " +  res);
+	return [username, res, g.moves[g.moves.length - 1].length - 1];
 }
 
 
