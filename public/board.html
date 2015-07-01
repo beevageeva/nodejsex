@@ -50,10 +50,6 @@
 
     <div class="container" ng-show="moved==0"  >
 
-        <!-- HEADER AND TODO COUNT -->
-        <div class="jumbotron text-center">
-            <h1>Started room </h1>
-        </div>
 
         <!-- TODO LIST -->
         <div id="player-list" class="row">
@@ -90,7 +86,6 @@
 
     </div>
 
-		<h2> MOVED : {{moved}}</h2>
 
 	<div ng-show="startedRoom!=null">
 	<span class="label label-info">move {{moveUser}}, {{message}}</span>
@@ -112,7 +107,11 @@
 		<div>Selected<img style="border: 1px solid green; " width="50" height="72" ng-src="/cards/{{selected}}.png"></div>
     <button type="submit" class="btn btn-primary btn-lg" ng-disabled="isSendCardDisabled()" ng-click="sendCard()">Done</button>
 
-		<table>
+   <!-- HEADER AND TODO COUNT -->
+    <div class="jumbotron text-center">
+        <h1>Bets </h1>
+    </div>
+		<table boder="1">
 			<tr> 
 				<td ng-repeat="b in gameBets  track by $index">{{b}}</td> 
 			</tr>
