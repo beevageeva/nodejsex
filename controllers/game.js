@@ -52,14 +52,14 @@ io.sockets.on('connection', function (socket) {
 				  });
 
 					console.log("NUMBER PLAYERS IN THE ROOM start message on server : "  + nPlayers);
-        	io.to(data.message).emit('startRoom', {'room': data.message, 'nPlayers': nPlayers, 'username': roomUsernames[0] });
+        	io.to(data.message).emit('startRoom', {'room': data.message, 'nPlayers': nPlayers});
 					for(var i = 0; i<nPlayers; i++){
 						console.log("send Cards to player " + i);
 						console.log(newRoom.games[0].cards[i]);		
 						console.log("send Cards to player END ");
 				
 						console.log();
-						io.to(conSockets[i]).emit("cards", {"cards":  newRoom.games[0].cards[i], "atu":  newRoom.games[0].atu});
+						io.to(conSockets[i]).emit("cards", {"cards":  newRoom.games[0].cards[i], "atu":  newRoom.games[0].atu, "username" : roomUsernames[0] });
 						//put room in session for every user
 						io.sockets.connected[conSockets[i]].request.session.room = data.message;
 					}
@@ -73,7 +73,7 @@ io.sockets.on('connection', function (socket) {
 				for(var i = 0;i<room.usernames.length; i++){
 					if(socket.request.session.username == room.usernames[i]){
 						g = room.games[room.games.length - 1];
-						socket.emit("cards", {"cards":  g.cards[i], "atu":  g.atu});
+						socket.emit("cards", {"cards":  g.cards[i], "atu":  g.atu, "username": room.usernames[(room.games.length -1) % room.usernames.length] });
 						break;	
 					}
 				}

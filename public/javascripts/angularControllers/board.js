@@ -76,7 +76,6 @@ function mainController($scope, $http) {
 				for(var i = 0;i<data.nPlayers; i++){
 					$scope.tableCards.push(0);
 				}
-				$scope.moveUser = data.username;
 				$scope.$apply();
 			}
 		});
@@ -96,6 +95,7 @@ function mainController($scope, $http) {
 					$scope.gameBets.push(0);
 				}
 				$scope.atu = data.atu;
+				$scope.moveUser = data.username;
 				$scope.selected = $scope.myCards[0];
 
 			});
