@@ -162,7 +162,7 @@ function mainController($scope, $http) {
 			//reinit vars	
 			$scope.myCards.length = 0;	
 			//$scope.myCards = [];	
-			$scope.isSendCardDisabled = true;	
+			$scope.isGetCardsDisabled = true;	
 			$scope.moved = 1;
 			for(var i = 0;i<$scope.tableCards.length; i++){
 				$scope.tableCards[i] = 0;
