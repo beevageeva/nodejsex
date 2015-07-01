@@ -83,7 +83,7 @@ function mainController($scope, $http) {
 		//receive cards
 		socket.on('cards', function (data) {
 			$scope.$apply(function () {
-				console.log("get cards  " +  data.cards );
+				console.log("get cards  " +  data.cards  + ", username " + data.username);
 				$scope.nCards = data.cards.length;
 				//init myCards
 				for(var i = 0; i< data.cards.length; i++){
