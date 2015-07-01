@@ -93,7 +93,7 @@ function mainController($scope, $http) {
 				//new game bets!
 				$scope.gameBets = [];
 				for(var i = 0; i< $scope.nPlayers; i++){
-					$scope.gameBets.push(0);
+					$scope.gameBets.push(-1);
 				}
 				$scope.atu = data.atu;
 				$scope.moveUser = data.username;
@@ -113,6 +113,10 @@ function mainController($scope, $http) {
 			else if(data.res == 2){
 				//another round finished, I must have button activated
 				$scope.moved = 2;
+				//TODO duplicated code in getCards click event	
+				for(var i = 0;i<$scope.tableCards.length; i++){
+					$scope.tableCards[i] = 0;
+				}
 			}
 			$scope.$apply();
 		});

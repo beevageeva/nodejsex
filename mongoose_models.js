@@ -99,11 +99,11 @@ roomSchema.pre('save', function(next) {
 
 
 function getNextGameNCards(nPlayers, numberGame){
-	if(numberGame<nPlayers ){
+	if(numberGame<nPlayers -1){
 		return 1;
 	}
 	else if(numberGame<nPlayers + 7){
-		return numberGame - nPlayers + 1;
+		return numberGame - nPlayers + 3;
 	}
 	else if(numberGame<2*nPlayers + 7){
 		return 8;
