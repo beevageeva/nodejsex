@@ -214,7 +214,7 @@ roomSchema.methods.addMove = function(card, username){
 		position = indexFirstPlayer;
 
 		//TODO test continous...AUTH
-		for(var i = indexFirstPlayer +1; i<nPlayers && indexNextPlayer !==-1; i++){
+		for(var i = indexFirstPlayer +1; i<nPlayers && indexNextPlayer ==-1; i++){
 			if(g.moves[i].cardsPut.length != g.moves[indexFirstPlayer].cardsPut.length){
 				indexNextPlayer = i;
 			}
