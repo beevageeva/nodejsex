@@ -275,7 +275,7 @@ roomSchema.methods.addMove = function(card, username){
 		}
 		else{
 			res = 3;
-			username = this.usernames[indexNextUsername];
+			username = this.usernames[indexNextPlayer];
 		}
 		//g.markModified("moves");
 		this.markModified("games");
