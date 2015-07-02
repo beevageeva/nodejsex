@@ -43,12 +43,6 @@ function mainController($scope, $http) {
 		$scope.moved = 0;
 		$scope.message = "";
 		$scope.startedRoom = null;
-		$scope.nPlayers = 0;
-		$scope.nCards = 0;
-		$scope.tableCards = [];
-		$scope.myCards = [];	
-		$scope.selected = 0;	
-		$scope.atu = 0;	
 
 
 		var socket = io.connect('https://secure-badlands-6804.herokuapp.com');
@@ -56,23 +50,33 @@ function mainController($scope, $http) {
 			console.log("client message data " +  data);
 			$scope.$apply();
 		});
+
 		socket.on('newUsername', function (data) {
 			$scope.clients[data.username] = [data.room];
 				$scope.$apply();
 			
 		});
+
 		socket.on('newRoom', function (data) {
 			console.log("new room " +  data.room + " from username " + data.username);
 			$scope.clients[data.username].push(data.room);
 			$scope.$apply();
 		});
+
 		socket.on('startRoom', function (data) {
 			console.log("start room " +  data.room );
 			if($scope.startedRoom == null){
+				$scope.nPlayers = 0;
+				$scope.nCards = 0;
+				$scope.tableCards = [];
+				$scope.myCards = [];	
+				$scope.selected = 0;	
+				$scope.atu = 0;	
 				$scope.startedRoom = data.room;
 				$scope.moved = 1;
 				$scope.nPlayers = data.nPlayers;
 				$scope.isGetCardsDisabled = true;
+				$scope.scores = [];
 				//initialize tableCards
 				for(var i = 0;i<data.nPlayers; i++){
 					$scope.tableCards.push(0);
