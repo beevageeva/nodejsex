@@ -107,7 +107,7 @@
 		<div>Selected<img style="border: 1px solid green; " width="50" height="72" ng-src="/cards/{{selected}}.png"></div>
     <button type="submit" class="btn btn-primary btn-lg" ng-disabled="isSendCardDisabled()" ng-click="sendCard()">Done</button>
 
-   <!-- HEADER AND TODO COUNT -->
+		<div style="float:right;">
     <div class="jumbotron text-center">
         <h1>Bets </h1>
     </div>
@@ -116,9 +116,10 @@
 				<td ng-repeat="b in gameBets  track by $index">{{b}}</td> 
 			</tr>
 		</table>
+    <div class="jumbotron text-center">
+        <h1>Scores </h1>
+    </div>
 
-		<div style="height:45px;width:200px;  background:yellow;  float:right;">
-				SCORES		
 		</div>
 
 
