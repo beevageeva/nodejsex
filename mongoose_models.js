@@ -176,7 +176,7 @@ roomSchema.methods.addGame = function(nCards){
 		resCards["moves"].push({'username': this.usernames[i], "cardsPut":[] });
 	}
 	resCards["hands"] = []; //array of length = nPlayers for each game
-	resCards["firstPlayer"] = [this.usernames[this.games.length -1 % nPlayers]]; //array of length = nCards, first player for each round
+	resCards["firstPlayer"] = [this.usernames[this.games.length  % nPlayers]]; //array of length = nCards, first player for each round
 	this.games.push(resCards);
 }
 
