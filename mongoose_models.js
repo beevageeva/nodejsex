@@ -235,10 +235,10 @@ roomSchema.methods.addMove = function(card, username){
 		if(indexNextPlayer == -1){
 			//new round
 			username = g.firstPlayer[g.firstPlayer.length - 1];
-			firstUserCard = g.moves[indexFirstUsername].cardsPut[g.moves[indexFirstUsername].cardsPut.length - 1];
+			firstUserCard = g.moves[indexFirstPlayer].cardsPut[g.moves[indexFirstPlayer].cardsPut.length - 1];
 			biggestAtu = 0;
 			for(var i = 0;i<nPlayers;i++){
-				if(i!=indexFirstUsername){
+				if(i!=indexFirstPlayer){
 					thisUserCard = g.moves[i].cardsPut[g.moves[i].cardsPut.length - 1];
 					if( (thisUserCard - firstUserCard)%4==0  && thisUserCard>firstUserCard ){
 						username = this.usernames[i];
