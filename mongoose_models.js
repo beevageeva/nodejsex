@@ -209,6 +209,7 @@ roomSchema.methods.addMove = function(card, username){
 			finished = true;
 		}
 		indexFirstPlayer = this.usernames.indexOf(g.firstPlayer[g.firstPlayer.length - 1]);
+		console.log("INDEX FIRST PLAYER = " + indexFirstPlayer);
 		indexNextPlayer = -1; //and will be -1 <=> allEqual = true
 		position = indexFirstPlayer;
 
