@@ -188,8 +188,19 @@ roomSchema.methods.addMove = function(card, username){
 	g = this.games[this.games.length - 1];
 	nPlayers = this.usernames.length;
 	nCards = g.cards[0].length;
+	//TODO following not working	
+	//g.moves.findOne({username: username}, function (err, m) {});
+	m = null;
+	for(var i = 0;i<g.moves.length && !m;i++){
+		if(g.moves[i].username == username){
+			m = g.moves[i];
+		}
+	}
 
-	g.moves.findOne({username: username}, function (err, m) {
+
+
+
+	//g.moves.findOne({username: username}, function (err, m) {
 		if(m.cardsPut.length<nCards){
 			m.cardsPut.push(card);
 			finished = false;
@@ -264,10 +275,14 @@ roomSchema.methods.addMove = function(card, username){
 			res = 3;
 			username = this.usernames[indexNextUsername];
 		}
-
+		//g.markModified("moves");
+		this.markModified("games");
 		return [username, res, position];
 		
-	});
+	//}); //findOne
+
+
+
 	
 }
 
