@@ -209,12 +209,12 @@ roomSchema.methods.addMove = function(card, username){
 			finished = true;
 		}
 		indexFirstPlayer = this.usernames.indexOf(g.firstPlayer[g.firstPlayer.length - 1]);
-		console.log("INDEX FIRST PLAYER = " + indexFirstPlayer);
+		console.log("INDEX FIRST PLAYER = " + indexFirstPlayer + " firstPlayer cards length = " + g.moves[indexFirstPlayer].cardsPut.length);
 		indexNextPlayer = -1; //and will be -1 <=> allEqual = true
 		position = indexFirstPlayer;
 
 		//TODO test continous...AUTH
-		for(var i = indexFirstPlayer +1; i<nPlayers && indexNextPlayer !=-1; i++){
+		for(var i = indexFirstPlayer +1; i<nPlayers && indexNextPlayer !==-1; i++){
 			if(g.moves[i].cardsPut.length != g.moves[indexFirstPlayer].cardsPut.length){
 				indexNextPlayer = i;
 			}
@@ -222,7 +222,7 @@ roomSchema.methods.addMove = function(card, username){
 				position = i;
 			}
 		}
-		for(var i = 0; i<indexFirstPlayer && indexNextPlayer !=-1; i++){
+		for(var i = 0; i<indexFirstPlayer && indexNextPlayer ==-1; i++){
 			if(g.moves[i].cardsPut.length != g.moves[indexFirstPlayer].cardsPut.length){
 				indexNextPlayer = i;
 			}
@@ -255,6 +255,7 @@ roomSchema.methods.addMove = function(card, username){
 			//set firstPlayer
 			g.firstPlayer.push(username);
 			res = 2;
+			//the same using 0 as firstPlayerIndex as they are all equal
 			if(g.moves[0].cardsPut.length == nCards){
 			//new game
 				nextGameNCards = getNextGameNCards(nPlayers, this.games.length);
