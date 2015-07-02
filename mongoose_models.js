@@ -75,7 +75,7 @@ var roomSchema = mongoose.Schema({
     name: String,
     finished: Boolean,
 		usernames: [String],
-		games: [{'cards': Array, 	'hands': [{'bet': Number, 'done': Number}], 	'atu': Number, 'moves': Array}],
+		games: [{'cards': Array, 	'hands': [{'bet': Number, 'done': Number}], 	'atu': Number, 'moves': [{'username': String, 'cardsPut':[Number] }], 'firstPlayer':[String] }],
     created_at: Date,
     updated_at: Date
 });
@@ -171,8 +171,12 @@ roomSchema.methods.addGame = function(nCards){
 	nPlayers = this.usernames.length;
 	resCards = getCards(nPlayers, nCards);
 	//add rest of hash variables to this one , it's the same as newRoom.games[0] afterwards
-	resCards["moves"] = []; //array of length = nCards for each game each of length = nPlayers (matrix nCards x nPlayers)
+	resCards["moves"] = []; //array of length = nPlayers indexed by field username for each cardsPut field is an array of length nCards
+	for(var i = 0;i<nPlayers;i++){
+		resCards["moves"].push({'username': this.usernames[i], "cardsPut":[] });
+	}
 	resCards["hands"] = []; //array of length = nPlayers for each game
+	resCards["firstPlayer"] = [this.usernames[this.games.length -1 % nPlayers]]; //array of length = nCards, first player for each round
 	this.games.push(resCards);
 }
 
@@ -180,73 +184,91 @@ roomSchema.methods.addGame = function(nCards){
 
 //also checks for turn username variable from session map 
 roomSchema.methods.addMove = function(card, username){
-	//finished game completely = 0, finished game = 1(addNewGame), 2 finish last round , finished round = 3, unfinished = 4
+	//finished game completely = 0, finished game = 1(addNewGame), 2 finish last round , unfinished = 3
 	g = this.games[this.games.length - 1];
 	nPlayers = this.usernames.length;
-	addNewRound = g.moves.length == 0 || g.moves[g.moves.length-1].length == nPlayers;
-	
-	console.log("addNewRound = " + addNewRound );
-	if(g.moves.length > 0){
-		console.log("lg ml length = " + g.moves[g.moves.length - 1].length + ", type = " + typeof( g.moves[g.moves.length - 1]));
-		console.log(g.moves[g.moves.length - 1]);	
-	}
-
-	indexUsername = (this.games.length -1  +   (addNewRound?0:g.moves[g.moves.length - 1].length )) % nPlayers 
-
-	//TODO check username
-	console.log("IS USER AUTH: "  + (this.usernames[indexUsername] == username));
 	nCards = g.cards[0].length;
-	res = 4;
-	username = null;
-	position = null;
-	if (addNewRound){
-		console.log("mongoose_models.addMove: add new round");
-		res = 3;
-		//round finished
-		//calculate who took it and add one to done to that username
-		//check bp
-		if(g.moves.length < nCards){
-			g.moves.push([]);	
+
+	g.moves.findOne({username: username}, function (err, m) {
+		if(m.cardsPut.length<nCards){
+			m.cardsPut.push(card);
+			finished = false;
 		}
 		else{
-			console.log("INVALID MOVE");
-			return null;
+			finished = true;
 		}
-	}
-	if(indexUsername == nPlayers -1){
-		username = this.usernames[0];
-	}
-	else{
-		username = this.usernames[indexUsername + 1];
-	}	
-	g.moves[g.moves.length - 1].push(card);
-	//TODO mark modified may only be needed once for 'games' field
-	g.markModified("moves");
-	this.markModified("games");
-	//console.log("AFTER ADDING");
-	//console.log(g.moves[g.moves.length - 1]);	
-	//test if this last move was the last in the game
-	if(g.moves[g.moves.length - 1].length == nPlayers){
-		if(g.moves.length == nCards){
-			//insert next game, calculate points
-			nextGameNCards = getNextGameNCards(nPlayers, this.games.length);
-			console.log("****nextGameNCards = " + nextGameNCards);
-			if(nextGameNCards == -1){
-				//game finished
-				res = 0;
+		indexFirstPlayer = this.usernames.indexOf(g.firstPlayer[g.firstPlayer.length - 1]);
+		indexNextPlayer = -1; //and will be -1 <=> allEqual = true
+		position = indexFirstPlayer;
+
+		//TODO test continous...AUTH
+		for(var i = indexFirstPlayer +1; i<nPlayers && indexNextPlayer !=-1; i++){
+			if(g.moves[i].cardsPut.length != g.moves[indexFirstPlayer].cardsPut.length){
+				indexNextPlayer = i;
 			}
 			else{
-				//round finished, new game
-				res = 1;
-				this.addGame(nextGameNCards);
+				position = i;
+			}
+		}
+		for(var i = 0; i<indexFirstPlayer && indexNextPlayer !=-1; i++){
+			if(g.moves[i].cardsPut.length != g.moves[indexFirstPlayer].cardsPut.length){
+				indexNextPlayer = i;
+			}
+			else{
+				position = i;
+			}
+		}
+		//AUTH
+		console.log("MOVE CARD isUserAuth: " +  (this.usernames[position] == username) );
+		//END
+		if(indexNextPlayer == -1){
+			//new round
+			username = g.firstPlayer[g.firstPlayer.length - 1];
+			firstUserCard = g.moves[indexFirstUsername].cardsPut[g.moves[indexFirstUsername].cardsPut.length - 1];
+			biggestAtu = 0;
+			for(var i = 0;i<nPlayers;i++){
+				if(i!=indexFirstUsername){
+					thisUserCard = g.moves[i].cardsPut[g.moves[i].cardsPut.length - 1];
+					if( (thisUserCard - firstUserCard)%4==0  && thisUserCard>firstUserCard ){
+						username = this.usernames[i];
+					}
+					else if( (thisUserCard - g.atu)%4==0  && thisUserCard>biggestAtu ){
+						username = this.usernames[i];
+						biggestAtu = thisUserCard;
+					}
+					
+				}
+			}
+			g.hands[this.usernames.indexOf(username)].done++;
+			//set firstPlayer
+			g.firstPlayer.push(username);
+			res = 2;
+			if(g.moves[0].cardsPut.length == nCards){
+			//new game
+				nextGameNCards = getNextGameNCards(nPlayers, this.games.length);
+				console.log("****nextGameNCards = " + nextGameNCards);
+				if(nextGameNCards == -1){
+					//game finished
+					res = 0;
+				}
+				else{
+					//round finished, new game
+					//calculate scores
+
+					res = 1;
+					this.addGame(nextGameNCards);
+				}
 			}
 		}
 		else{
-			res = 2;
-		}	
-	}
-	console.log("in saveMove username = " + username + ", position = " +  (g.moves[g.moves.length - 1].length - 1)   + ", res = " +  res);
-	return [username, res, g.moves[g.moves.length - 1].length - 1];
+			res = 3;
+			username = this.usernames[indexNextUsername];
+		}
+
+		return [username, res, position];
+		
+	});
+	
 }
 
 

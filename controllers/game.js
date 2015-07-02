@@ -73,7 +73,7 @@ io.sockets.on('connection', function (socket) {
 				for(var i = 0;i<room.usernames.length; i++){
 					if(socket.request.session.username == room.usernames[i]){
 						g = room.games[room.games.length - 1];
-						socket.emit("cards", {"cards":  g.cards[i], "atu":  g.atu, "username": room.usernames[(room.games.length - 1) % room.usernames.length] });
+						socket.emit("cards", {"cards":  g.cards[i], "atu":  g.atu, "username": g.firstPlayer[g.firstPlayer.length - 1] });
 						break;	
 					}
 				}
