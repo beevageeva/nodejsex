@@ -150,7 +150,7 @@ function mainController($scope, $http) {
 
 		$scope.isBetDisabled = function(){
 				console.log("***********************************getCardsRec = " + getCardsRec);
-				return $scope.moveUser!=$scope.username || $scope.moved!=1 || getCardsRec!=$scope.nPlayers;
+				return $scope.moveUser!=$scope.username || $scope.moved!=1 || getCardsRec < $scope.nPlayers - 1;
 			
 		}
 
