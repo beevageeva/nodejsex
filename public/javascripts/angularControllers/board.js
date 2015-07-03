@@ -126,7 +126,7 @@ function mainController($scope, $http) {
 		});
 		socket.on('betMade', function (data) {
 			console.log("bet made " +  data.bet + " on position " + data.position + ", moveUser " + data.username);
-			$scope.gameBets[data.position] = data.bet;
+			$scope.gameBets[data.position] = data.fromUsername + ":" + data.bet;
 			$scope.moveUser = data.username;
 			$scope.$apply();
 		});

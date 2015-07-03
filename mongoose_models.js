@@ -279,7 +279,7 @@ roomSchema.methods.addMove = function(card, username){
 		}
 		//g.markModified("moves");
 		this.markModified("games");
-		return [username, res, position - indexFirstPlayer];
+		return [username, res, (position - indexFirstPlayer)%nPlayers];
 		
 	//}); //findOne
 
