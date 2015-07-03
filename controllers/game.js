@@ -91,7 +91,7 @@ io.sockets.on('connection', function (socket) {
 							if(!err){
 								
 								//send card to all users in the room kept as a variable in session map	
-								io.to(socket.request.session.room).emit("betMade", {"bet": data.bet, "fromUsename": socket.request.session.username, "username": resBet[1], "res": resBet[0], "position": resBet[2]});
+								io.to(socket.request.session.room).emit("betMade", {"bet": data.bet, "fromUsername": socket.request.session.username, "username": resBet[1], "res": resBet[0], "position": resBet[2]});
 							}
 							else{
 								console.log(err);
