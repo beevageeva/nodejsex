@@ -26,6 +26,7 @@ function mainController($scope, $http) {
 
 
     $scope.formData = {};
+				getCardsRec = $scope.nPlayers;
 
     // when landing on the page, get all todos and show them
     $http.get('/api/board')
