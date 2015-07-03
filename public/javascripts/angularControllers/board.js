@@ -110,6 +110,7 @@ function mainController($scope, $http) {
 
 		});
 		socket.on('getCardsRec', function (data) {
+			console.log("---- IN socket.on getCardsRec: getCardsRec = " + getCardsRec);
 			getCardsRec++;
 		});
 
@@ -147,6 +148,7 @@ function mainController($scope, $http) {
 		}
 
 		$scope.isBetDisabled = function(){
+				console.log("***********************************getCardsRec = " + getCardsRec);
 				return $scope.moveUser!=$scope.username || $scope.moved!=1 || getCardsRec!=$scope.nPlayers;
 			
 		}
