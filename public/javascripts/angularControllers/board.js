@@ -20,6 +20,7 @@ function mainController($scope, $http) {
 
 
 
+		//TODO unbind moved from $scope
 
 
 
@@ -66,6 +67,7 @@ function mainController($scope, $http) {
 		socket.on('startRoom', function (data) {
 			console.log("start room " +  data.room );
 			if($scope.startedRoom == null){
+				//TODO keep in scope a variable counting getCards events form other users(enable Bet after n == nPlayers)
 				$scope.nPlayers = 0;
 				$scope.nCards = 0;
 				$scope.tableCards = [];
@@ -77,6 +79,7 @@ function mainController($scope, $http) {
 				$scope.nPlayers = data.nPlayers;
 				$scope.isGetCardsDisabled = true;
 				$scope.scores = [];
+				getCardsRec = $scope.nPlayers;
 				//initialize tableCards
 				for(var i = 0;i<data.nPlayers; i++){
 					$scope.tableCards.push(0);
@@ -106,6 +109,9 @@ function mainController($scope, $http) {
 			});
 
 		});
+		socket.on('getCardsRec', function (data) {
+			getCardsRec++;
+		});
 
 		socket.on('cardMoved', function (data) {
 			console.log("move card " +  data.card + " on position " + data.position  + ", moveUser " + data.username  + ", res = " + data.res);
@@ -113,6 +119,7 @@ function mainController($scope, $http) {
 			$scope.moveUser = data.username;
 			if(data.res == 1){
 				$scope.isGetCardsDisabled = false;
+				getCardsRec = 0;
 			}
 			else if(data.res == 2){
 				//another round finished, I must have button activated
@@ -140,7 +147,7 @@ function mainController($scope, $http) {
 		}
 
 		$scope.isBetDisabled = function(){
-				return $scope.moveUser!=$scope.username || $scope.moved!=1;
+				return $scope.moveUser!=$scope.username || $scope.moved!=1 || getCardsRec!=$scope.nPlayers;
 			
 		}
 
@@ -202,7 +209,7 @@ function mainController($scope, $http) {
 			}
 			socket.emit("sendCard", {"card": $scope.selected});
 			$scope.selected = 0;
-			//TODO no apply	in click events , this is already wrapped in an apply call and calling it here again (from apply function) will throw an error
+			//!!!! no apply	in click events , this is already wrapped in an apply call and calling it here again (from apply function) will throw an error
 			//$scope.$apply();
 
 		}

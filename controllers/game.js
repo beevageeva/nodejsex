@@ -77,6 +77,8 @@ io.sockets.on('connection', function (socket) {
 						break;	
 					}
 				}
+				//send getCards to the other
+				io.to(room.name).emit("getCardsRec", {"fromUsername": socket.request.session.username});
 			 });	
 		});
 
