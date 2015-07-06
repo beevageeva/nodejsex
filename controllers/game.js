@@ -40,6 +40,10 @@ io.sockets.on('connection', function (socket) {
 					//delete already saved rooms with this name
 					Room.remove({"name": data.message});
 					var newRoom = new Room({"name": data.message, "usernames": roomUsernames , "finished": false, "games": []});
+					newRoom.scores = [];
+					for(var i = 0; i< nPlayers; i++){
+						newRoom.push(0);
+					}
 					//nCards = 1 for the first game
 					newRoom.addGame(1);
 					
@@ -70,10 +74,15 @@ io.sockets.on('connection', function (socket) {
 
 		socket.on('getCards', function (data) {
 			 Room.findOne({ name: socket.request.session.room }, function (err, room) {
+				scores = [];
+				for(var i = 0;i<room.usernames.length; i++){
+					scores.push({'username': room.usernames[i], 'score': this.scores[i] });
+				}
 				for(var i = 0;i<room.usernames.length; i++){
 					if(socket.request.session.username == room.usernames[i]){
 						g = room.games[room.games.length - 1];
-						socket.emit("cards", {"cards":  g.cards[i], "atu":  g.atu, "username": g.firstPlayer[g.firstPlayer.length - 1] });
+						//TODO send scores
+						socket.emit("cards", {"cards":  g.cards[i], "atu":  g.atu, "username": g.firstPlayer[g.firstPlayer.length - 1], "scores": scores });
 						break;	
 					}
 				}

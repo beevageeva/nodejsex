@@ -75,6 +75,7 @@ var roomSchema = mongoose.Schema({
     name: String,
     finished: Boolean,
 		usernames: [String],
+		scores: [Number],
 		games: [{'cards': Array, 	'hands': [{'bet': Number, 'done': Number}], 	'atu': Number, 'moves': [{'username': String, 'cardsPut':[Number] }], 'firstPlayer':[String] }],
     created_at: Date,
     updated_at: Date
@@ -267,6 +268,14 @@ roomSchema.methods.addMove = function(card, username){
 				else{
 					//round finished, new game
 					//calculate scores
+					for(var i = 0;i<nPlayers;i++){
+			 				if(g.hands[i].bet!=g.hands[i].done){
+							this.scores[i]-=abs(g.hands[i].done - g.hands[i].bet);
+						}
+						else{
+							this.scores[i]+=(5+g.hands[i].done);
+						}
+					}
 
 					res = 1;
 					this.addGame(nextGameNCards);

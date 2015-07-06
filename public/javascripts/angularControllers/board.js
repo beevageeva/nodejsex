@@ -106,6 +106,7 @@ function mainController($scope, $http) {
 				$scope.atu = data.atu;
 				$scope.moveUser = data.username;
 				$scope.selected = $scope.myCards[0];
+				$scope.scores = data.scores;
 
 			});
 
