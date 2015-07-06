@@ -42,7 +42,7 @@ io.sockets.on('connection', function (socket) {
 					var newRoom = new Room({"name": data.message, "usernames": roomUsernames , "finished": false, "games": []});
 					newRoom.scores = [];
 					for(var i = 0; i< nPlayers; i++){
-						newRoom.push(0);
+						newRoom.scores.push(0);
 					}
 					//nCards = 1 for the first game
 					newRoom.addGame(1);
