@@ -111,8 +111,9 @@ function mainController($scope, $http) {
 
 		});
 		socket.on('getCardsRec', function (data) {
-			console.log("---- IN socket.on getCardsRec: getCardsRec = " + getCardsRec);
 			getCardsRec++;
+			console.log("---- AFTER Update IN socket.on getCardsRec: getCardsRec = " + getCardsRec);
+			$scope.$apply();
 		});
 
 		socket.on('cardMoved', function (data) {
@@ -150,8 +151,8 @@ function mainController($scope, $http) {
 
 		$scope.isBetDisabled = function(){
 				console.log("***********************************getCardsRec = " + getCardsRec + " , moved = " + $scope.moved);
-				console.log("first = " + ($scope.moveUser!=$scope.username) +"sec = " + ($scope.moved!=1) + "th = " + ( getCardsRec < $scope.nPlayers - 1) );
-				return $scope.moveUser!=$scope.username || $scope.moved!=1 ||  getCardsRec < $scope.nPlayers - 1;
+				console.log("first = " + ($scope.moveUser!=$scope.username) +",sec = " + ($scope.moved!=1) + ",th = " + ( getCardsRec < $scope.nPlayers - 1) );
+				return $scope.moveUser!=$scope.username || $scope.moved!=1 ||  getCardsRec < $scope.nPlayers ;
 			
 		}
 
